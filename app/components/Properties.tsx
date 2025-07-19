@@ -84,17 +84,17 @@ const Properties: React.FC = () => {
     <section id="properties" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {t('properties.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             {t('properties.subtitle')}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((property) => (
-            <div key={property.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            <div key={property.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={property.image}
@@ -107,7 +107,7 @@ const Properties: React.FC = () => {
                   </span>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <span className="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                  <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
                     {formatPrice(property.price)} {t('properties.price')}
                   </span>
                 </div>
@@ -118,26 +118,26 @@ const Properties: React.FC = () => {
                   {property.title}
                 </h3>
                 
-                <div className="flex items-center text-gray-600 mb-4">
+                <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
                   <MapPin className="h-4 w-4 mr-2" />
                   <span className="text-sm">{property.location}</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="text-center">
-                    <Square className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                    <span className="text-sm text-gray-600">{property.area} {t('properties.area')}</span>
+                    <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{property.area} {t('properties.area')}</span>
                   </div>
                   {property.bedrooms > 0 && (
                     <div className="text-center">
-                      <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                      <span className="text-sm text-gray-600">{property.bedrooms} {t('properties.bedrooms')}</span>
+                      <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{property.bedrooms} {t('properties.bedrooms')}</span>
                     </div>
                   )}
                   {property.bathrooms > 0 && (
                     <div className="text-center">
-                      <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                      <span className="text-sm text-gray-600">{property.bathrooms} {t('properties.bathrooms')}</span>
+                      <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{property.bathrooms} {t('properties.bathrooms')}</span>
                     </div>
                   )}
                 </div>
