@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Inter, Cairo } from "next/font/google";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import PropertiesSidebar from "./components/PropertiesSidebar";
+import { PropertiesSidebar } from "./components/PropertiesSidebar";
+// import PropertiesSidebar from "./components/PropertiesSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({ subsets: ["arabic"] });

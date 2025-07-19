@@ -1,6 +1,5 @@
-// components/PropertyCard.tsx
-import { Property } from './PropertiesSidebar';
 import { Bed, Bath, Ruler, MapPin } from 'lucide-react';
+import { Property } from './PropertiesSidebar';
 
 export const PropertyCard = ({ property }: { property: Property }) => {
   return (
