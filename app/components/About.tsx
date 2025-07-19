@@ -31,16 +31,16 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-blue-50 to-green-50">
+    <section id="about" className="py-20 bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
               {t('about.title')}
             </h2>
             
-            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
               {t('about.description')}
             </p>
 
@@ -49,14 +49,14 @@ const About: React.FC = () => {
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div key={index} className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <div className="bg-gradient-to-br from-blue-500 to-green-500 w-12 h-12 rounded-lg mx-auto mb-4 flex items-center justify-center">
                       <IconComponent className="h-6 w-6 text-white" />
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-2">
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                       {stat.label}
                     </div>
                   </div>
@@ -67,7 +67,7 @@ const About: React.FC = () => {
 
           {/* Image */}
           <div className="relative">
-            <div className="bg-gradient-to-br from-blue-200 to-green-200 rounded-2xl p-8">
+            <div className="bg-gradient-to-br from-blue-200 to-green-200 dark:from-blue-900 dark:to-green-900 rounded-2xl p-8">
               <img
                 src="https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg"
                 alt="About us"

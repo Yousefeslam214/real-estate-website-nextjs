@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 dark:bg-black text-white transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
@@ -34,12 +34,12 @@ const Footer: React.FC = () => {
                 <span className="text-white font-bold text-xl">RE</span>
               </div>
               <div className={`${language === 'ar' ? 'mr-3' : 'ml-3'}`}>
-                <h3 className="text-lg font-bold">
+                <h3 className="text-lg font-bold text-white">
                   {language === 'ar' ? 'البوابة المصرية للعقارات' : 'Egyptian Real Estate'}
                 </h3>
               </div>
             </div>
-            <p className="text-gray-300 leading-relaxed mb-6">
+            <p className="text-gray-300 dark:text-gray-400 leading-relaxed mb-6">
               {t('footer.description')}
             </p>
             
@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
                 <a
                   key={index}
                   href="#"
-                  className="bg-gray-800 hover:bg-blue-600 p-3 rounded-lg transition-colors duration-200"
+                  className="bg-gray-800 dark:bg-gray-900 hover:bg-blue-600 dark:hover:bg-blue-700 p-3 rounded-lg transition-colors duration-200"
                 >
                   <Icon className="h-5 w-5" />
                 </a>
@@ -59,13 +59,13 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-6">{t('footer.quick.links')}</h4>
+            <h4 className="text-lg font-bold text-white mb-6">{t('footer.quick.links')}</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.key}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-200"
+                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200"
                   >
                     {t(link.key)}
                   </a>
@@ -76,13 +76,13 @@ const Footer: React.FC = () => {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-bold mb-6">{t('footer.services.links')}</h4>
+            <h4 className="text-lg font-bold text-white mb-6">{t('footer.services.links')}</h4>
             <ul className="space-y-3">
               {serviceLinks.map((service) => (
                 <li key={service.key}>
                   <a
                     href="#services"
-                    className="text-gray-300 hover:text-white transition-colors duration-200"
+                    className="text-gray-300 dark:text-gray-400 hover:text-white transition-colors duration-200"
                   >
                     {t(service.key)}
                   </a>
@@ -93,19 +93,19 @@ const Footer: React.FC = () => {
 
           {/* Contact Information */}
           <div>
-            <h4 className="text-lg font-bold mb-6">{t('footer.contact.info')}</h4>
+            <h4 className="text-lg font-bold text-white mb-6">{t('footer.contact.info')}</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3 rtl:space-x-reverse">
                 <MapPin className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">{t('contact.address')}</span>
+                <span className="text-gray-300 dark:text-gray-400 text-sm">{t('contact.address')}</span>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <Phone className="h-5 w-5 text-green-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">{t('contact.phone')}</span>
+                <span className="text-gray-300 dark:text-gray-400 text-sm">{t('contact.phone')}</span>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
                 <Mail className="h-5 w-5 text-purple-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm">{t('contact.email')}</span>
+                <span className="text-gray-300 dark:text-gray-400 text-sm">{t('contact.email')}</span>
               </div>
             </div>
           </div>

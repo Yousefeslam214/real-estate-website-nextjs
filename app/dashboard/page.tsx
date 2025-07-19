@@ -83,16 +83,16 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex transition-colors duration-200">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
+      <div className="w-64 bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
         <div className="p-6">
           <div className="flex items-center">
             <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">RE</span>
             </div>
             <div className={`${language === 'ar' ? 'mr-3' : 'ml-3'}`}>
-              <h1 className="text-lg font-bold text-gray-900">
+              <h1 className="text-lg font-bold text-gray-900 dark:text-white">
                 {language === 'ar' ? 'لوحة التحكم' : 'Dashboard'}
               </h1>
             </div>
@@ -109,7 +109,7 @@ const DashboardPage: React.FC = () => {
                 className={`w-full flex items-center px-6 py-3 text-left transition-colors duration-200 ${
                   activeTab === item.id
                     ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 <IconComponent className="h-5 w-5 mr-3" />
@@ -120,7 +120,7 @@ const DashboardPage: React.FC = () => {
         </nav>
 
         <div className="absolute bottom-0 w-64 p-6">
-          <button className="flex items-center text-gray-600 hover:text-red-600 transition-colors duration-200">
+          <button className="flex items-center text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200">
             <LogOut className="h-5 w-5 mr-3" />
             <span>{language === 'ar' ? 'تسجيل الخروج' : 'Logout'}</span>
           </button>
@@ -130,10 +130,10 @@ const DashboardPage: React.FC = () => {
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b">
+        <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700 transition-colors duration-200">
           <div className="px-6 py-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {activeTab === 'overview' && (language === 'ar' ? 'نظرة عامة' : 'Overview')}
                 {activeTab === 'properties' && (language === 'ar' ? 'إدارة العقارات' : 'Manage Properties')}
                 {activeTab === 'posts' && (language === 'ar' ? 'إدارة المقالات' : 'Manage Blog Posts')}
@@ -147,9 +147,9 @@ const DashboardPage: React.FC = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={language === 'ar' ? 'البحث...' : 'Search...'}
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                   />
-                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-500" />
                 </div>
                 {(activeTab === 'properties' || activeTab === 'posts') && (
                   <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 rtl:space-x-reverse">
@@ -174,44 +174,44 @@ const DashboardPage: React.FC = () => {
             <div className="space-y-6">
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">{language === 'ar' ? 'إجمالي العقارات' : 'Total Properties'}</p>
-                      <p className="text-3xl font-bold text-gray-900">1,247</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{language === 'ar' ? 'إجمالي العقارات' : 'Total Properties'}</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-white">1,247</p>
                     </div>
                     <div className="bg-blue-100 p-3 rounded-lg">
                       <Home className="h-8 w-8 text-blue-600" />
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">{language === 'ar' ? 'المقالات المنشورة' : 'Published Posts'}</p>
-                      <p className="text-3xl font-bold text-gray-900">89</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{language === 'ar' ? 'المقالات المنشورة' : 'Published Posts'}</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-white">89</p>
                     </div>
                     <div className="bg-green-100 p-3 rounded-lg">
                       <FileText className="h-8 w-8 text-green-600" />
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">{language === 'ar' ? 'المستخدمون النشطون' : 'Active Users'}</p>
-                      <p className="text-3xl font-bold text-gray-900">15,432</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{language === 'ar' ? 'المستخدمون النشطون' : 'Active Users'}</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-white">15,432</p>
                     </div>
                     <div className="bg-purple-100 p-3 rounded-lg">
                       <Users className="h-8 w-8 text-purple-600" />
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">{language === 'ar' ? 'المشاهدات الشهرية' : 'Monthly Views'}</p>
-                      <p className="text-3xl font-bold text-gray-900">234K</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{language === 'ar' ? 'المشاهدات الشهرية' : 'Monthly Views'}</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-white">234K</p>
                     </div>
                     <div className="bg-orange-100 p-3 rounded-lg">
                       <BarChart3 className="h-8 w-8 text-orange-600" />
@@ -221,8 +221,8 @@ const DashboardPage: React.FC = () => {
               </div>
 
               {/* Recent Activity */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                   {language === 'ar' ? 'النشاط الأخير' : 'Recent Activity'}
                 </h3>
                 <div className="space-y-4">
@@ -231,10 +231,10 @@ const DashboardPage: React.FC = () => {
                       <Home className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {language === 'ar' ? 'تم إضافة عقار جديد' : 'New property added'}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {language === 'ar' ? 'منذ ساعتين' : '2 hours ago'}
                       </p>
                     </div>
@@ -244,10 +244,10 @@ const DashboardPage: React.FC = () => {
                       <FileText className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {language === 'ar' ? 'تم نشر مقال جديد' : 'New blog post published'}
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {language === 'ar' ? 'منذ 4 ساعات' : '4 hours ago'}
                       </p>
                     </div>
@@ -259,43 +259,43 @@ const DashboardPage: React.FC = () => {
 
           {/* Properties Tab */}
           {activeTab === 'properties' && (
-            <div className="bg-white rounded-xl shadow-lg">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-colors duration-200">
               <div className="p-6 border-b">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                     {language === 'ar' ? 'قائمة العقارات' : 'Properties List'}
                   </h3>
                   <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                      <Filter className="h-5 w-5 text-gray-600" />
+                    <button className="p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                      <Filter className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                     </button>
                   </div>
                 </div>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'العقار' : 'Property'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'السعر' : 'Price'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'الحالة' : 'Status'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'المشاهدات' : 'Views'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'الإجراءات' : 'Actions'}
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {properties.map((property) => (
-                      <tr key={property.id} className="hover:bg-gray-50">
+                      <tr key={property.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <img
@@ -304,13 +304,13 @@ const DashboardPage: React.FC = () => {
                               className="h-12 w-12 rounded-lg object-cover"
                             />
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">{property.title}</div>
-                              <div className="text-sm text-gray-500">{property.location}</div>
+                              <div className="text-sm font-medium text-gray-900 dark:text-white">{property.title}</div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">{property.location}</div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
                             {formatPrice(property.price)} {language === 'ar' ? 'ج.م' : 'EGP'}
                           </div>
                         </td>
@@ -323,7 +323,7 @@ const DashboardPage: React.FC = () => {
                             {property.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                           {property.views.toLocaleString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -349,41 +349,41 @@ const DashboardPage: React.FC = () => {
 
           {/* Blog Posts Tab */}
           {activeTab === 'posts' && (
-            <div className="bg-white rounded-xl shadow-lg">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-colors duration-200">
               <div className="p-6 border-b">
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                   {language === 'ar' ? 'قائمة المقالات' : 'Blog Posts List'}
                 </h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'العنوان' : 'Title'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'الكاتب' : 'Author'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'الحالة' : 'Status'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'المشاهدات' : 'Views'}
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {language === 'ar' ? 'الإجراءات' : 'Actions'}
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     {blogPosts.map((post) => (
-                      <tr key={post.id} className="hover:bg-gray-50">
+                      <tr key={post.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
                         <td className="px-6 py-4">
-                          <div className="text-sm font-medium text-gray-900">{post.title}</div>
-                          <div className="text-sm text-gray-500">{post.category}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">{post.title}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{post.category}</div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                           {post.author}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -395,7 +395,7 @@ const DashboardPage: React.FC = () => {
                             {post.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                           {post.views.toLocaleString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -421,11 +421,11 @@ const DashboardPage: React.FC = () => {
 
           {/* Users Tab */}
           {activeTab === 'users' && (
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 {language === 'ar' ? 'إدارة المستخدمين' : 'User Management'}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 {language === 'ar' ? 'قريباً - إدارة المستخدمين والصلاحيات' : 'Coming Soon - User management and permissions'}
               </p>
             </div>
@@ -433,11 +433,11 @@ const DashboardPage: React.FC = () => {
 
           {/* Settings Tab */}
           {activeTab === 'settings' && (
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
                 {language === 'ar' ? 'إعدادات النظام' : 'System Settings'}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 {language === 'ar' ? 'قريباً - إعدادات النظام والتكوين' : 'Coming Soon - System settings and configuration'}
               </p>
             </div>

@@ -101,17 +101,17 @@ const BlogPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <Header />
       
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-green-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
               {language === 'ar' ? 'مدونة العقارات' : 'Real Estate Blog'}
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-blue-100 dark:text-blue-200 max-w-3xl mx-auto">
               {language === 'ar' ? 'آخر الأخبار والتحديثات في قطاع العقارات المصري' : 'Latest news and updates in the Egyptian real estate sector'}
             </p>
           </div>
@@ -119,7 +119,7 @@ const BlogPage: React.FC = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-8 bg-white shadow-sm">
+      <section className="py-8 bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search Bar */}
@@ -129,18 +129,18 @@ const BlogPage: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={language === 'ar' ? 'البحث في المقالات...' : 'Search articles...'}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pl-10"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pl-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
-              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
             </div>
 
             {/* Category Filter */}
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <Filter className="h-5 w-5 text-gray-500" />
+              <Filter className="h-5 w-5 text-gray-500 dark:text-gray-400" />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 {categories.map((category) => (
                   <option key={category.value} value={category.value}>
@@ -158,7 +158,7 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
-              <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <article key={post.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={post.image}
@@ -173,7 +173,7 @@ const BlogPage: React.FC = () => {
                 </div>
 
                 <div className="p-6">
-                  <div className="flex items-center justify-between text-gray-500 text-sm mb-3">
+                  <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 text-sm mb-3">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2" />
                       <span>{formatDate(post.date)}</span>
@@ -181,21 +181,21 @@ const BlogPage: React.FC = () => {
                     <span>{post.readTime}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
                     {post.title}
                   </h3>
 
-                  <p className="text-gray-600 mb-4 line-clamp-3">
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-gray-500 text-sm">
+                    <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
                       <User className="h-4 w-4 mr-2" />
                       <span>{post.author}</span>
                     </div>
 
-                    <button className="flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200">
+                    <button className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors duration-200">
                       <span>{language === 'ar' ? 'اقرأ المزيد' : 'Read More'}</span>
                       <ArrowRight className={`h-4 w-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
                     </button>
@@ -207,7 +207,7 @@ const BlogPage: React.FC = () => {
 
           {filteredPosts.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === 'ar' ? 'لم يتم العثور على مقالات تطابق البحث' : 'No articles found matching your search'}
               </p>
             </div>

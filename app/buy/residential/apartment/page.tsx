@@ -182,31 +182,31 @@ const ApartmentPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <Header />
       
       {/* Hero Section */}
       {/* Map Section */}
-      <section className="bg-white py-8">
+      <section className="bg-white dark:bg-gray-800 py-8 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
               {language === 'ar' ? 'شقق سكنية للبيع' : 'Residential Apartments for Sale'}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               {language === 'ar' ? 'اكتشف أفضل الشقق السكنية المعتمدة حكومياً في جميع أنحاء مصر' : 'Discover the best government-certified residential apartments across Egypt'}
             </p>
           </div>
           
           {/* Interactive Map */}
-          <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center relative overflow-hidden mb-8">
+          <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl h-96 flex items-center justify-center relative overflow-hidden mb-8">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-green-500 opacity-20"></div>
             <div className="text-center z-10">
-              <MapPin className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg font-medium">
+              <MapPin className="h-16 w-16 text-gray-500 dark:text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">
                 {language === 'ar' ? 'خريطة تفاعلية للعقارات' : 'Interactive Properties Map'}
               </p>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 {language === 'ar' ? `عرض ${filteredApartments.length} عقار على الخريطة` : `Showing ${filteredApartments.length} properties on map`}
               </p>
             </div>
@@ -237,7 +237,7 @@ const ApartmentPage: React.FC = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-8 bg-white shadow-sm">
+      <section className="py-8 bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             {/* Search Bar */}
@@ -247,16 +247,16 @@ const ApartmentPage: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={language === 'ar' ? 'البحث في الشقق...' : 'Search apartments...'}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pl-10"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pl-10 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               />
-              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400 dark:text-gray-500" />
             </div>
 
             {/* Price Range Filter */}
             <select
               value={priceRange}
               onChange={(e) => setPriceRange(e.target.value)}
-              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               {priceRanges.map((range) => (
                 <option key={range.value} value={range.value}>
@@ -269,7 +269,7 @@ const ApartmentPage: React.FC = () => {
             <select
               value={bedrooms}
               onChange={(e) => setBedrooms(e.target.value)}
-              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               {bedroomOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -282,7 +282,7 @@ const ApartmentPage: React.FC = () => {
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
               {locations.map((loc) => (
                 <option key={loc.value} value={loc.value}>
@@ -295,9 +295,9 @@ const ApartmentPage: React.FC = () => {
       </section>
 
       {/* Results Count */}
-      <section className="py-4 bg-gray-100">
+      <section className="py-4 bg-gray-100 dark:bg-gray-800 transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             {language === 'ar' ? `تم العثور على ${filteredApartments.length} شقة` : `Found ${filteredApartments.length} apartments`}
           </p>
         </div>
@@ -308,7 +308,7 @@ const ApartmentPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredApartments.map((apartment) => (
-              <div key={apartment.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div key={apartment.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={apartment.image}
@@ -326,39 +326,39 @@ const ApartmentPage: React.FC = () => {
                     </button>
                   </div>
                   <div className="absolute bottom-4 left-4">
-                    <span className="bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+                    <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
                       {formatPrice(apartment.price)} {language === 'ar' ? 'ج.م' : 'EGP'}
                     </span>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
                     {apartment.title}
                   </h3>
                   
-                  <div className="flex items-center text-gray-600 mb-4">
+                  <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
                     <MapPin className="h-4 w-4 mr-2" />
                     <span className="text-sm">{apartment.location}</span>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center">
-                      <Square className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                      <span className="text-sm text-gray-600">{apartment.area} {language === 'ar' ? 'م²' : 'm²'}</span>
+                      <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{apartment.area} {language === 'ar' ? 'م²' : 'm²'}</span>
                     </div>
                     <div className="text-center">
-                      <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                      <span className="text-sm text-gray-600">{apartment.bedrooms} {language === 'ar' ? 'غرف' : 'beds'}</span>
+                      <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{apartment.bedrooms} {language === 'ar' ? 'غرف' : 'beds'}</span>
                     </div>
                     <div className="text-center">
-                      <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500" />
-                      <span className="text-sm text-gray-600">{apartment.bathrooms} {language === 'ar' ? 'حمام' : 'baths'}</span>
+                      <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{apartment.bathrooms} {language === 'ar' ? 'حمام' : 'baths'}</span>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <p className="text-sm text-gray-600 mb-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                       {language === 'ar' ? `الطابق ${apartment.floor} من ${apartment.totalFloors}` : `Floor ${apartment.floor} of ${apartment.totalFloors}`}
                     </p>
                     <div className="flex flex-wrap gap-1">
@@ -372,7 +372,7 @@ const ApartmentPage: React.FC = () => {
 
                   <div className="border-t pt-4">
                     <div className="flex items-center justify-between mb-3">
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
                         <p className="font-medium">{apartment.agent.name}</p>
                         <div className="flex items-center mt-1">
                           <Phone className="h-3 w-3 mr-1" />
@@ -389,7 +389,7 @@ const ApartmentPage: React.FC = () => {
                         <Eye className="h-4 w-4" />
                         <span>{language === 'ar' ? 'التفاصيل' : 'Details'}</span>
                       </a>
-                      <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg transition-colors duration-200">
+                      <button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200">
                         <Phone className="h-4 w-4" />
                       </button>
                     </div>
@@ -401,7 +401,7 @@ const ApartmentPage: React.FC = () => {
 
           {filteredApartments.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === 'ar' ? 'لم يتم العثور على شقق تطابق معايير البحث' : 'No apartments found matching your search criteria'}
               </p>
             </div>

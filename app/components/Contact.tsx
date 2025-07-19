@@ -31,13 +31,13 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-50">
+    <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {t('contact.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             {t('contact.subtitle')}
           </p>
         </div>
@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
                     <IconComponent className="h-7 w-7 text-white" />
                   </div>
                   <div>
-                    <p className="text-lg text-gray-700 leading-relaxed">
+                    <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                       {info.title}
                     </p>
                   </div>
@@ -63,12 +63,12 @@ const Contact: React.FC = () => {
           </div>
 
           {/* Map Placeholder */}
-          <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center relative overflow-hidden">
+          <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl h-96 flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-green-500 opacity-20"></div>
             <div className="text-center z-10">
-              <MapPin className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg font-medium">Interactive Map</p>
-              <p className="text-gray-500">Location: New Administrative Capital</p>
+              <MapPin className="h-16 w-16 text-gray-500 dark:text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-300 text-lg font-medium">Interactive Map</p>
+              <p className="text-gray-500 dark:text-gray-400">Location: New Administrative Capital</p>
             </div>
           </div>
         </div>

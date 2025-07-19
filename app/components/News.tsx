@@ -40,20 +40,20 @@ const News: React.FC = () => {
   };
 
   return (
-    <section id="news" className="py-20 bg-white">
+    <section id="news" className="py-20 bg-white dark:bg-gray-800 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             {t('news.title')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             {t('news.subtitle')}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {newsItems.map((item) => (
-            <article key={item.id} className="bg-gray-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            <article key={item.id} className="bg-gray-50 dark:bg-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={item.image}
@@ -68,20 +68,20 @@ const News: React.FC = () => {
               </div>
 
               <div className="p-6">
-                <div className="flex items-center text-gray-500 text-sm mb-3">
+                <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-3">
                   <Calendar className="h-4 w-4 mr-2" />
                   <span>{formatDate(item.date)}</span>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
                   {item.title}
                 </h3>
 
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                   {item.excerpt}
                 </p>
 
-                <button className="flex items-center text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200">
+                <button className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors duration-200">
                   <span>{t('news.read.more')}</span>
                   <ArrowRight className={`h-4 w-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} />
                 </button>
