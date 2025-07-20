@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const navigationItems = [
     { key: "nav.home", href: "/" },
     // { key: 'nav.properties', href: '#properties' },
-    { key: "nav.buy", href: "/buy/residential/apartment" },
+    { key: "nav.offers", href: "/offers" },
     // { key: 'nav.services', href: '#services' },
     { key: "nav.about", href: "/about" },
     { key: "nav.blog", href: "/blog" },

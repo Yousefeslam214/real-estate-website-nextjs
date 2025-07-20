@@ -16,13 +16,10 @@ const translations = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.properties': 'Properties',
-    'nav.services': 'Services',
+    'nav.offers': 'Our Offers',
     'nav.about': 'About',
-    'nav.contact': 'Contact',
-    'nav.news': 'News',
     'nav.blog': 'Blog',
-    'nav.buy': 'Buy',
+    'nav.contact': 'Contact',
     
     // Hero Section
     'hero.title': 'Egyptian Real Estate Portal',
@@ -89,14 +86,11 @@ const translations = {
   ar: {
     // Navigation
     'nav.home': 'الرئيسية',
-    'nav.properties': 'العقارات',
-    'nav.services': 'الخدمات',
+    'nav.offers': 'عروضنا',
     'nav.about': 'من نحن',
-    'nav.contact': 'اتصل بنا',
-    'nav.news': 'الأخبار',
     'nav.blog': 'المدونة',
-    'nav.buy': 'شراء',
-    
+    'nav.contact': 'اتصل بنا',
+
     // Hero Section
     'hero.title': 'البوابة المصرية للعقارات',
     'hero.subtitle': 'بوابتك إلى العقارات والخدمات العقارية المعتمدة حكومياً',
