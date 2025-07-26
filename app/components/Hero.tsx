@@ -13,7 +13,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 const Hero: React.FC = () => {
   const { language, t } = useLanguage();
- 
 
   return (
     <>
@@ -53,8 +52,6 @@ const Hero: React.FC = () => {
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl ">
               {t("hero.subtitle")}
             </p>
-
-       
           </div>
         </div>
       </div>
