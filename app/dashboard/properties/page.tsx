@@ -1,0 +1,143 @@
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { fetcher } from "@/services/shared/fetcher";
+import { Edit, Eye, Filter, Plus, Search, Trash2 } from "lucide-react";
+import React from "react";
+import useSWR from "swr";
+import clsx from "clsx";
+import SearchWithAddButton from "@/app/components/SearchWithAddButton";
+
+const PropertiesDashboardTab = () => {
+  const activeTab = "properties"; // This can be dynamic based on your app's state
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
+  
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const { data, error, isLoading } = useSWR(
+    apiUrl ? `${apiUrl}/properties` : null,
+    fetcher
+  );
+
+  console.log("Properties data:", data);
+  const { language, t } = useLanguage();
+
+  const properties = Array.isArray(data?.data) ? data.data : [];
+
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(price);
+
+  if (isLoading) return <div>Loading properties...</div>;
+  if (error)
+    return <div className="text-red-500">Failed to load properties.</div>;
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+      <div className="p-6 border-b">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+            {language === "ar" ? "قائمة العقارات" : "Properties List"}
+          </h3>
+
+          <SearchWithAddButton
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            language={language}
+            activeTab={activeTab}
+            //   onAddClick={handleAdd}
+          />
+        </div>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "العقار" : "Property"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "السعر" : "Price"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "الحالة" : "Status"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "الإجراءات" : "Actions"}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {properties.map((property: any) => (
+              <tr key={property.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 flex items-center">
+                  <img
+                    src={property?.image || "/placeholder.jpg"}
+                    alt={property?.title || "Property"}
+                    className="h-12 w-12 rounded-lg object-cover"
+                  />
+                  <div className="ml-4">
+                    <div className="text-sm font-medium">{property?.title}</div>
+                    <div className="text-sm text-gray-500">
+                      {/* {property?.location} */}
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="text-sm font-medium">
+                    {formatPrice(property?.price_amount)}{" "}
+                    {language === "ar" ? "ج.م" : "EGP"}
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <span
+                    className={clsx(
+                      "px-2 py-1 text-xs rounded-full",
+                      language === "ar"
+                        ? property.status_ar === "متاح"
+                          ? "bg-green-100 text-green-800"
+                          : property.status_ar === "غير نشط"
+                          ? "bg-red-100 text-red-800"
+                          : "bg-yellow-100 text-yellow-800"
+                        : property.status_en === "Available"
+                        ? "bg-green-100 text-green-800"
+                        : property.status_en === "inactive"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    )}>
+                    {language === "ar"
+                      ? property.status_ar
+                      : property.status_en}
+                  </span>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center space-x-2">
+                    <button className="text-blue-600">
+                      <Eye className="h-4 w-4" />
+                    </button>
+                    <button className="text-green-600">
+                      <Edit className="h-4 w-4" />
+                    </button>
+                    <button className="text-red-600">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+
+            {properties.length === 0 && (
+              <tr>
+                <td colSpan={4} className="text-center p-4">
+                  {language === "ar" ? "لا توجد عقارات" : "No properties found"}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default PropertiesDashboardTab;
