@@ -10,11 +10,12 @@ const PropertiesDashboardTab = () => {
   const activeTab = "properties"; // This can be dynamic based on your app's state
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-
-  
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [itemsPerPage, setItemsPerPage] = React.useState(5);
+
   const { data, error, isLoading } = useSWR(
-    apiUrl ? `${apiUrl}/properties` : null,
+    apiUrl ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}` : null,
     fetcher
   );
 
@@ -72,7 +73,7 @@ const PropertiesDashboardTab = () => {
               <tr key={property.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center">
                   <img
-                    src={property?.image || "/placeholder.jpg"}
+                    src={property?.coverimageurl || "/placeholder.jpg"}
                     alt={property?.title || "Property"}
                     className="h-12 w-12 rounded-lg object-cover"
                   />
@@ -85,30 +86,27 @@ const PropertiesDashboardTab = () => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium">
+                    {language === "ar"
+                      ? property?.additional_information.ar.title
+                      : property?.additional_information.en.title}
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="text-sm font-medium">
                     {formatPrice(property?.price_amount)}{" "}
                     {language === "ar" ? "ج.م" : "EGP"}
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex ">
                   <span
                     className={clsx(
-                      "px-2 py-1 text-xs rounded-full",
-                      language === "ar"
-                        ? property.status_ar === "متاح"
-                          ? "bg-green-100 text-green-800"
-                          : property.status_ar === "غير نشط"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-yellow-100 text-yellow-800"
-                        : property.status_en === "Available"
+                      "px-2 py-1 text-xs flex w-4 h-4 rounded-full justify-center items-center",
+                      property.status === "Available"
                         ? "bg-green-100 text-green-800"
-                        : property.status_en === "inactive"
+                        : property.status === "inactive"
                         ? "bg-red-100 text-red-800"
                         : "bg-yellow-100 text-yellow-800"
-                    )}>
-                    {language === "ar"
-                      ? property.status_ar
-                      : property.status_en}
-                  </span>
+                    )}></span>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center space-x-2">

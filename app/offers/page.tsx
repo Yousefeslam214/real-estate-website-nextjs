@@ -344,7 +344,6 @@ const ApartmentPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-
       {/* Hero Section */}
       {/* Map Section */}
       <section className="bg-white dark:bg-gray-800 py-8 transition-colors duration-200">
@@ -599,7 +598,6 @@ const ApartmentPage: React.FC = () => {
           )}
         </div>
       </section>
-
     </div>
   );
 };
