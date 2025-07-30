@@ -5,6 +5,7 @@ import React from "react";
 import useSWR from "swr";
 import clsx from "clsx";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
+import Pagination from "../Pagination";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties"; // This can be dynamic based on your app's state
@@ -15,7 +16,9 @@ const PropertiesDashboardTab = () => {
   const [itemsPerPage, setItemsPerPage] = React.useState(5);
 
   const { data, error, isLoading } = useSWR(
-    apiUrl ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}` : null,
+    apiUrl
+      ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}`
+      : null,
     fetcher
   );
 
@@ -41,7 +44,10 @@ const PropertiesDashboardTab = () => {
 
           <SearchWithAddButton
             searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={(val) => {
+              setSearchQuery(val);
+              setCurrentPage(1); // reset page when searching
+            }}
             language={language}
             activeTab={activeTab}
             //   onAddClick={handleAdd}
@@ -55,6 +61,9 @@ const PropertiesDashboardTab = () => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium">
                 {language === "ar" ? "العقار" : "Property"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "العنوان" : "Title"}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium">
                 {language === "ar" ? "السعر" : "Price"}
@@ -134,6 +143,13 @@ const PropertiesDashboardTab = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ✅ Use Pagination Component */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data.pagination.totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 };
