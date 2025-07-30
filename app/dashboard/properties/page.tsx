@@ -6,10 +6,14 @@ import useSWR from "swr";
 import clsx from "clsx";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import Pagination from "../Pagination";
+import { Toast } from "@/components/ui/toast";
+import toast from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties"; // This can be dynamic based on your app's state
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = localStorage.getItem("token");
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -21,6 +25,34 @@ const PropertiesDashboardTab = () => {
       : null,
     fetcher
   );
+
+  const { mutate } = useSWR(
+    apiUrl
+      ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}`
+      : null,
+    fetcher
+  );
+
+  const deleteProperty = async (id: number) => {
+    try {
+      const res = await fetch(`${apiUrl}/properties/${id}/reject`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res.ok) {
+        toast.success("Property deleted successfully");
+        mutate(); // Refresh the properties list
+      } else {
+        toast.error("Failed to delete property");
+        throw new Error("Failed to delete");
+      }
+    } catch (error) {
+      toast.error("Failed to delete property");
+    }
+  };
 
   console.log("Properties data:", data);
   const { language, t } = useLanguage();
@@ -119,13 +151,19 @@ const PropertiesDashboardTab = () => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center space-x-2">
-                    <button className="text-blue-600">
+                    <a
+                      href={`/offers/apartment-${property.id}`}
+                      className="text-blue-600"
+                      target="_blank"
+                      rel="noopener noreferrer">
                       <Eye className="h-4 w-4" />
-                    </button>
+                    </a>
                     <button className="text-green-600">
                       <Edit className="h-4 w-4" />
                     </button>
-                    <button className="text-red-600">
+                    <button
+                      className="text-red-600"
+                      onClick={() => deleteProperty(property.id)}>
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
