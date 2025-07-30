@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, User, MessageSquare, Building, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 const ContactPage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -119,7 +117,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <Header />
+      {/* <Header /> */}
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-600 to-green-600 text-white py-20">
@@ -366,7 +364,6 @@ const ContactPage: React.FC = () => {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 };

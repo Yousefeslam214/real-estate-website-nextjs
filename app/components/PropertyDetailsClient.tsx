@@ -22,8 +22,6 @@ import {
 
 import { useParams } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
-import Header from "./Header";
-import Footer from "./Footer";
 
 const PropertyDetailsPage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -132,7 +130,6 @@ const PropertyDetailsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
 
       {/* Property Images Gallery */}
       <section className="bg-white">
@@ -440,7 +437,6 @@ const PropertyDetailsPage: React.FC = () => {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 };
