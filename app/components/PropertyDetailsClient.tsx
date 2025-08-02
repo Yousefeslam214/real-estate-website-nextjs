@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import {
   MapPin,
   Bed,
@@ -22,23 +22,37 @@ import {
 
 import { useParams } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
+import useSWR from "swr";
+import { baseUrl } from "@/services/shared/apiUrl";
+import { fetcher } from "@/services/shared/fetcher";
 
-const PropertyDetailsPage: React.FC = () => {
+type PropertyDetailsPageProps = {
+  idOfProperty: string;
+};
+
+const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
+  idOfProperty,
+}) => {
   const { language, t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const params = useParams();
   console.log("params", params); // Check shape
+  const [token, setToken] = useState(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZm91YWRraGFsaWRAZ21haWwiLCJyb2xlIjoxLCJpYXQiOjE3NTQxMzUzNTIsImV4cCI6MTc1NDEzODk1Mn0.iQC7G6pmQfptN001-0g-EykboM5r0i1IEnWCkz73ZAA"
+  );
 
-  const slug = typeof params.slug === "string" ? params.slug : "apartment-1";
-  const slugArray = Array.isArray(params.slug)
-    ? params.slug
-    : params.slug
-    ? [params.slug]
-    : ["apartment-1"];
+  console.log("Token:", token); // Check token value
+  const { data, error, isLoading } = useSWR(
+    [`${baseUrl}/properties/${idOfProperty}`, token],
+    ([url, token]) => fetcher(url, token)
+  );
+
+  const property = data?.data;
+  console.log("Property data:", property); // Check data shape
   // Mock property data - in real app this would come from API based on slug
-  const property = {
-    id: slugArray[0],
+  const property1 = {
+    id: idOfProperty,
     title:
       language === "ar"
         ? "شقة فاخرة في العلمين - الحي اللاتيني"
@@ -60,7 +74,7 @@ const PropertyDetailsPage: React.FC = () => {
     yearBuilt: 2023,
     propertyType: language === "ar" ? "شقة سكنية" : "Residential Apartment",
     status: language === "ar" ? "متاح للبيع" : "Available for Sale",
-    images: [
+    photos: [
       "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
       "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
       "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
@@ -130,7 +144,7 @@ const PropertyDetailsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
+      {`Property ID: ${idOfProperty}`}
       {/* Property Images Gallery */}
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -138,17 +152,17 @@ const PropertyDetailsPage: React.FC = () => {
             {/* Main Image */}
             <div className="lg:col-span-2">
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
-                <img
-                  src={property.images[currentImageIndex]}
+                {/* <img
+                  src={property.photos[currentImageIndex]}
                   alt={property.title}
                   className="w-full h-full object-cover"
-                />
+                /> */}
                 <div className="absolute top-4 left-4 flex space-x-2 rtl:space-x-reverse">
                   <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {property.status}
+                    {property.status.en}
                   </span>
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    ID: {property.id}
+                    ID: {idOfProperty}
                   </span>
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2 rtl:space-x-reverse">
@@ -168,7 +182,7 @@ const PropertyDetailsPage: React.FC = () => {
                 <div className="absolute bottom-4 right-4">
                   <span className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm flex items-center">
                     <Camera className="h-4 w-4 mr-2" />
-                    {currentImageIndex + 1} / {property.images.length}
+                    {currentImageIndex + 1} / {property.photos.length}
                   </span>
                 </div>
               </div>
@@ -176,7 +190,7 @@ const PropertyDetailsPage: React.FC = () => {
 
             {/* Thumbnail Images */}
             <div className="space-y-4">
-              {property.images.slice(1, 5).map((image, index) => (
+              {property.photos.slice(1, 5).map((image, index) => (
                 <div
                   key={index}
                   className={`relative h-24 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 ${
@@ -436,7 +450,6 @@ const PropertyDetailsPage: React.FC = () => {
           </div>
         </div>
       </section>
-
     </div>
   );
 };

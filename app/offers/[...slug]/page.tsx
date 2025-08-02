@@ -1,9 +1,7 @@
 import PropertyDetailsClient from "@/app/components/PropertyDetailsClient";
 
-export default function Page() {
-  return <PropertyDetailsClient />;
-}
+export const dynamic = "force-dynamic"; // Forces SSR on every request
 
-export async function generateStaticParams() {
-  return [{ slug: ["apartment-1"] }];
+export default async function Page({ params }: { params: { slug: string[] } }) {
+  return <PropertyDetailsClient idOfProperty={params.slug[0]} />;
 }

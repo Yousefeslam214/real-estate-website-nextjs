@@ -8,10 +8,10 @@ import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import Pagination from "../Pagination";
 import { Toast } from "@/components/ui/toast";
 import toast from "react-hot-toast";
-// import { toast } from "react-hot-toast";
 
 const PropertiesDashboardTab = () => {
-  const activeTab = "properties"; // This can be dynamic based on your app's state
+  const activeTab = "properties";
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const token = localStorage.getItem("token");
 
@@ -152,7 +152,7 @@ const PropertiesDashboardTab = () => {
                 <td className="px-6 py-4">
                   <div className="flex items-center space-x-2">
                     <a
-                      href={`/offers/apartment-${property.id}`}
+                      href={`/offers/${property.id}`}
                       className="text-blue-600"
                       target="_blank"
                       rel="noopener noreferrer">
