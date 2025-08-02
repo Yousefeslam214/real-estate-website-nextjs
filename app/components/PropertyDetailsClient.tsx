@@ -1,6 +1,6 @@
-"use client";
 
-import React, { use, useEffect, useState } from "react";
+
+import React from "react";
 import {
   MapPin,
   Bed,
@@ -19,107 +19,41 @@ import {
   TreePine,
   Building,
 } from "lucide-react";
-
-import { useParams } from "next/navigation";
-import { useLanguage } from "../contexts/LanguageContext";
-import useSWR from "swr";
-import { baseUrl } from "@/services/shared/apiUrl";
-import { fetcher } from "@/services/shared/fetcher";
+// import { useParams } from "next/navigation";
+// import { useLanguage } from "../contexts/LanguageContext";
+// import useSWR from "swr";
+// import { baseUrl } from "@/services/shared/apiUrl";
+// import { fetcher } from "@/services/shared/fetcher";
 
 type PropertyDetailsPageProps = {
   idOfProperty: string;
+  initialData: any;
 };
 
 const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
   idOfProperty,
+  initialData,
 }) => {
-  const { language, t } = useLanguage();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const params = useParams();
-  console.log("params", params); // Check shape
-  const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoiZm91YWRraGFsaWRAZ21haWwiLCJyb2xlIjoxLCJpYXQiOjE3NTQxMzUzNTIsImV4cCI6MTc1NDEzODk1Mn0.iQC7G6pmQfptN001-0g-EykboM5r0i1IEnWCkz73ZAA"
-  );
+  // const { language, t } = useLanguage();
+  const language = "en";
+  let currentImageIndex = 0;
+  let isFavorite = false;
 
-  console.log("Token:", token); // Check token value
-  const { data, error, isLoading } = useSWR(
-    [`${baseUrl}/properties/${idOfProperty}`, token],
-    ([url, token]) => fetcher(url, token)
-  );
+  const setCurrentImageIndex = (index: number) => {
+    currentImageIndex = index;
+  };
 
-  const property = data?.data;
-  console.log("Property data:", property); // Check data shape
-  // Mock property data - in real app this would come from API based on slug
-  // const property1 = {
-  //   id: idOfProperty,
-  //   title:
-  //     language === "ar"
-  //       ? "شقة فاخرة في العلمين - الحي اللاتيني"
-  //       : "Luxury Apartment in Alamain - Latin District",
-  //   location:
-  //     language === "ar"
-  //       ? "العلمين، الساحل الشمالي، الإسكندرية"
-  //       : "Alamain, North Coast, Alexandria",
-  //   fullAddress:
-  //     language === "ar"
-  //       ? "مبنى E03، الطابق الأرضي، الوحدة Z03-CL07-E03-X4-00-03"
-  //       : "Building E03, Floor G, Unit Z03-CL07-E03-X4-00-03",
-  //   price: 4500000,
-  //   area: 180,
-  //   bedrooms: 3,
-  //   bathrooms: 2,
-  //   floor: 0,
-  //   totalFloors: 8,
-  //   yearBuilt: 2023,
-  //   propertyType: language === "ar" ? "شقة سكنية" : "Residential Apartment",
-  //   status: language === "ar" ? "متاح للبيع" : "Available for Sale",
-  //   photos: [
-  //     "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-  //     "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-  //     "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
-  //     "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg",
-  //     "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg",
-  //   ],
-  //   features:
-  //     language === "ar"
-  //       ? [
-  //           "إطلالة على البحر",
-  //           "مطبخ مجهز بالكامل",
-  //           "تكييف مركزي",
-  //           "بلكونة واسعة",
-  //           "موقف سيارة",
-  //           "أمن 24/7",
-  //           "حمام سباحة",
-  //           "صالة رياضية",
-  //           "حديقة",
-  //           "إنترنت عالي السرعة",
-  //         ]
-  //       : [
-  //           "Sea View",
-  //           "Fully Fitted Kitchen",
-  //           "Central Air Conditioning",
-  //           "Spacious Balcony",
-  //           "Parking Space",
-  //           "24/7 Security",
-  //           "Swimming Pool",
-  //           "Gym",
-  //           "Garden",
-  //           "High-Speed Internet",
-  //         ],
-  //   description:
-  //     language === "ar"
-  //       ? "شقة فاخرة في موقع استراتيجي بالعلمين على الساحل الشمالي. تتميز الشقة بإطلالة بانورامية على البحر الأبيض المتوسط وتصميم عصري يجمع بين الأناقة والراحة. الشقة مجهزة بأحدث التقنيات والتشطيبات عالية الجودة. تقع في مجمع سكني متكامل يضم جميع الخدمات والمرافق الترفيهية."
-  //       : "Luxury apartment in a strategic location in Alamain on the North Coast. The apartment features panoramic views of the Mediterranean Sea and modern design that combines elegance and comfort. The apartment is equipped with the latest technology and high-quality finishes. Located in an integrated residential complex with all services and recreational facilities.",
-  //   agent: {
-  //     name: language === "ar" ? "مها السيد" : "Maha El Sayed",
-  //     phone: "+20 100 123 4567",
-  //     email: "maha@realestate.gov.eg",
-  //     image:
-  //       "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
-  //   },
-  //   coordinates: { lat: 30.8418, lng: 28.9618 },
-  // };
+  const setIsFavorite = (value: boolean) => {
+    isFavorite = value;
+  };
+  // const params = useParams();
+
+  // const { data, error, isLoading } = useSWR(
+  //   [`${baseUrl}/properties/${idOfProperty}`, token],
+  //   ([url, token]) => fetcher(url, token)
+  // );
+
+  const property = initialData?.data;
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
@@ -128,7 +62,8 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
   };
 
   const getFeatureIcon = (feature: string) => {
-    const lowerFeature = feature.toLowerCase();
+    const lowerFeature =
+      typeof feature === "string" ? feature.toLowerCase() : "";
     if (lowerFeature.includes("car") || lowerFeature.includes("موقف"))
       return Car;
     if (lowerFeature.includes("wifi") || lowerFeature.includes("إنترنت"))
@@ -166,7 +101,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2 rtl:space-x-reverse">
                   <button
-                    onClick={() => setIsFavorite(!isFavorite)}
+                    // onClick={() => setIsFavorite(!isFavorite)}
                     className={`p-2 rounded-full shadow-lg transition-colors duration-200 ${
                       isFavorite
                         ? "bg-red-500 text-white"
@@ -199,7 +134,8 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                         ? "ring-2 ring-blue-500"
                         : "hover:opacity-80"
                     }`}
-                    onClick={() => setCurrentImageIndex(index + 1)}>
+                    // onClick={() => setCurrentImageIndex(index + 1)}
+                  >
                     <img
                       src={image}
                       alt={`Property ${index + 2}`}
@@ -317,17 +253,17 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                     : "Features & Amenities"}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* {property?.features.map((feature, index) => {
-                    // const IconComponent = getFeatureIcon(feature);
+                  {property?.[language].features.map((feature) => {
+                    const IconComponent = getFeatureIcon(String(feature));
                     return (
                       <div
-                        key={index}
+                        // key={index}
                         className="flex items-center space-x-3 rtl:space-x-reverse p-3 bg-gray-50 rounded-lg">
-                         <IconComponent className="h-5 w-5 text-blue-600 flex-shrink-0" /> 
+                        <IconComponent className="h-5 w-5 text-blue-600 flex-shrink-0" />
                         <span className="text-gray-700">{feature}</span>
                       </div>
                     );
-                  })} */}
+                  })}
                 </div>
               </div>
 
@@ -428,7 +364,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                             : "Property Subtype:"}
                         </span>
                         <span className="font-medium">
-                          {property.property_type.subtype}
+                          {property?.[language]?.property_type?.subtype}
                         </span>
                       </div>
                     </div>
@@ -480,9 +416,14 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   {language === "ar" ? "إجراءات سريعة" : "Quick Actions"}
                 </h3>
                 <div className="space-y-3">
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300">
-                    {language === "ar" ? "طلب معاينة" : "Schedule Viewing"}
-                  </button>
+                  <a
+                    href="https://calendly.com/yousefeslam214/new-meeting"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <button className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300">
+                      {language === "ar" ? "طلب معاينة" : "Schedule Viewing"}
+                    </button>
+                  </a>
                   <a
                     href={`https://wa.me/201005307391?text=${encodeURIComponent(
                       language === "ar"
@@ -496,108 +437,109 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   </a>
                   <button
                     className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200"
-                    onClick={async () => {
-                      const { jsPDF } = await import("jspdf");
-                      const doc = new jsPDF();
+                    // onClick={async () => {
+                    //   const { jsPDF } = await import("jspdf");
+                    //   const doc = new jsPDF();
 
-                      // ✅ Extract data
-                      const title =
-                        property?.additional_information?.en?.title || "";
-                      const address =
-                        property?.additional_information?.en?.address || "";
-                      const description =
-                        property?.additional_information?.en?.description || "";
-                      const price = property?.price_amount || "";
-                      const area = property?.area_sqm || "";
-                      const bedrooms = property?.bedrooms || "";
-                      const bathrooms = property?.bathrooms || "";
-                      const listingType = property?.en?.listing_type || "";
-                      const status = property?.en?.status || "";
-                      const project = property?.project?.name || "";
-                      const developer = property?.developer?.name || "";
-                      const availableFrom = property?.available_from
-                        ? new Date(property.available_from).toLocaleDateString()
-                        : "";
-                      const isApproved = property?.is_approved
-                        ? "Approved"
-                        : "Not Approved";
+                    //   // ✅ Extract data
+                    //   const title =
+                    //     property?.additional_information?.en?.title || "";
+                    //   const address =
+                    //     property?.additional_information?.en?.address || "";
+                    //   const description =
+                    //     property?.additional_information?.en?.description || "";
+                    //   const price = property?.price_amount || "";
+                    //   const area = property?.area_sqm || "";
+                    //   const bedrooms = property?.bedrooms || "";
+                    //   const bathrooms = property?.bathrooms || "";
+                    //   const listingType = property?.en?.listing_type || "";
+                    //   const status = property?.en?.status || "";
+                    //   const project = property?.project?.name || "";
+                    //   const developer = property?.developer?.name || "";
+                    //   const availableFrom = property?.available_from
+                    //     ? new Date(property.available_from).toLocaleDateString()
+                    //     : "";
+                    //   const isApproved = property?.is_approved
+                    //     ? "Approved"
+                    //     : "Not Approved";
 
-                      const locationCountry = property?.location?.country || "";
-                      const locationGov = property?.location?.governorate || "";
-                      const locationArea = property?.location?.area || "";
-                      const locationDistrict =
-                        property?.location?.district || "";
+                    //   const locationCountry = property?.location?.country || "";
+                    //   const locationGov = property?.location?.governorate || "";
+                    //   const locationArea = property?.location?.area || "";
+                    //   const locationDistrict =
+                    //     property?.location?.district || "";
 
-                      const propertyTypeCategory =
-                        property?.property_type?.category || "";
-                      const propertyTypeSubtype =
-                        property?.property_type?.subtype || "";
+                    //   const propertyTypeCategory =
+                    //     property?.property_type?.category || "";
+                    //   const propertyTypeSubtype =
+                    //     property?.property_type?.subtype || "";
 
-                      const agent = property?.contact?.name || "";
-                      const agentPhone = property?.contact?.phone || "";
-                      const agentEmail = property?.contact?.email || "";
-                      const agentType = property?.contact?.contact_type || "";
+                    //   const agent = property?.contact?.name || "";
+                    //   const agentPhone = property?.contact?.phone || "";
+                    //   const agentEmail = property?.contact?.email || "";
+                    //   const agentType = property?.contact?.contact_type || "";
 
-                      const features = property?.en?.features?.join(", ") || "";
+                    //   const features = property?.en?.features?.join(", ") || "";
 
-                      const id = idOfProperty;
+                    //   const id = idOfProperty;
 
-                      // ✅ Title
-                      doc.setFontSize(18);
-                      doc.text(title, 10, 20, { maxWidth: 180 });
+                    //   // ✅ Title
+                    //   doc.setFontSize(18);
+                    //   doc.text(title, 10, 20, { maxWidth: 180 });
 
-                      doc.setFontSize(12);
-                      let y = 30;
+                    //   doc.setFontSize(12);
+                    //   let y = 30;
 
-                      const addLine = (label, value) => {
-                        if (value) {
-                          doc.text(`${label}: ${value}`, 10, y, {
-                            maxWidth: 180,
-                          });
-                          y += 10;
-                        }
-                      };
+                    //   const addLine = (label, value) => {
+                    //     if (value) {
+                    //       doc.text(`${label}: ${value}`, 10, y, {
+                    //         maxWidth: 180,
+                    //       });
+                    //       y += 10;
+                    //     }
+                    //   };
 
-                      // ✅ Add all data
-                      addLine("Address", address);
-                      addLine("Price", `${price} EGP`);
-                      addLine("Area", `${area} sqm`);
-                      addLine("Bedrooms", bedrooms);
-                      addLine("Bathrooms", bathrooms);
-                      addLine("Listing Type", listingType);
-                      addLine("Status", status);
-                      addLine("Project", project);
-                      addLine("Developer", developer);
-                      addLine("Available From", availableFrom);
-                      addLine("Approval", isApproved);
+                    //   // ✅ Add all data
+                    //   addLine("Address", address);
+                    //   addLine("Price", `${price} EGP`);
+                    //   addLine("Area", `${area} sqm`);
+                    //   addLine("Bedrooms", bedrooms);
+                    //   addLine("Bathrooms", bathrooms);
+                    //   addLine("Listing Type", listingType);
+                    //   addLine("Status", status);
+                    //   addLine("Project", project);
+                    //   addLine("Developer", developer);
+                    //   addLine("Available From", availableFrom);
+                    //   addLine("Approval", isApproved);
 
-                      addLine("Country", locationCountry);
-                      addLine("Governorate", locationGov);
-                      addLine("Area", locationArea);
-                      addLine("District", locationDistrict);
+                    //   addLine("Country", locationCountry);
+                    //   addLine("Governorate", locationGov);
+                    //   addLine("Area", locationArea);
+                    //   addLine("District", locationDistrict);
 
-                      addLine("Property Category", propertyTypeCategory);
-                      addLine("Subtype", propertyTypeSubtype);
+                    //   addLine("Property Category", propertyTypeCategory);
+                    //   addLine("Subtype", propertyTypeSubtype);
 
-                      addLine("Features", features);
+                    //   addLine("Features", features);
 
-                      // ✅ Description block
-                      addLine("Description", "");
-                      doc.text(description, 10, y, { maxWidth: 180 });
-                      y += 30;
+                    //   // ✅ Description block
+                    //   addLine("Description", "");
+                    //   doc.text(description, 10, y, { maxWidth: 180 });
+                    //   y += 30;
 
-                      // ✅ Agent
-                      addLine("Agent", agent);
-                      addLine("Agent Phone", agentPhone);
-                      addLine("Agent Email", agentEmail);
-                      addLine("Contact Type", agentType);
+                    //   // ✅ Agent
+                    //   addLine("Agent", agent);
+                    //   addLine("Agent Phone", agentPhone);
+                    //   addLine("Agent Email", agentEmail);
+                    //   addLine("Contact Type", agentType);
 
-                      // ✅ Property ID
-                      addLine("Property ID", id);
+                    //   // ✅ Property ID
+                    //   addLine("Property ID", id);
 
-                      // ✅ Save PDF
-                      doc.save(`property-details-${id}.pdf`);
-                    }}>
+                    //   // ✅ Save PDF
+                    //   doc.save(`property-details-${id}.pdf`);
+                    // }}
+                  >
                     {language === "ar"
                       ? "تحميل التفاصيل PDF"
                       : "Download Details PDF"}{" "}
