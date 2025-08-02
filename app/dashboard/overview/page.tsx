@@ -8,10 +8,9 @@ import useSWR from "swr";
 const OverviewDashboardTab = () => {
   const { language, t } = useLanguage();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
- const { data, error, isLoading } = useSWR(
-   `${apiUrl}/properties` ,
-    fetcher
-  );
+  console.log("API URL:", apiUrl);
+  const { data, error, isLoading } = useSWR(`${apiUrl}/properties`, fetcher);
+  console.log("Data fetched:", data);
   const totalProperties = data?.pagination?.totalCount || 0;
   return (
     <div className="space-y-6">

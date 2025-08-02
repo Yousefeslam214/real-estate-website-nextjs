@@ -5,18 +5,54 @@ import React from "react";
 import useSWR from "swr";
 import clsx from "clsx";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
+import Pagination from "../Pagination";
+import { Toast } from "@/components/ui/toast";
+import toast from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties"; // This can be dynamic based on your app's state
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const token = localStorage.getItem("token");
 
-
-  
   const [searchQuery, setSearchQuery] = React.useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [itemsPerPage, setItemsPerPage] = React.useState(5);
+
   const { data, error, isLoading } = useSWR(
-    apiUrl ? `${apiUrl}/properties` : null,
+    apiUrl
+      ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}`
+      : null,
     fetcher
   );
+
+  const { mutate } = useSWR(
+    apiUrl
+      ? `${apiUrl}/properties?search=${searchQuery}&page=${currentPage}&limit=${itemsPerPage}`
+      : null,
+    fetcher
+  );
+
+  const deleteProperty = async (id: number) => {
+    try {
+      const res = await fetch(`${apiUrl}/properties/${id}/reject`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res.ok) {
+        toast.success("Property deleted successfully");
+        mutate(); // Refresh the properties list
+      } else {
+        toast.error("Failed to delete property");
+        throw new Error("Failed to delete");
+      }
+    } catch (error) {
+      toast.error("Failed to delete property");
+    }
+  };
 
   console.log("Properties data:", data);
   const { language, t } = useLanguage();
@@ -40,7 +76,10 @@ const PropertiesDashboardTab = () => {
 
           <SearchWithAddButton
             searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={(val) => {
+              setSearchQuery(val);
+              setCurrentPage(1); // reset page when searching
+            }}
             language={language}
             activeTab={activeTab}
             //   onAddClick={handleAdd}
@@ -54,6 +93,9 @@ const PropertiesDashboardTab = () => {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium">
                 {language === "ar" ? "العقار" : "Property"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium">
+                {language === "ar" ? "العنوان" : "Title"}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium">
                 {language === "ar" ? "السعر" : "Price"}
@@ -72,7 +114,7 @@ const PropertiesDashboardTab = () => {
               <tr key={property.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center">
                   <img
-                    src={property?.image || "/placeholder.jpg"}
+                    src={property?.coverimageurl || "/placeholder.jpg"}
                     alt={property?.title || "Property"}
                     className="h-12 w-12 rounded-lg object-cover"
                   />
@@ -85,40 +127,43 @@ const PropertiesDashboardTab = () => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium">
+                    {language === "ar"
+                      ? property?.additional_information.ar.title
+                      : property?.additional_information.en.title}
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="text-sm font-medium">
                     {formatPrice(property?.price_amount)}{" "}
                     {language === "ar" ? "ج.م" : "EGP"}
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex ">
                   <span
                     className={clsx(
-                      "px-2 py-1 text-xs rounded-full",
-                      language === "ar"
-                        ? property.status_ar === "متاح"
-                          ? "bg-green-100 text-green-800"
-                          : property.status_ar === "غير نشط"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-yellow-100 text-yellow-800"
-                        : property.status_en === "Available"
+                      "px-2 py-1 text-xs flex w-4 h-4 rounded-full justify-center items-center",
+                      property.status === "Available"
                         ? "bg-green-100 text-green-800"
-                        : property.status_en === "inactive"
+                        : property.status === "inactive"
                         ? "bg-red-100 text-red-800"
                         : "bg-yellow-100 text-yellow-800"
-                    )}>
-                    {language === "ar"
-                      ? property.status_ar
-                      : property.status_en}
-                  </span>
+                    )}></span>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center space-x-2">
-                    <button className="text-blue-600">
+                    <a
+                      href={`/offers/apartment-${property.id}`}
+                      className="text-blue-600"
+                      target="_blank"
+                      rel="noopener noreferrer">
                       <Eye className="h-4 w-4" />
-                    </button>
+                    </a>
                     <button className="text-green-600">
                       <Edit className="h-4 w-4" />
                     </button>
-                    <button className="text-red-600">
+                    <button
+                      className="text-red-600"
+                      onClick={() => deleteProperty(property.id)}>
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
@@ -136,6 +181,13 @@ const PropertiesDashboardTab = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ✅ Use Pagination Component */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data.pagination.totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 };

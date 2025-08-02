@@ -13,13 +13,11 @@ const Header: React.FC = () => {
 
   const navigationItems = [
     { key: "nav.home", href: "/" },
-    // { key: 'nav.properties', href: '#properties' },
     { key: "nav.offers", href: "/offers" },
-    // { key: 'nav.services', href: '#services' },
     { key: "nav.about", href: "/about" },
     { key: "nav.blog", href: "/blog" },
-    // { key: 'nav.news', href: '#news' },
     { key: "nav.contact", href: "/contact" },
+    { key: "nav.sellProperty", href: "/sell", highlight: true },
   ];
 
   return (

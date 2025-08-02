@@ -14,8 +14,6 @@ import {
   Mail,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 const ApartmentPage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -346,8 +344,6 @@ const ApartmentPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <Header />
-
       {/* Hero Section */}
       {/* Map Section */}
       <section className="bg-white dark:bg-gray-800 py-8 transition-colors duration-200">
@@ -602,8 +598,6 @@ const ApartmentPage: React.FC = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
