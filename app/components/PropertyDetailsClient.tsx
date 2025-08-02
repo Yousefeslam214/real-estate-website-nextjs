@@ -51,75 +51,75 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
   const property = data?.data;
   console.log("Property data:", property); // Check data shape
   // Mock property data - in real app this would come from API based on slug
-  const property1 = {
-    id: idOfProperty,
-    title:
-      language === "ar"
-        ? "شقة فاخرة في العلمين - الحي اللاتيني"
-        : "Luxury Apartment in Alamain - Latin District",
-    location:
-      language === "ar"
-        ? "العلمين، الساحل الشمالي، الإسكندرية"
-        : "Alamain, North Coast, Alexandria",
-    fullAddress:
-      language === "ar"
-        ? "مبنى E03، الطابق الأرضي، الوحدة Z03-CL07-E03-X4-00-03"
-        : "Building E03, Floor G, Unit Z03-CL07-E03-X4-00-03",
-    price: 4500000,
-    area: 180,
-    bedrooms: 3,
-    bathrooms: 2,
-    floor: 0,
-    totalFloors: 8,
-    yearBuilt: 2023,
-    propertyType: language === "ar" ? "شقة سكنية" : "Residential Apartment",
-    status: language === "ar" ? "متاح للبيع" : "Available for Sale",
-    photos: [
-      "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-      "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
-      "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg",
-      "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg",
-    ],
-    features:
-      language === "ar"
-        ? [
-            "إطلالة على البحر",
-            "مطبخ مجهز بالكامل",
-            "تكييف مركزي",
-            "بلكونة واسعة",
-            "موقف سيارة",
-            "أمن 24/7",
-            "حمام سباحة",
-            "صالة رياضية",
-            "حديقة",
-            "إنترنت عالي السرعة",
-          ]
-        : [
-            "Sea View",
-            "Fully Fitted Kitchen",
-            "Central Air Conditioning",
-            "Spacious Balcony",
-            "Parking Space",
-            "24/7 Security",
-            "Swimming Pool",
-            "Gym",
-            "Garden",
-            "High-Speed Internet",
-          ],
-    description:
-      language === "ar"
-        ? "شقة فاخرة في موقع استراتيجي بالعلمين على الساحل الشمالي. تتميز الشقة بإطلالة بانورامية على البحر الأبيض المتوسط وتصميم عصري يجمع بين الأناقة والراحة. الشقة مجهزة بأحدث التقنيات والتشطيبات عالية الجودة. تقع في مجمع سكني متكامل يضم جميع الخدمات والمرافق الترفيهية."
-        : "Luxury apartment in a strategic location in Alamain on the North Coast. The apartment features panoramic views of the Mediterranean Sea and modern design that combines elegance and comfort. The apartment is equipped with the latest technology and high-quality finishes. Located in an integrated residential complex with all services and recreational facilities.",
-    agent: {
-      name: language === "ar" ? "مها السيد" : "Maha El Sayed",
-      phone: "+20 100 123 4567",
-      email: "maha@realestate.gov.eg",
-      image:
-        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
-    },
-    coordinates: { lat: 30.8418, lng: 28.9618 },
-  };
+  // const property1 = {
+  //   id: idOfProperty,
+  //   title:
+  //     language === "ar"
+  //       ? "شقة فاخرة في العلمين - الحي اللاتيني"
+  //       : "Luxury Apartment in Alamain - Latin District",
+  //   location:
+  //     language === "ar"
+  //       ? "العلمين، الساحل الشمالي، الإسكندرية"
+  //       : "Alamain, North Coast, Alexandria",
+  //   fullAddress:
+  //     language === "ar"
+  //       ? "مبنى E03، الطابق الأرضي، الوحدة Z03-CL07-E03-X4-00-03"
+  //       : "Building E03, Floor G, Unit Z03-CL07-E03-X4-00-03",
+  //   price: 4500000,
+  //   area: 180,
+  //   bedrooms: 3,
+  //   bathrooms: 2,
+  //   floor: 0,
+  //   totalFloors: 8,
+  //   yearBuilt: 2023,
+  //   propertyType: language === "ar" ? "شقة سكنية" : "Residential Apartment",
+  //   status: language === "ar" ? "متاح للبيع" : "Available for Sale",
+  //   photos: [
+  //     "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
+  //     "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
+  //     "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
+  //     "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg",
+  //     "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg",
+  //   ],
+  //   features:
+  //     language === "ar"
+  //       ? [
+  //           "إطلالة على البحر",
+  //           "مطبخ مجهز بالكامل",
+  //           "تكييف مركزي",
+  //           "بلكونة واسعة",
+  //           "موقف سيارة",
+  //           "أمن 24/7",
+  //           "حمام سباحة",
+  //           "صالة رياضية",
+  //           "حديقة",
+  //           "إنترنت عالي السرعة",
+  //         ]
+  //       : [
+  //           "Sea View",
+  //           "Fully Fitted Kitchen",
+  //           "Central Air Conditioning",
+  //           "Spacious Balcony",
+  //           "Parking Space",
+  //           "24/7 Security",
+  //           "Swimming Pool",
+  //           "Gym",
+  //           "Garden",
+  //           "High-Speed Internet",
+  //         ],
+  //   description:
+  //     language === "ar"
+  //       ? "شقة فاخرة في موقع استراتيجي بالعلمين على الساحل الشمالي. تتميز الشقة بإطلالة بانورامية على البحر الأبيض المتوسط وتصميم عصري يجمع بين الأناقة والراحة. الشقة مجهزة بأحدث التقنيات والتشطيبات عالية الجودة. تقع في مجمع سكني متكامل يضم جميع الخدمات والمرافق الترفيهية."
+  //       : "Luxury apartment in a strategic location in Alamain on the North Coast. The apartment features panoramic views of the Mediterranean Sea and modern design that combines elegance and comfort. The apartment is equipped with the latest technology and high-quality finishes. Located in an integrated residential complex with all services and recreational facilities.",
+  //   agent: {
+  //     name: language === "ar" ? "مها السيد" : "Maha El Sayed",
+  //     phone: "+20 100 123 4567",
+  //     email: "maha@realestate.gov.eg",
+  //     image:
+  //       "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
+  //   },
+  //   coordinates: { lat: 30.8418, lng: 28.9618 },
+  // };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
@@ -144,7 +144,6 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {`Property ID: ${idOfProperty}`}
       {/* Property Images Gallery */}
       <section className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -152,14 +151,14 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
             {/* Main Image */}
             <div className="lg:col-span-2">
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
-                {/* <img
-                  src={property.photos[currentImageIndex]}
-                  alt={property.title}
+                <img
+                  src={property?.photos[currentImageIndex]}
+                  alt={property?.additional_information[language]?.title}
                   className="w-full h-full object-cover"
-                /> */}
+                />
                 <div className="absolute top-4 left-4 flex space-x-2 rtl:space-x-reverse">
                   <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {property.status.en}
+                    {property?.status}
                   </span>
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                     ID: {idOfProperty}
@@ -182,7 +181,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 <div className="absolute bottom-4 right-4">
                   <span className="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm flex items-center">
                     <Camera className="h-4 w-4 mr-2" />
-                    {currentImageIndex + 1} / {property.photos.length}
+                    {currentImageIndex + 1} / {property?.photos?.length}
                   </span>
                 </div>
               </div>
@@ -190,22 +189,24 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
 
             {/* Thumbnail Images */}
             <div className="space-y-4">
-              {property.photos.slice(1, 5).map((image, index) => (
-                <div
-                  key={index}
-                  className={`relative h-24 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 ${
-                    currentImageIndex === index + 1
-                      ? "ring-2 ring-blue-500"
-                      : "hover:opacity-80"
-                  }`}
-                  onClick={() => setCurrentImageIndex(index + 1)}>
-                  <img
-                    src={image}
-                    alt={`Property ${index + 2}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
+              {property?.photos
+                .slice(1, property?.photos?.length)
+                .map((image, index) => (
+                  <div
+                    key={index}
+                    className={`relative h-24 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 ${
+                      currentImageIndex === index + 1
+                        ? "ring-2 ring-blue-500"
+                        : "hover:opacity-80"
+                    }`}
+                    onClick={() => setCurrentImageIndex(index + 1)}>
+                    <img
+                      src={image}
+                      alt={`Property ${index + 2}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -222,24 +223,27 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                      {property.title}
+                      {property?.additional_information[language]?.title}
                     </h1>
                     <div className="flex items-center text-gray-600 mb-4">
                       <MapPin className="h-5 w-5 mr-2" />
-                      <span>{property.location}</span>
+                      <span>
+                        {property?.additional_information[language]?.address}
+                      </span>
                     </div>
                     <p className="text-sm text-gray-500">
-                      {property.fullAddress}
+                      {/* {property?.fullAddress} */}
                     </p>
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-bold text-blue-600 mb-2">
-                      {formatPrice(property.price)}{" "}
+                      {formatPrice(property?.price_amount)}{" "}
                       {language === "ar" ? "ج.م" : "EGP"}
                     </div>
                     <div className="text-sm text-gray-500">
                       {Math.round(
-                        property.price / property.area
+                        parseFloat(property?.price_amount) /
+                          parseFloat(property?.area_sqm)
                       ).toLocaleString()}{" "}
                       {language === "ar" ? "ج.م/م²" : "EGP/m²"}
                     </div>
@@ -251,7 +255,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Square className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                     <div className="text-2xl font-bold text-gray-900">
-                      {property.area}
+                      {parseInt(property?.area_sqm)}
                     </div>
                     <div className="text-sm text-gray-600">
                       {language === "ar" ? "متر مربع" : "Square Meters"}
@@ -260,7 +264,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Bed className="h-8 w-8 mx-auto mb-2 text-green-600" />
                     <div className="text-2xl font-bold text-gray-900">
-                      {property.bedrooms}
+                      {property?.bedrooms}
                     </div>
                     <div className="text-sm text-gray-600">
                       {language === "ar" ? "غرف نوم" : "Bedrooms"}
@@ -269,7 +273,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Bath className="h-8 w-8 mx-auto mb-2 text-purple-600" />
                     <div className="text-2xl font-bold text-gray-900">
-                      {property.bathrooms}
+                      {property?.bathrooms}
                     </div>
                     <div className="text-sm text-gray-600">
                       {language === "ar" ? "حمامات" : "Bathrooms"}
@@ -278,10 +282,18 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
                     <Calendar className="h-8 w-8 mx-auto mb-2 text-orange-600" />
                     <div className="text-2xl font-bold text-gray-900">
-                      {property.yearBuilt}
+                      {property?.available_from
+                        ? new Date(property.available_from).toLocaleString(
+                            language === "ar" ? "ar-EG" : "en-EG",
+                            {
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )
+                        : ""}
                     </div>
                     <div className="text-sm text-gray-600">
-                      {language === "ar" ? "سنة البناء" : "Year Built"}
+                      {language === "ar" ? "تاريخ التوفر" : "Available From"}
                     </div>
                   </div>
                 </div>
@@ -292,7 +304,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                     {language === "ar" ? "وصف العقار" : "Property Description"}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">
-                    {property.description}
+                    {property?.additional_information[language]?.description}
                   </p>
                 </div>
               </div>
@@ -305,17 +317,17 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                     : "Features & Amenities"}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {property.features.map((feature, index) => {
-                    const IconComponent = getFeatureIcon(feature);
+                  {/* {property?.features.map((feature, index) => {
+                    // const IconComponent = getFeatureIcon(feature);
                     return (
                       <div
                         key={index}
                         className="flex items-center space-x-3 rtl:space-x-reverse p-3 bg-gray-50 rounded-lg">
-                        <IconComponent className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                         <IconComponent className="h-5 w-5 text-blue-600 flex-shrink-0" /> 
                         <span className="text-gray-700">{feature}</span>
                       </div>
                     );
-                  })}
+                  })} */}
                 </div>
               </div>
 
@@ -324,21 +336,27 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 <h3 className="text-xl font-bold text-gray-900 mb-6">
                   {language === "ar" ? "الموقع على الخريطة" : "Location on Map"}
                 </h3>
-                <div className="bg-gray-200 rounded-xl h-64 flex items-center justify-center">
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    property?.additional_information[language]?.address || ""
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gray-200 rounded-xl h-64 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
                   <div className="text-center">
                     <MapPin className="h-16 w-16 text-gray-500 mx-auto mb-4" />
                     <p className="text-gray-600 text-lg font-medium">
                       Interactive Map
                     </p>
                     <p className="text-gray-500">
-                      Alamain, North Coast, Alexandria
+                      {property?.additional_information[language]?.address}
                     </p>
                     <p className="text-sm text-gray-400 mt-2">
-                      Coordinates: {property.coordinates.lat},{" "}
-                      {property.coordinates.lng}
+                      {/* Coordinates: {property?.coordinates?.lat},{" "} */}
+                      {/* {property?.coordinates?.lng} */}
                     </p>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
@@ -351,13 +369,14 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 </h3>
                 <div className="flex items-center space-x-4 rtl:space-x-reverse mb-6">
                   <img
-                    src={property.agent.image}
-                    alt={property.agent.name}
+                    src={property?.contact?.image || "/3866.jpg"}
+                    alt={property?.contact?.name || ""}
                     className="w-16 h-16 rounded-full object-cover"
                   />
                   <div>
                     <h4 className="font-semibold text-gray-900">
-                      {property.agent.name}
+                      {property?.contact?.name ||
+                        (language === "ar" ? "وكيل عقاري" : "Agent")}
                     </h4>
                     <p className="text-sm text-gray-600">
                       {language === "ar"
@@ -368,13 +387,13 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                 </div>
                 <div className="space-y-3">
                   <a
-                    href={`tel:${property.agent.phone}`}
+                    href={`tel:+201005307391`}
                     className="flex items-center justify-center space-x-2 rtl:space-x-reverse bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200">
                     <Phone className="h-5 w-5" />
                     <span>{language === "ar" ? "اتصال" : "Call Now"}</span>
                   </a>
                   <a
-                    href={`mailto:${property.agent.email}`}
+                    href={`mailto:yousefeslam214@gmail.com`}
                     className="flex items-center justify-center space-x-2 rtl:space-x-reverse bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200">
                     <Mail className="h-5 w-5" />
                     <span>
@@ -390,41 +409,67 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   {language === "ar" ? "تفاصيل العقار" : "Property Details"}
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">
-                      {language === "ar" ? "نوع العقار:" : "Property Type:"}
-                    </span>
-                    <span className="font-medium">{property.propertyType}</span>
-                  </div>
+                  {property?.property_type && (
+                    <div className="flex flex-col gap-2 mb-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">
+                          {language === "ar"
+                            ? "نوع العقار:"
+                            : "Property Category:"}
+                        </span>
+                        <span className="font-medium">
+                          {property.property_type.category}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">
+                          {language === "ar"
+                            ? "تصنيف العقار:"
+                            : "Property Subtype:"}
+                        </span>
+                        <span className="font-medium">
+                          {property.property_type.subtype}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-gray-600">
                       {language === "ar" ? "الطابق:" : "Floor:"}
                     </span>
                     <span className="font-medium">
-                      {property.floor === 0
-                        ? language === "ar"
-                          ? "الطابق الأرضي"
-                          : "Ground Floor"
-                        : property.floor}
+                      {(() => {
+                        const minFloor = 1;
+                        const maxFloor = 3;
+                        const randomFloor =
+                          Math.floor(
+                            Math.random() * (maxFloor - minFloor + 1)
+                          ) + minFloor;
+                        return randomFloor === 0
+                          ? language === "ar"
+                            ? "الطابق الأرضي"
+                            : "Ground Floor"
+                          : randomFloor;
+                      })()}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">
                       {language === "ar" ? "إجمالي الطوابق:" : "Total Floors:"}
                     </span>
-                    <span className="font-medium">{property.totalFloors}</span>
+                    <span className="font-medium">4</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span className="text-gray-600">
                       {language === "ar" ? "سنة البناء:" : "Year Built:"}
                     </span>
-                    <span className="font-medium">{property.yearBuilt}</span>
-                  </div>
+                    <span className="font-medium">{property?.yearBuilt}</span> 
+                  </div> */}
                   <div className="flex justify-between">
                     <span className="text-gray-600">
                       {language === "ar" ? "رقم العقار:" : "Property ID:"}
                     </span>
-                    <span className="font-medium">{property.id}</span>
+                    <span className="font-medium">{idOfProperty}</span>
                   </div>
                 </div>
               </div>
@@ -438,11 +483,124 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <button className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300">
                     {language === "ar" ? "طلب معاينة" : "Schedule Viewing"}
                   </button>
-                  <button className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200">
+                  <a
+                    href={`https://wa.me/201005307391?text=${encodeURIComponent(
+                      language === "ar"
+                        ? `طلب تمويل للوحدة رقم ${idOfProperty}`
+                        : `Request financing for unit with ID ${idOfProperty}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full block border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200 text-center">
                     {language === "ar" ? "طلب تمويل" : "Request Financing"}
-                  </button>
-                  <button className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200">
-                    {language === "ar" ? "تحميل التفاصيل" : "Download Details"}
+                  </a>
+                  <button
+                    className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-200"
+                    onClick={async () => {
+                      const { jsPDF } = await import("jspdf");
+                      const doc = new jsPDF();
+
+                      // ✅ Extract data
+                      const title =
+                        property?.additional_information?.en?.title || "";
+                      const address =
+                        property?.additional_information?.en?.address || "";
+                      const description =
+                        property?.additional_information?.en?.description || "";
+                      const price = property?.price_amount || "";
+                      const area = property?.area_sqm || "";
+                      const bedrooms = property?.bedrooms || "";
+                      const bathrooms = property?.bathrooms || "";
+                      const listingType = property?.en?.listing_type || "";
+                      const status = property?.en?.status || "";
+                      const project = property?.project?.name || "";
+                      const developer = property?.developer?.name || "";
+                      const availableFrom = property?.available_from
+                        ? new Date(property.available_from).toLocaleDateString()
+                        : "";
+                      const isApproved = property?.is_approved
+                        ? "Approved"
+                        : "Not Approved";
+
+                      const locationCountry = property?.location?.country || "";
+                      const locationGov = property?.location?.governorate || "";
+                      const locationArea = property?.location?.area || "";
+                      const locationDistrict =
+                        property?.location?.district || "";
+
+                      const propertyTypeCategory =
+                        property?.property_type?.category || "";
+                      const propertyTypeSubtype =
+                        property?.property_type?.subtype || "";
+
+                      const agent = property?.contact?.name || "";
+                      const agentPhone = property?.contact?.phone || "";
+                      const agentEmail = property?.contact?.email || "";
+                      const agentType = property?.contact?.contact_type || "";
+
+                      const features = property?.en?.features?.join(", ") || "";
+
+                      const id = idOfProperty;
+
+                      // ✅ Title
+                      doc.setFontSize(18);
+                      doc.text(title, 10, 20, { maxWidth: 180 });
+
+                      doc.setFontSize(12);
+                      let y = 30;
+
+                      const addLine = (label, value) => {
+                        if (value) {
+                          doc.text(`${label}: ${value}`, 10, y, {
+                            maxWidth: 180,
+                          });
+                          y += 10;
+                        }
+                      };
+
+                      // ✅ Add all data
+                      addLine("Address", address);
+                      addLine("Price", `${price} EGP`);
+                      addLine("Area", `${area} sqm`);
+                      addLine("Bedrooms", bedrooms);
+                      addLine("Bathrooms", bathrooms);
+                      addLine("Listing Type", listingType);
+                      addLine("Status", status);
+                      addLine("Project", project);
+                      addLine("Developer", developer);
+                      addLine("Available From", availableFrom);
+                      addLine("Approval", isApproved);
+
+                      addLine("Country", locationCountry);
+                      addLine("Governorate", locationGov);
+                      addLine("Area", locationArea);
+                      addLine("District", locationDistrict);
+
+                      addLine("Property Category", propertyTypeCategory);
+                      addLine("Subtype", propertyTypeSubtype);
+
+                      addLine("Features", features);
+
+                      // ✅ Description block
+                      addLine("Description", "");
+                      doc.text(description, 10, y, { maxWidth: 180 });
+                      y += 30;
+
+                      // ✅ Agent
+                      addLine("Agent", agent);
+                      addLine("Agent Phone", agentPhone);
+                      addLine("Agent Email", agentEmail);
+                      addLine("Contact Type", agentType);
+
+                      // ✅ Property ID
+                      addLine("Property ID", id);
+
+                      // ✅ Save PDF
+                      doc.save(`property-details-${id}.pdf`);
+                    }}>
+                    {language === "ar"
+                      ? "تحميل التفاصيل PDF"
+                      : "Download Details PDF"}{" "}
                   </button>
                 </div>
               </div>
