@@ -19,11 +19,6 @@ import {
   TreePine,
   Building,
 } from "lucide-react";
-// import { useParams } from "next/navigation";
-// import { useLanguage } from "../contexts/LanguageContext";
-// import useSWR from "swr";
-// import { baseUrl } from "@/services/shared/apiUrl";
-// import { fetcher } from "@/services/shared/fetcher";
 
 type PropertyDetailsPageProps = {
   idOfProperty: string;

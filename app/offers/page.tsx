@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import {
   Search,
   MapPin,
@@ -14,13 +14,22 @@ import {
   Mail,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { fetchProperties } from "@/services/properties/property.service";
+export async function getApartments() {
+  // You can add any sync logic here if needed
+  const data = await fetchProperties();
+  return data;
+}
 
-const ApartmentPage: React.FC = () => {
+
+export default async function OffersPage() {
   const { language, t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [bedrooms, setBedrooms] = useState("");
   const [location, setLocation] = useState("");
+  const filteredApartments = await fetchProperties();
+  console.log("filteredApartments (client)", filteredApartments);
 
   const priceRanges = [
     { value: "", label: language === "ar" ? "جميع الأسعار" : "All Prices" },
@@ -311,7 +320,9 @@ const ApartmentPage: React.FC = () => {
     },
   ];
 
-  const filteredApartments = apartments.filter((apartment) => {
+  // const filteredApartments = fetchProperties();
+  console.log("filteredApartments", filteredApartments);
+  const filteredApartments1 = apartments.filter((apartment) => {
     const matchesSearch =
       apartment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       apartment.location.toLowerCase().includes(searchQuery.toLowerCase());
@@ -373,8 +384,8 @@ const ApartmentPage: React.FC = () => {
               </p>
               <p className="text-gray-500 dark:text-gray-400">
                 {language === "ar"
-                  ? `عرض ${filteredApartments.length} عقار على الخريطة`
-                  : `Showing ${filteredApartments.length} properties on map`}
+                  ? `عرض ${filteredApartments?.pagination.totalCount} عقار على الخريطة`
+                  : `Showing ${filteredApartments?.pagination.totalCount} properties on map`}
               </p>
             </div>
 
@@ -475,131 +486,146 @@ const ApartmentPage: React.FC = () => {
 
       {/* Apartments Grid */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredApartments.map((apartment) => (
-              <div
-                key={apartment.id}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={apartment.image}
-                    alt={apartment.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {language === "ar" ? "للبيع" : "For Sale"}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-200">
-                      <Heart className="h-5 w-5 text-gray-600" />
-                    </button>
-                  </div>
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
-                      {formatPrice(apartment.price)}{" "}
-                      {language === "ar" ? "ج.م" : "EGP"}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
-                    {apartment.title}
-                  </h3>
-
-                  <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    <span className="text-sm">{apartment.location}</span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4 mb-4">
-                    <div className="text-center">
-                      <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {apartment.area} {language === "ar" ? "م²" : "m²"}
+        <Suspense fallback={<div className="text-center">Loading...</div>}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredApartments?.map((apartment) => (
+                <div
+                  key={apartment.id}
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={apartment.image}
+                      alt={apartment.title}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {language === "ar" ? "للبيع" : "For Sale"}
                       </span>
                     </div>
-                    <div className="text-center">
-                      <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {apartment.bedrooms}{" "}
-                        {language === "ar" ? "غرف" : "beds"}
-                      </span>
+                    <div className="absolute top-4 right-4">
+                      <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Heart className="h-5 w-5 text-gray-600" />
+                      </button>
                     </div>
-                    <div className="text-center">
-                      <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {apartment.bathrooms}{" "}
-                        {language === "ar" ? "حمام" : "baths"}
+                    <div className="absolute bottom-4 left-4">
+                      <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
+                        {formatPrice(apartment.price)}{" "}
+                        {language === "ar" ? "ج.م" : "EGP"}
                       </span>
                     </div>
                   </div>
 
-                  <div className="mb-4">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                      {language === "ar"
-                        ? `الطابق ${apartment.floor} من ${apartment.totalFloors}`
-                        : `Floor ${apartment.floor} of ${apartment.totalFloors}`}
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {apartment.features.slice(0, 3).map((feature, index) => (
-                        <span
-                          key={index}
-                          className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                          {feature}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                      {apartment.title}
+                    </h3>
+
+                    <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      <span className="text-sm">{apartment.location}</span>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 mb-4">
+                      <div className="text-center">
+                        <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {apartment.area} {language === "ar" ? "م²" : "m²"}
                         </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="text-sm text-gray-600 dark:text-gray-400">
-                        <p className="font-medium">{apartment.agent.name}</p>
-                        <div className="flex items-center mt-1">
-                          <Phone className="h-3 w-3 mr-1" />
-                          <span className="text-xs">
-                            {apartment.agent.phone}
-                          </span>
-                        </div>
+                      </div>
+                      <div className="text-center">
+                        <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {apartment.bedrooms}{" "}
+                          {language === "ar" ? "غرف" : "beds"}
+                        </span>
+                      </div>
+                      <div className="text-center">
+                        <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
+                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                          {apartment.bathrooms}{" "}
+                          {language === "ar" ? "حمام" : "baths"}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="flex space-x-2 rtl:space-x-reverse">
-                      <a
-                        href={`offers/apartment-${apartment.id}`}
-                        className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm">
-                        <Eye className="h-4 w-4" />
-                        <span>
-                          {language === "ar" ? "التفاصيل" : "Details"}
-                        </span>
-                      </a>
-                      <button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200">
-                        <Phone className="h-4 w-4" />
-                      </button>
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        {language === "ar"
+                          ? `الطابق ${apartment.floor} من ${apartment.totalFloors}`
+                          : `Floor ${apartment.floor} of ${apartment.totalFloors}`}
+                      </p>
+                      <div className="flex flex-wrap gap-1">
+                        {apartment.features
+                          .slice(0, 3)
+                          .map((feature, index) => (
+                            <span
+                              key={index}
+                              className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                              {feature}
+                            </span>
+                          ))}
+                      </div>
+                    </div>
+
+                    <div className="border-t pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="text-sm text-gray-600 dark:text-gray-400">
+                          <p className="font-medium">{apartment.agent.name}</p>
+                          <div className="flex items-center mt-1">
+                            <Phone className="h-3 w-3 mr-1" />
+                            <span className="text-xs">
+                              {apartment.agent.phone}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex space-x-2 rtl:space-x-reverse">
+                        <a
+                          href={`offers/apartment-${apartment.id}`}
+                          className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm">
+                          <Eye className="h-4 w-4" />
+                          <span>
+                            {language === "ar" ? "التفاصيل" : "Details"}
+                          </span>
+                        </a>
+                        <button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200">
+                          <Phone className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {filteredApartments.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
-                {language === "ar"
-                  ? "لم يتم العثور على شقق تطابق معايير البحث"
-                  : "No apartments found matching your search criteria"}
-              </p>
+              ))}
             </div>
-          )}
-        </div>
+
+            {filteredApartments.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-gray-500 dark:text-gray-400 text-lg">
+                  {language === "ar"
+                    ? "لم يتم العثور على شقق تطابق معايير البحث"
+                    : "No apartments found matching your search criteria"}
+                </p>
+              </div>
+            )}
+          </div>
+        </Suspense>
       </section>
     </div>
   );
-};
+}
 
-export default ApartmentPage;
+// export async function getServerSideProps() {
+//   const filteredApartments = await fetchProperties(); // ✅ Await here
+//   console.log("filteredApartments (server)", filteredApartments);
+
+//   return {
+//     props: {
+//       filteredApartments,
+//     },
+//   };
+// }
+
+// export default ApartmentPage;
