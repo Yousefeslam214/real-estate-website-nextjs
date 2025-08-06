@@ -1,5 +1,6 @@
 import { PaginationResponse } from "@/types/api";
 import { baseUrl } from "../shared/apiUrl";
+import { PropertyInput, PropertyUpdateInput } from "@/schemas/property.schema";
 
 export interface Property {
   id: string;
@@ -42,3 +43,24 @@ export const fetchProperties = async (
   const data: PaginationResponse<Property> = await res.json();
   return data;
 };
+
+export async function updateProperty(id: number, data: PropertyUpdateInput) {
+  try {
+    const res = await fetch(`${baseUrl}/api/properties/${id}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to update property. Status: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Error updating property:", error);
+    throw error;
+  }
+}

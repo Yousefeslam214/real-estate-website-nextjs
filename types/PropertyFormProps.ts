@@ -1,4 +1,4 @@
-import { PropertyInput } from "./schema";
+import { PropertyInput } from "@/schemas/property.schema";
 
 export type PropertyFormProps = {
   mode: "create" | "update";

@@ -8,6 +8,7 @@ import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import Pagination from "../Pagination";
 import { Toast } from "@/components/ui/toast";
 import toast from "react-hot-toast";
+import { Router } from "next/router";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties";
@@ -158,7 +159,8 @@ const PropertiesDashboardTab = () => {
                       rel="noopener noreferrer">
                       <Eye className="h-4 w-4" />
                     </a>
-                    <button className="text-green-600">
+                    <button className="text-green-600"
+                    onClick={() => window.location.href = `/dashboard/properties/${property.id}/edit`}>
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
