@@ -25,7 +25,7 @@ const translations = {
     "nav.sellProperty": "Sell Property",
 
     // Hero Section
-    "hero.title": "Egyptian Real Estate Portal",
+    "hero.title": "Palmline Properties",
     "hero.subtitle":
       "Your gateway to government-verified properties and real estate services",
     "hero.search.placeholder":
@@ -70,9 +70,9 @@ const translations = {
       "Expert legal advice for real estate transactions",
 
     // About
-    "about.title": "About Egyptian Real Estate Portal",
+    "about.title": "About Palmline Properties",
     "about.description":
-      "The Egyptian Real Estate Portal is the official government platform dedicated to providing comprehensive real estate services to Egyptian citizens and investors. Our mission is to facilitate transparent, efficient, and secure real estate transactions while ensuring compliance with Egyptian property laws and regulations.",
+      "The Palmline Properties is the official platform dedicated to providing comprehensive real estate services to Egyptian citizens and investors. Our mission is to facilitate transparent, efficient, and secure real estate transactions while ensuring compliance with Egyptian property laws and regulations.",
 
     // News
     "news.title": "Latest News & Updates",
@@ -90,14 +90,15 @@ const translations = {
 
     // Footer
     "footer.description":
-      "Official Egyptian Government Real Estate Portal providing comprehensive property services and information.",
+      "Official Egyptian Government Real Estate providing comprehensive property services and information.",
     "footer.quick.links": "Quick Links",
     "footer.services.links": "Services",
     "footer.contact.info": "Contact Information",
-    "footer.rights": "© 2025 Egyptian Real Estate Portal. All rights reserved.",
+    "footer.rights": "© 2025 Palmline Properties Portal. All rights reserved.",
 
     "sell.property.title": "Sell Your Property",
-    "sell.property.subtitle": "List your property on our platform and reach thousands of potential buyers",
+    "sell.property.subtitle":
+      "List your property on our platform and reach thousands of potential buyers",
   },
   ar: {
     // Navigation
@@ -150,7 +151,7 @@ const translations = {
     // About
     "about.title": "حول البوابة المصرية للعقارات",
     "about.description":
-      "البوابة المصرية للعقارات هي المنصة الحكومية الرسمية المخصصة لتقديم خدمات عقارية شاملة للمواطنين المصريين والمستثمرين. مهمتنا هي تسهيل المعاملات العقارية الشفافة والفعالة والآمنة مع ضمان الامتثال لقوانين ولوائح العقارات المصرية.",
+      "البوابة المصرية للعقارات هي المنصة الرسمية المخصصة لتقديم خدمات عقارية شاملة للمواطنين المصريين والمستثمرين. مهمتنا هي تسهيل المعاملات العقارية الشفافة والفعالة والآمنة مع ضمان الامتثال لقوانين ولوائح العقارات المصرية.",
 
     // News
     "news.title": "آخر الأخبار والتحديثات",
@@ -174,8 +175,8 @@ const translations = {
     "footer.rights": "© 2025 البوابة المصرية للعقارات. جميع الحقوق محفوظة.",
 
     "sell.property.title": "اعرض عقارك للبيع",
-    "sell.property.subtitle": "أضف عقارك على منصتنا واصل إلى آلاف المشترين المحتملين",
-
+    "sell.property.subtitle":
+      "أضف عقارك على منصتنا واصل إلى آلاف المشترين المحتملين",
   },
 };
 

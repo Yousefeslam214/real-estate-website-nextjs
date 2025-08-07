@@ -14,9 +14,46 @@ const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
-  title: "Egyptian Real Estate Portal | البوابة المصرية للعقارات",
+  title: "Palmline Properties | المصرية للعقارات",
   description:
-    "Official Egyptian Government Real Estate Portal | البوابة الرسمية للحكومة المصرية للعقارات",
+    "Discover premium real estate opportunities with Palmline Properties. البوابة الرسمية للحكومة المصرية للعقارات - اعثر على أفضل العقارات في مصر.",
+  keywords: [
+    "Palmline Properties",
+    "Egyptian Real Estate",
+    "عقارات مصرية",
+    "Buy Property Egypt",
+    "بيع العقارات",
+    "شقق للبيع",
+    "فلل للبيع",
+    "عقارات القاهرة",
+    "عقارات الإسكندرية",
+  ],
+  authors: [{ name: "Palmline Properties Team", url: "https://palmline.com" }],
+  openGraph: {
+    title: "Palmline Properties | المصرية للعقارات",
+    description:
+      "Explore the official for Egyptian real estate. Find apartments, villas, and commercial properties across Egypt.",
+    url: "https://palmline.com",
+    siteName: "Palmline Properties",
+    images: [
+      {
+        url: "https://palmline.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Palmline Properties - المصرية للعقارات",
+      },
+    ],
+    locale: "en_EG",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Palmline Properties | المصرية للعقارات",
+    description:
+      "Official Egyptian Palmline Properties Real Estate. Find your dream property in Egypt.",
+    images: ["https://palmline.com/twitter-image.jpg"],
+  },
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -32,8 +69,8 @@ export default function RootLayout({
             <Header />
             {children}
 
-                    {/* <Toaster position="top-right" reverseOrder={false} /> */}
-                    <Toaster position="top-right" reverseOrder={false} />
+            {/* <Toaster position="top-right" reverseOrder={false} /> */}
+            <Toaster position="top-right" reverseOrder={false} />
 
             <PropertiesSidebar />
             <Footer />

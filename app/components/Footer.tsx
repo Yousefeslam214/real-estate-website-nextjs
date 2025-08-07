@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
               </div>
               <div className={`${language === 'ar' ? 'mr-3' : 'ml-3'}`}>
                 <h3 className="text-lg font-bold text-white">
-                  {language === 'ar' ? 'البوابة المصرية للعقارات' : 'Egyptian Real Estate'}
+                  {language === 'ar' ? 'البوابة المصرية للعقارات' : 'Palmline Properties'}
                 </h3>
               </div>
             </div>

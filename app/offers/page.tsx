@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Search,
   MapPin,
@@ -15,21 +15,35 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { fetchProperties } from "@/services/properties/property.service";
+import useSWR from "swr";
+import { baseUrl } from "@/services/shared/apiUrl";
+import { fetcher } from "@/services/shared/fetcher";
 export async function getApartments() {
   // You can add any sync logic here if needed
   const data = await fetchProperties();
   return data;
 }
 
-
-export default async function OffersPage() {
+export default function OffersPage() {
   const { language, t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [bedrooms, setBedrooms] = useState("");
   const [location, setLocation] = useState("");
-  const filteredApartments = await fetchProperties();
-  console.log("filteredApartments (client)", filteredApartments);
+  // const [filteredApartments, setFilteredApartments] = useState<any[]>([]);
+  const { data, error, isLoading } = useSWR(`${baseUrl}/properties`, fetcher);
+
+  const apartments = data?.data || [];
+  console.log("filteredApartments (client)", apartments);
+  // const filteredApartments = data?.data;
+  // console.log("filteredApartments (client)", filteredApartments);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     console.log("filteredApartments (client)", data);
+  //   };
+  //   fetchData();
+  // }, []);
+  // const filteredApartments =  fetchProperties();
 
   const priceRanges = [
     { value: "", label: language === "ar" ? "جميع الأسعار" : "All Prices" },
@@ -88,264 +102,44 @@ export default async function OffersPage() {
       label: language === "ar" ? "الشيخ زايد" : "Sheikh Zayed",
     },
   ];
+  // const apartments = [];
+  const filteredApartments = Array.isArray(apartments)
+    ? apartments.filter((apartment) => {
+        const matchesSearch =
+          apartment.additional_information[language].title
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          apartment.additional_information[language].location
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        // const matchesBedrooms =
+        //   bedrooms === "" ||
+        //   apartment.bedrooms.toString() === bedrooms ||
+        //   (bedrooms === "5+" && apartment.bedrooms >= 5);
+        // const matchesLocation =
+        //   location === "" || apartment.location.toLowerCase().includes(location);
 
-  const apartments = [
-    {
-      id: 1,
-      title:
-        language === "ar"
-          ? "شقة فاخرة في العاصمة الإدارية"
-          : "Luxury Apartment in New Capital",
-      location:
-        language === "ar"
-          ? "العاصمة الإدارية الجديدة، R7"
-          : "New Administrative Capital, R7",
-      price: 2500000,
-      area: 150,
-      bedrooms: 3,
-      bathrooms: 2,
-      floor: 5,
-      totalFloors: 12,
-      image:
-        "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-      features:
-        language === "ar"
-          ? ["مكيف", "مطبخ مجهز", "بلكونة", "موقف سيارة", "أمن 24/7"]
-          : [
-              "Air Conditioning",
-              "Fitted Kitchen",
-              "Balcony",
-              "Parking",
-              "24/7 Security",
-            ],
-      agent: {
-        name: language === "ar" ? "أحمد محمد" : "Ahmed Mohamed",
-        phone: "+20 100 123 4567",
-        email: "ahmed@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة فاخرة في موقع متميز بالعاصمة الإدارية الجديدة، تتميز بالتشطيب الراقي والإطلالة المميزة."
-          : "Luxury apartment in a prime location in the New Administrative Capital, featuring high-end finishes and stunning views.",
-    },
-    {
-      id: 2,
-      title:
-        language === "ar"
-          ? "شقة عائلية في الشيخ زايد"
-          : "Family Apartment in Sheikh Zayed",
-      location: language === "ar" ? "الشيخ زايد، الجيزة" : "Sheikh Zayed, Giza",
-      price: 3200000,
-      area: 180,
-      bedrooms: 4,
-      bathrooms: 3,
-      floor: 3,
-      totalFloors: 8,
-      image:
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      features:
-        language === "ar"
-          ? ["حديقة خاصة", "مطبخ أمريكي", "غرفة خادمة", "تراس", "جيم"]
-          : [
-              "Private Garden",
-              "American Kitchen",
-              "Maid Room",
-              "Terrace",
-              "Gym",
-            ],
-      agent: {
-        name: language === "ar" ? "فاطمة علي" : "Fatma Ali",
-        phone: "+20 101 234 5678",
-        email: "fatma@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة عائلية واسعة في منطقة راقية بالشيخ زايد، مناسبة للعائلات الكبيرة."
-          : "Spacious family apartment in an upscale area of Sheikh Zayed, suitable for large families.",
-    },
-    {
-      id: 3,
-      title:
-        language === "ar"
-          ? "شقة حديثة في القاهرة الجديدة"
-          : "Modern Apartment in New Cairo",
-      location:
-        language === "ar"
-          ? "القاهرة الجديدة، التجمع الخامس"
-          : "New Cairo, Fifth Settlement",
-      price: 2800000,
-      area: 160,
-      bedrooms: 3,
-      bathrooms: 2,
-      floor: 7,
-      totalFloors: 15,
-      image:
-        "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
-      features:
-        language === "ar"
-          ? [
-              "إطلالة على الحديقة",
-              "مطبخ مجهز",
-              "دريسنج روم",
-              "بلكونتان",
-              "مصعد",
-            ]
-          : [
-              "Garden View",
-              "Fitted Kitchen",
-              "Dressing Room",
-              "Two Balconies",
-              "Elevator",
-            ],
-      agent: {
-        name: language === "ar" ? "محمد حسن" : "Mohamed Hassan",
-        phone: "+20 102 345 6789",
-        email: "mohamed@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة حديثة بتصميم عصري في قلب التجمع الخامس، قريبة من جميع الخدمات."
-          : "Modern apartment with contemporary design in the heart of Fifth Settlement, close to all amenities.",
-    },
-    {
-      id: 4,
-      title:
-        language === "ar"
-          ? "شقة بإطلالة بحرية في الإسكندرية"
-          : "Sea View Apartment in Alexandria",
-      location:
-        language === "ar" ? "الإسكندرية، سيدي جابر" : "Alexandria, Sidi Gaber",
-      price: 3500000,
-      area: 200,
-      bedrooms: 4,
-      bathrooms: 3,
-      floor: 8,
-      totalFloors: 10,
-      image:
-        "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg",
-      features:
-        language === "ar"
-          ? ["إطلالة بحرية", "تراس كبير", "مطبخ إيطالي", "جاكوزي", "موقف خاص"]
-          : [
-              "Sea View",
-              "Large Terrace",
-              "Italian Kitchen",
-              "Jacuzzi",
-              "Private Parking",
-            ],
-      agent: {
-        name: language === "ar" ? "سارة أحمد" : "Sara Ahmed",
-        phone: "+20 103 456 7890",
-        email: "sara@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة فاخرة بإطلالة بحرية مباشرة في أرقى أحياء الإسكندرية."
-          : "Luxury apartment with direct sea view in one of Alexandria's most prestigious neighborhoods.",
-    },
-    {
-      id: 5,
-      title:
-        language === "ar"
-          ? "شقة استثمارية في وسط البلد"
-          : "Investment Apartment Downtown",
-      location: language === "ar" ? "وسط البلد، القاهرة" : "Downtown, Cairo",
-      price: 1800000,
-      area: 120,
-      bedrooms: 2,
-      bathrooms: 2,
-      floor: 4,
-      totalFloors: 6,
-      image: "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg",
-      features:
-        language === "ar"
-          ? [
-              "موقع تجاري",
-              "مدخل منفصل",
-              "تشطيب كامل",
-              "قريب من المترو",
-              "عائد استثماري عالي",
-            ]
-          : [
-              "Commercial Location",
-              "Separate Entrance",
-              "Fully Finished",
-              "Near Metro",
-              "High ROI",
-            ],
-      agent: {
-        name: language === "ar" ? "خالد عبدالله" : "Khaled Abdullah",
-        phone: "+20 104 567 8901",
-        email: "khaled@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة استثمارية في موقع استراتيجي بوسط البلد، مناسبة للاستثمار التجاري."
-          : "Investment apartment in a strategic downtown location, suitable for commercial investment.",
-    },
-    {
-      id: 6,
-      title:
-        language === "ar"
-          ? "شقة دوبلكس في مدينة نصر"
-          : "Duplex Apartment in Nasr City",
-      location: language === "ar" ? "مدينة نصر، القاهرة" : "Nasr City, Cairo",
-      price: 4200000,
-      area: 250,
-      bedrooms: 5,
-      bathrooms: 4,
-      floor: 9,
-      totalFloors: 10,
-      image:
-        "https://images.pexels.com/photos/1546168/pexels-photo-1546168.jpeg",
-      features:
-        language === "ar"
-          ? ["دوبلكس", "روف خاص", "مطبخان", "غرفة معيشة كبيرة", "مصعد خاص"]
-          : [
-              "Duplex",
-              "Private Roof",
-              "Two Kitchens",
-              "Large Living Room",
-              "Private Elevator",
-            ],
-      agent: {
-        name: language === "ar" ? "نورا سالم" : "Nora Salem",
-        phone: "+20 105 678 9012",
-        email: "nora@realestate.gov.eg",
-      },
-      description:
-        language === "ar"
-          ? "شقة دوبلكس فاخرة مع روف خاص في أرقى مناطق مدينة نصر."
-          : "Luxury duplex apartment with private roof in one of Nasr City's most prestigious areas.",
-    },
-  ];
+        let matchesPrice = true;
+        if (priceRange) {
+          const [min, max] = priceRange
+            .split("-")
+            .map((p) => p.replace("+", ""));
+          if (max) {
+            matchesPrice =
+              apartment.price_amount >= parseInt(min) &&
+              apartment.price_amount <= parseInt(max);
+          } else {
+            matchesPrice = apartment.price_amount >= parseInt(min);
+          }
+        }
 
-  // const filteredApartments = fetchProperties();
-  console.log("filteredApartments", filteredApartments);
-  const filteredApartments1 = apartments.filter((apartment) => {
-    const matchesSearch =
-      apartment.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      apartment.location.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesBedrooms =
-      bedrooms === "" ||
-      apartment.bedrooms.toString() === bedrooms ||
-      (bedrooms === "5+" && apartment.bedrooms >= 5);
-    const matchesLocation =
-      location === "" || apartment.location.toLowerCase().includes(location);
-
-    let matchesPrice = true;
-    if (priceRange) {
-      const [min, max] = priceRange.split("-").map((p) => p.replace("+", ""));
-      if (max) {
-        matchesPrice =
-          apartment.price >= parseInt(min) && apartment.price <= parseInt(max);
-      } else {
-        matchesPrice = apartment.price >= parseInt(min);
-      }
-    }
-
-    return matchesSearch && matchesBedrooms && matchesLocation && matchesPrice;
-  });
+        return (
+          matchesSearch &&
+          // && matchesBedrooms && matchesLocation
+          matchesPrice
+        );
+      })
+    : [];
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
@@ -384,8 +178,8 @@ export default async function OffersPage() {
               </p>
               <p className="text-gray-500 dark:text-gray-400">
                 {language === "ar"
-                  ? `عرض ${filteredApartments?.pagination.totalCount} عقار على الخريطة`
-                  : `Showing ${filteredApartments?.pagination.totalCount} properties on map`}
+                  ? `عرض ${filteredApartments?.pagination?.totalCount} عقار على الخريطة`
+                  : `Showing ${filteredApartments?.pagination?.totalCount} properties on map`}
               </p>
             </div>
 
@@ -478,8 +272,8 @@ export default async function OffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-gray-600 dark:text-gray-300">
             {language === "ar"
-              ? `تم العثور على ${filteredApartments.length} شقة`
-              : `Found ${filteredApartments.length} apartments`}
+              ? `تم العثور على ${filteredApartments?.length} شقة`
+              : `Found ${filteredApartments?.length} apartments`}
           </p>
         </div>
       </section>
@@ -495,7 +289,7 @@ export default async function OffersPage() {
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={apartment.image}
+                      src={apartment.coverimageurl}
                       alt={apartment.title}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />
@@ -511,7 +305,7 @@ export default async function OffersPage() {
                     </div>
                     <div className="absolute bottom-4 left-4">
                       <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
-                        {formatPrice(apartment.price)}{" "}
+                        {formatPrice(parseInt(apartment.price_amount) || 0)}{" "}
                         {language === "ar" ? "ج.م" : "EGP"}
                       </span>
                     </div>
@@ -519,19 +313,22 @@ export default async function OffersPage() {
 
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
-                      {apartment.title}
+                      {apartment.additional_information[language].title}
                     </h3>
 
                     <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
                       <MapPin className="h-4 w-4 mr-2" />
-                      <span className="text-sm">{apartment.location}</span>
+                      <span className="text-sm">
+                        {apartment.additional_information[language].address}
+                      </span>
                     </div>
 
                     <div className="grid grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
                         <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {apartment.area} {language === "ar" ? "م²" : "m²"}
+                          {parseInt(apartment.area_sqm)}{" "}
+                          {language === "ar" ? "م²" : "m²"}
                         </span>
                       </div>
                       <div className="text-center">
@@ -552,12 +349,12 @@ export default async function OffersPage() {
 
                     <div className="mb-4">
                       <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        {language === "ar"
+                        {/* {language === "ar"
                           ? `الطابق ${apartment.floor} من ${apartment.totalFloors}`
-                          : `Floor ${apartment.floor} of ${apartment.totalFloors}`}
+                          : `Floor ${apartment.floor} of ${apartment.totalFloors}`} */}
                       </p>
                       <div className="flex flex-wrap gap-1">
-                        {apartment.features
+                        {/* {apartment.features
                           .slice(0, 3)
                           .map((feature, index) => (
                             <span
@@ -565,33 +362,38 @@ export default async function OffersPage() {
                               className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
                               {feature}
                             </span>
-                          ))}
+                          ))} */}
                       </div>
                     </div>
 
                     <div className="border-t pt-4">
                       <div className="flex items-center justify-between mb-3">
                         <div className="text-sm text-gray-600 dark:text-gray-400">
-                          <p className="font-medium">{apartment.agent.name}</p>
-                          <div className="flex items-center mt-1">
-                            <Phone className="h-3 w-3 mr-1" />
-                            <span className="text-xs">
+                          delivered on {apartment?.available_from?.slice(0, 7)}
+                          {/*
+                           <p className="font-medium">{apartment.agent.name}</p> 
+                           <div className="flex items-center mt-1">
+                             <Phone className="h-3 w-3 mr-1" /> 
+                             <span className="text-xs">
                               {apartment.agent.phone}
-                            </span>
-                          </div>
+                            </span> 
+                          </div> 
+                          */}
                         </div>
                       </div>
 
                       <div className="flex space-x-2 rtl:space-x-reverse">
                         <a
-                          href={`offers/apartment-${apartment.id}`}
+                          href={`offers/${apartment.id}`}
                           className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm">
                           <Eye className="h-4 w-4" />
                           <span>
                             {language === "ar" ? "التفاصيل" : "Details"}
                           </span>
                         </a>
-                        <button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200">
+                        <button
+                          className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200"
+                          onClick={() => window.open("tel:01005307391")}>
                           <Phone className="h-4 w-4" />
                         </button>
                       </div>
@@ -601,7 +403,7 @@ export default async function OffersPage() {
               ))}
             </div>
 
-            {filteredApartments.length === 0 && (
+            {filteredApartments?.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-gray-500 dark:text-gray-400 text-lg">
                   {language === "ar"
@@ -616,16 +418,3 @@ export default async function OffersPage() {
     </div>
   );
 }
-
-// export async function getServerSideProps() {
-//   const filteredApartments = await fetchProperties(); // ✅ Await here
-//   console.log("filteredApartments (server)", filteredApartments);
-
-//   return {
-//     props: {
-//       filteredApartments,
-//     },
-//   };
-// }
-
-// export default ApartmentPage;

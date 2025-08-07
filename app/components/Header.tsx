@@ -28,7 +28,7 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">RE</span>
+                <span className="text-white font-bold text-lg">PL</span>
               </div>
             </div>
             <div
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
               <h1 className="text-lg font-bold text-gray-900 dark:text-white">
                 {language === "ar"
                   ? "البوابة المصرية للعقارات"
-                  : "Egyptian Real Estate"}
+                  : "Palmline Properties"}
               </h1>
             </div>
           </div>

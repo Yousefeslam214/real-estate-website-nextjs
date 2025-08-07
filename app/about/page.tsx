@@ -3,8 +3,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { 
   Users, 
   Target, 
@@ -115,7 +113,7 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
-        <Header />
+ 
         
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-blue-600 to-green-600 text-white py-20">
@@ -299,8 +297,6 @@ const About: React.FC = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
     </div>
   );
 };
