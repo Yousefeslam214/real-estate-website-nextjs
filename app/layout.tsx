@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 // import { Toaster } from "@/components/ui/toaster";
 // import PropertiesSidebar from "./components/PropertiesSidebar";
 import { Toaster } from "react-hot-toast";
+// import { Toast } from "@radix-ui/react-toast";
+import { ToastProvider } from "./contexts/ToastContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const cairo = Cairo({ subsets: ["arabic"] });
@@ -67,7 +69,7 @@ export default function RootLayout({
         <LanguageProvider>
           <ThemeProvider>
             <Header />
-            {children}
+            <ToastProvider>{children}</ToastProvider>
 
             {/* <Toaster position="top-right" reverseOrder={false} /> */}
             <Toaster position="top-right" reverseOrder={false} />
