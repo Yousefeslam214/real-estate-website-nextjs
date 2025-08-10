@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   MapPin,
   Phone,
@@ -44,7 +44,6 @@ interface User {
 
 const SellProperty: React.FC = () => {
   const { language, t } = useLanguage();
-
   // Mock authentication state - replace with your actual auth logic
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -67,6 +66,14 @@ const SellProperty: React.FC = () => {
     contactEmail: user?.email || "",
     images: [],
   });
+  useEffect(() => {
+    // Get token from localStorage if exists
+    const token = localStorage.getItem("token");
+  
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  })
 
   const propertyTypes = [
     {
