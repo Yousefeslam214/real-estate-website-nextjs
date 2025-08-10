@@ -20,10 +20,10 @@ export default function PropertyForm({
     handleSubmit,
     formState: { errors },
   } = useForm<PropertyInput>({
-    resolver: zodResolver(inputPropertySchema),
+    // resolver: zodResolver(inputPropertySchema),
     defaultValues,
   });
-console.log("Default Values from property Form:", defaultValues);
+  console.log("Default Values from property Form:", defaultValues);
   const { language, t } = useLanguage();
 
   const labelStyle =
@@ -41,7 +41,7 @@ console.log("Default Values from property Form:", defaultValues);
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className={labelStyle}>Price</label>
+          <label className={labelStyle}>price_amount</label>
           <input
             type="number"
             {...register("price_amount")}

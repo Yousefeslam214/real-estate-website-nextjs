@@ -27,9 +27,9 @@ const SignInPage: React.FC = () => {
     console.log("Form data:", formData);
     try {
       const data = await login(formData);
-      console.log("Login response:", data);
-      if (data.token) {
-        localStorage.setItem("token", data.token);
+      console.log("Login response:", data?.data);
+      if (data?.data?.token) {
+        localStorage.setItem("token", data.data.token);
         setIsSubmitted(true);
         router.push("/");
         return;

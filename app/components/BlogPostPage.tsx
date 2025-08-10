@@ -8,6 +8,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { DetailsPageProps } from "@/types/detailsPage";
 
 // Define the blog post type
 interface BlogPost {
@@ -165,15 +166,18 @@ export async function generateStaticParams() {
   }));
 }
 
-// const BlogPostPage = ({ params }: { params: { slug: string[] } }) => {
-const BlogPostPage = () => {
+// // const BlogPostPage = ({ params }: { params: { slug: string[] } }) => {
+// const BlogPostPage = (id: DetailsPageProps) => {
+
+const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
   const params = useParams();
   console.log("params", params); // Check shape
   const { language, t } = useLanguage();
   const router = useRouter();
   const postId = parseInt(params.slug[0]);
-  const post = blogPosts.find((p) => p.id === postId);
-
+  // const post = blogPosts.find((p) => p.id === postId);
+  const post = initialData?.data;
+  console.log("Post data fetched:", post);
   // Format date function
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -252,7 +256,7 @@ const BlogPostPage = () => {
             <div className="flex flex-wrap items-center text-gray-200 text-sm">
               <div className="flex items-center mr-6 mb-2">
                 <User className="h-4 w-4 mr-2" />
-                <span>{post.author}</span>
+                <span>{post.author.name}</span>
               </div>
               <div className="flex items-center mr-6 mb-2">
                 <Calendar className="h-4 w-4 mr-2" />
@@ -299,6 +303,15 @@ const BlogPostPage = () => {
 
             <p className="mb-6">{post.content}</p>
 
+            <h2 className="text-2xl font-bold mt-10 mb-6">
+                {language === "ar" ? "ملخص المقال" : "Post Summary"}
+            </h2>
+
+            <p className="mb-6">
+              {language === "ar"
+                ? "يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة. تم تصميم المشروع ليكون نموذجاً للتنمية المستدامة والتخطيط الحضري الحديث في المنطقة."
+                : "The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities. Designed to be a model of sustainable development and modern urban planning in the region."}
+            </p>
             <h2 className="text-2xl font-bold mt-10 mb-6">
               {language === "ar" ? "تفاصيل المشروع" : "Project Details"}
             </h2>
@@ -459,7 +472,7 @@ const BlogPostPage = () => {
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={post.image}
+                      src={post.featuredimageurl}
                       alt={post.title}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />

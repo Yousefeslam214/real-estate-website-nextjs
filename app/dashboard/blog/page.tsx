@@ -1,12 +1,26 @@
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import { useLanguage } from "@/app/contexts/LanguageContext";
+import { baseUrl } from "@/services/shared/apiUrl";
+import { fetcher } from "@/services/shared/fetcher";
 import { Edit, Eye, Trash2 } from "lucide-react";
 import React from "react";
+import useSWR from "swr";
 
-const BlogPostsDashboardTab = ({ blogPosts }: any) => {
+// const BlogPostsDashboardTab = ({ blogPosts }: any) => {
+const BlogPostsDashboardTab = () => {
   const { language, t } = useLanguage();
   const [searchQuery, setSearchQuery] = React.useState("");
   const activeTab = "posts"; // This can be dynamic based on your app's state
+  const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
+  console.log("Blog Posts data:", data?.data);
+  const blogPosts = data?.data || [];
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error loading blog posts.</div>;
+  }
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-colors duration-200">
@@ -29,16 +43,16 @@ const BlogPostsDashboardTab = ({ blogPosts }: any) => {
           <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                {language === "ar" ? "المنشور" : "Post"}
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                 {language === "ar" ? "العنوان" : "Title"}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                {language === "ar" ? "الكاتب" : "Author"}
+                {language === "ar" ? "الوسوم" : "Tags"}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                 {language === "ar" ? "الحالة" : "Status"}
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                {language === "ar" ? "المشاهدات" : "Views"}
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                 {language === "ar" ? "الإجراءات" : "Actions"}
@@ -50,6 +64,20 @@ const BlogPostsDashboardTab = ({ blogPosts }: any) => {
               <tr
                 key={post.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                <td className="px-6 py-4 flex items-center">
+                  <img
+                    src={post?.featuredImageUrl || "/placeholder.jpg"}
+                    // alt={post?.title || "Post"}
+                    className="h-12 w-12 rounded-lg object-cover"
+                  />
+                  <div className="ml-4">
+                    {/* <div className="text-sm font-medium">{post?.title}</div> */}
+                    <div className="text-sm text-gray-500">
+                      {/* {post`?.location} */}
+                    </div>
+                  </div>
+                </td>
+
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium text-gray-900 dark:text-white">
                     {post.title}
@@ -58,8 +86,25 @@ const BlogPostsDashboardTab = ({ blogPosts }: any) => {
                     {post.category}
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                   {post.author}
+                </td> */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                  {post.tags && post.tags.length > 0 ? (
+                    post.tags.map(
+                      (tag: { id: number; name: string; slug: string }) => (
+                        <span
+                          key={tag.id}
+                          className="inline-flex items-center px-2 py-1 mr-2 mb-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                          {tag.name}
+                        </span>
+                      )
+                    )
+                  ) : (
+                    <span className="text-gray-400">
+                      {language === "ar" ? "لا توجد وسوم" : "No tags"}
+                    </span>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
@@ -70,9 +115,6 @@ const BlogPostsDashboardTab = ({ blogPosts }: any) => {
                     }`}>
                     {post.status}
                   </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                  {post.views.toLocaleString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex items-center space-x-2 rtl:space-x-reverse">

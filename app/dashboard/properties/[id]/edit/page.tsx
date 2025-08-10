@@ -19,6 +19,15 @@ export default function EditPropertyPage({ params }) {
     `${baseUrl}/properties/${propertyId}`,
     fetcher
   );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading property.</div>;
+  }
+
   //   const { project, error, isLoading } = useSWR(
   //     `${baseUrl}/properties/getAvailableProjects`,
   //     fetcher

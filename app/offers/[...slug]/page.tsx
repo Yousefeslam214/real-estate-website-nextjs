@@ -13,6 +13,6 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
 
   const data = await res.json();
   return (
-    <PropertyDetailsClient idOfProperty={params.slug[0]} initialData={data} />
+    <PropertyDetailsClient id={params.slug[0]} initialData={data} />
   );
 }

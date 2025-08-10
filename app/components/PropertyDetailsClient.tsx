@@ -19,14 +19,12 @@ import {
   TreePine,
   Building,
 } from "lucide-react";
+import { DetailsPageProps } from "@/types/detailsPage";
 
-type PropertyDetailsPageProps = {
-  idOfProperty: string;
-  initialData: any;
-};
 
-const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
-  idOfProperty,
+
+const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
+  id,
   initialData,
 }) => {
   // const { language, t } = useLanguage();
@@ -44,7 +42,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
   // const params = useParams();
 
   // const { data, error, isLoading } = useSWR(
-  //   [`${baseUrl}/properties/${idOfProperty}`, token],
+  //   [`${baseUrl}/properties/${id}`, token],
   //   ([url, token]) => fetcher(url, token)
   // );
 
@@ -91,7 +89,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                     {property?.status}
                   </span>
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    ID: {idOfProperty}
+                    ID: {id}
                   </span>
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2 rtl:space-x-reverse">
@@ -400,7 +398,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                     <span className="text-gray-600">
                       {language === "ar" ? "رقم العقار:" : "Property ID:"}
                     </span>
-                    <span className="font-medium">{idOfProperty}</span>
+                    <span className="font-medium">{id}</span>
                   </div>
                 </div>
               </div>
@@ -422,8 +420,8 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
                   <a
                     href={`https://wa.me/201005307391?text=${encodeURIComponent(
                       language === "ar"
-                        ? `طلب تمويل للوحدة رقم ${idOfProperty}`
-                        : `Request financing for unit with ID ${idOfProperty}`
+                        ? `طلب تمويل للوحدة رقم ${id}`
+                        : `Request financing for unit with ID ${id}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -476,7 +474,7 @@ const PropertyDetailsPage: React.FC<PropertyDetailsPageProps> = ({
 
                     //   const features = property?.en?.features?.join(", ") || "";
 
-                    //   const id = idOfProperty;
+                    //   const id = id;
 
                     //   // ✅ Title
                     //   doc.setFontSize(18);
