@@ -62,6 +62,13 @@ const config: Config = {
         },
       },
       keyframes: {
+<<<<<<< HEAD
+=======
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+>>>>>>> c79548b (Updated)
         "accordion-down": {
           from: {
             height: "0",
@@ -92,6 +99,11 @@ const config: Config = {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
       "scroll-vertical": "scroll-vertical 20s linear infinite",
+<<<<<<< HEAD
+=======
+      "gradient-spin": "spin-slow 1s linear infinite",
+
+>>>>>>> c79548b (Updated)
       // },
     },
   },

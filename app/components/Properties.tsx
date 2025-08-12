@@ -1,12 +1,17 @@
 "use client";
 
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React from "react";
+>>>>>>> c79548b (Updated)
 import {
   MapPin,
   Bed,
   Bath,
   Square,
   Eye,
+<<<<<<< HEAD
   Search,
   Building,
   Factory,
@@ -18,6 +23,14 @@ import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Home from "../page";
+=======
+} from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import useSWR from "swr";
+import { fetcher } from "@/services/shared/fetcher";
+import { baseUrl } from "@/services/shared/apiUrl";
+import Image from "next/image";
+>>>>>>> c79548b (Updated)
 
 const Properties: React.FC = () => {
   const { language, t } = useLanguage();
@@ -147,7 +160,11 @@ const Properties: React.FC = () => {
               key={property.id}
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-64 overflow-hidden">
+<<<<<<< HEAD
                 <img
+=======
+                <Image
+>>>>>>> c79548b (Updated)
                   src={property.image}
                   alt={property.title}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"

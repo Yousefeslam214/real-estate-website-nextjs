@@ -12,7 +12,11 @@ export const login = async (loginSchema: LoginInput) => {
     throw new Error("Login failed");
   } else {
     const data = await res.json();
+<<<<<<< HEAD
     localStorage.setItem("token", data.data.token);
+=======
+    localStorage.setItem("token", data.token);
+>>>>>>> c79548b (Updated)
     return data;
   }
 };

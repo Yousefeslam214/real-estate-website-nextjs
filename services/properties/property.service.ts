@@ -46,12 +46,19 @@ export const fetchProperties = async (
 
 export async function updateProperty(id: number, data: PropertyUpdateInput) {
   try {
+<<<<<<< HEAD
     const token = localStorage.getItem("token");
     const res = await fetch(`${baseUrl}/properties/${id}/update`, {
       method: "PUT",
       headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
+=======
+    const res = await fetch(`${baseUrl}/api/properties/${id}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+>>>>>>> c79548b (Updated)
       },
       body: JSON.stringify(data),
     });

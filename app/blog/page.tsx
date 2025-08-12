@@ -3,12 +3,19 @@
 import React, { useState } from "react";
 import { Search, Calendar, User, ArrowRight, Filter } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+<<<<<<< HEAD
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+=======
+>>>>>>> c79548b (Updated)
 import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
+<<<<<<< HEAD
+=======
+import { ButtonLoading } from "../components/ButtonLoading";
+>>>>>>> c79548b (Updated)
 
 const BlogPage: React.FC = () => {
   const { language, t } = useLanguage();
@@ -35,6 +42,7 @@ const BlogPage: React.FC = () => {
     },
   ];
 
+<<<<<<< HEAD
   const blogPosts1 = [
     {
       id: 1,
@@ -167,6 +175,8 @@ const BlogPage: React.FC = () => {
     },
   ];
 
+=======
+>>>>>>> c79548b (Updated)
   const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
 
   const blogPosts = data?.data || [];
@@ -245,7 +255,12 @@ const BlogPage: React.FC = () => {
 
       {/* Blog Posts Grid */}
       <section className="py-16">
+<<<<<<< HEAD
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+=======
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+          {isLoading && <ButtonLoading />}
+>>>>>>> c79548b (Updated)
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
               <article
@@ -326,7 +341,11 @@ const BlogPage: React.FC = () => {
             ))}
           </div>
 
+<<<<<<< HEAD
           {filteredPosts.length === 0 && (
+=======
+          {filteredPosts.length === 0 && !isLoading && (
+>>>>>>> c79548b (Updated)
             <div className="text-center py-16">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === "ar"
