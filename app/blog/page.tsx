@@ -34,141 +34,6 @@ const BlogPage: React.FC = () => {
     },
   ];
 
-<<<<<<< HEAD
-  const blogPosts1 = [
-    {
-      id: 1,
-      title:
-        language === "ar"
-          ? "إطلاق مشروع العاصمة الإدارية الجديدة المرحلة الثالثة"
-          : "Launch of New Administrative Capital Phase 3",
-      excerpt:
-        language === "ar"
-          ? "الحكومة تعلن عن إطلاق المرحلة الثالثة من مشروع العاصمة الإدارية الجديدة بخطة استثمارية ضخمة تهدف إلى توفير 50,000 وحدة سكنية جديدة..."
-          : "Government announces the launch of the third phase of the New Administrative Capital project with massive investment plans aimed at providing 50,000 new residential units...",
-      content:
-        language === "ar"
-          ? "تم الإعلان رسمياً عن إطلاق المرحلة الثالثة من مشروع العاصمة الإدارية الجديدة، والتي تعد من أكبر المشاريع التنموية في مصر. يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة."
-          : "The third phase of the New Administrative Capital project has been officially announced, representing one of Egypt's largest development projects. The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities.",
-      date: "2025-01-15",
-      author: language === "ar" ? "وزارة الإسكان" : "Ministry of Housing",
-      image:
-        "https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg",
-      category: "housing",
-      readTime: language === "ar" ? "5 دقائق" : "5 min read",
-    },
-    {
-      id: 2,
-      title:
-        language === "ar"
-          ? "تحديث قوانين التملك للأجانب في مصر"
-          : "Updated Foreign Ownership Laws in Egypt",
-      excerpt:
-        language === "ar"
-          ? "تحديثات جديدة على قوانين تملك الأجانب للعقارات في مصر لتشجيع الاستثمار الأجنبي وجذب رؤوس الأموال الدولية..."
-          : "New updates to foreign property ownership laws in Egypt to encourage foreign investment and attract international capital...",
-      content:
-        language === "ar"
-          ? "أقرت الحكومة المصرية تحديثات مهمة على قوانين تملك الأجانب للعقارات، تهدف إلى تسهيل إجراءات الاستثمار وجذب المزيد من رؤوس الأموال الأجنبية. التحديثات تشمل تبسيط الإجراءات البيروقراطية وتوفير حوافز ضريبية للمستثمرين الأجانب."
-          : "The Egyptian government has approved important updates to foreign property ownership laws, aimed at facilitating investment procedures and attracting more foreign capital. The updates include simplifying bureaucratic procedures and providing tax incentives for foreign investors.",
-      date: "2025-01-12",
-      author: language === "ar" ? "وزارة العدل" : "Ministry of Justice",
-      image:
-        "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg",
-      category: "investment",
-      readTime: language === "ar" ? "7 دقائق" : "7 min read",
-    },
-    {
-      id: 3,
-      title:
-        language === "ar"
-          ? "برنامج الإسكان الاجتماعي الجديد"
-          : "New Social Housing Program",
-      excerpt:
-        language === "ar"
-          ? "إطلاق برنامج جديد للإسكان الاجتماعي يستهدف الشباب والأسر محدودة الدخل بشروط ميسرة وأسعار مدعومة..."
-          : "Launch of a new social housing program targeting youth and low-income families with flexible conditions and subsidized prices...",
-      content:
-        language === "ar"
-          ? "أطلقت وزارة الإسكان برنامجاً جديداً للإسكان الاجتماعي يهدف إلى توفير وحدات سكنية بأسعار مدعومة للشباب والأسر محدودة الدخل. البرنامج يوفر تسهيلات في السداد وشروط ميسرة للحصول على وحدة سكنية مناسبة."
-          : "The Ministry of Housing has launched a new social housing program aimed at providing subsidized residential units for youth and low-income families. The program offers payment facilities and flexible conditions for obtaining suitable housing units.",
-      date: "2025-01-10",
-      author: language === "ar" ? "وزارة الإسكان" : "Ministry of Housing",
-      image:
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      category: "housing",
-      readTime: language === "ar" ? "4 دقائق" : "4 min read",
-    },
-    {
-      id: 4,
-      title:
-        language === "ar"
-          ? "منصة رقمية جديدة لخدمات العقارات"
-          : "New Digital Platform for Real Estate Services",
-      excerpt:
-        language === "ar"
-          ? "إطلاق منصة رقمية متطورة تسهل على المواطنين الحصول على الخدمات العقارية إلكترونياً دون الحاجة لزيارة المكاتب الحكومية..."
-          : "Launch of an advanced digital platform that makes it easier for citizens to access real estate services electronically without visiting government offices...",
-      content:
-        language === "ar"
-          ? "تم إطلاق منصة رقمية جديدة تهدف إلى رقمنة جميع الخدمات العقارية وتسهيل الحصول عليها إلكترونياً. المنصة توفر خدمات التسجيل والتقييم والاستعلام عن العقارات بطريقة سهلة وآمنة."
-          : "A new digital platform has been launched aimed at digitizing all real estate services and facilitating electronic access to them. The platform provides registration, valuation, and property inquiry services in an easy and secure manner.",
-      date: "2025-01-08",
-      author:
-        language === "ar" ? "وزارة الاتصالات" : "Ministry of Communications",
-      image: "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg",
-      category: "digital",
-      readTime: language === "ar" ? "6 دقائق" : "6 min read",
-    },
-    {
-      id: 5,
-      title:
-        language === "ar"
-          ? "مبادرة المباني الخضراء في مصر"
-          : "Green Buildings Initiative in Egypt",
-      excerpt:
-        language === "ar"
-          ? "إطلاق مبادرة جديدة لتشجيع البناء المستدام والمباني الصديقة للبيئة في جميع المشاريع العقارية الجديدة..."
-          : "Launch of a new initiative to encourage sustainable construction and environmentally friendly buildings in all new real estate projects...",
-      content:
-        language === "ar"
-          ? "أطلقت الحكومة مبادرة المباني الخضراء التي تهدف إلى تشجيع استخدام تقنيات البناء المستدام والمواد الصديقة للبيئة. المبادرة تقدم حوافز للمطورين الذين يلتزمون بمعايير البناء الأخضر."
-          : "The government has launched the Green Buildings Initiative aimed at encouraging the use of sustainable construction techniques and environmentally friendly materials. The initiative provides incentives for developers who comply with green building standards.",
-      date: "2025-01-05",
-      author: language === "ar" ? "وزارة البيئة" : "Ministry of Environment",
-      image:
-        "https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg",
-      category: "sustainability",
-      readTime: language === "ar" ? "5 دقائق" : "5 min read",
-    },
-    {
-      id: 6,
-      title:
-        language === "ar"
-          ? "تطوير المدن الجديدة في صعيد مصر"
-          : "Development of New Cities in Upper Egypt",
-      excerpt:
-        language === "ar"
-          ? "خطة طموحة لتطوير مدن جديدة في صعيد مصر لتحقيق التوازن التنموي وجذب الاستثمارات للمحافظات الجنوبية..."
-          : "Ambitious plan to develop new cities in Upper Egypt to achieve developmental balance and attract investments to southern governorates...",
-      content:
-        language === "ar"
-          ? "تعمل الحكومة على تنفيذ خطة شاملة لتطوير مدن جديدة في صعيد مصر، تهدف إلى تحقيق التوازن التنموي بين المحافظات وجذب الاستثمارات للمناطق الجنوبية. المشروع يشمل إنشاء مناطق سكنية وصناعية وتجارية متكاملة."
-          : "The government is implementing a comprehensive plan to develop new cities in Upper Egypt, aimed at achieving developmental balance between governorates and attracting investments to southern regions. The project includes establishing integrated residential, industrial, and commercial areas.",
-      date: "2025-01-03",
-      author:
-        language === "ar"
-          ? "وزارة التنمية المحلية"
-          : "Ministry of Local Development",
-      image:
-        "https://images.pexels.com/photos/1546168/pexels-photo-1546168.jpeg",
-      category: "housing",
-      readTime: language === "ar" ? "8 دقائق" : "8 min read",
-    },
-  ];
-
-=======
->>>>>>> c79548b (Updated)
   const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
 
   const blogPosts = data?.data || [];
@@ -247,12 +112,8 @@ const BlogPage: React.FC = () => {
 
       {/* Blog Posts Grid */}
       <section className="py-16">
-<<<<<<< HEAD
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-=======
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
           {isLoading && <ButtonLoading />}
->>>>>>> c79548b (Updated)
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
               <article
@@ -333,11 +194,7 @@ const BlogPage: React.FC = () => {
             ))}
           </div>
 
-<<<<<<< HEAD
-          {filteredPosts.length === 0 && (
-=======
           {filteredPosts.length === 0 && !isLoading && (
->>>>>>> c79548b (Updated)
             <div className="text-center py-16">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === "ar"
