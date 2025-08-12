@@ -1,36 +1,12 @@
 "use client";
 
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-=======
 import React from "react";
->>>>>>> c79548b (Updated)
-import {
-  MapPin,
-  Bed,
-  Bath,
-  Square,
-  Eye,
-<<<<<<< HEAD
-  Search,
-  Building,
-  Factory,
-  Mountain,
-} from "lucide-react";
-import { useLanguage } from "../contexts/LanguageContext";
-import { fetchProperties } from "@/services/properties/property.service";
-import useSWR from "swr";
-import { fetcher } from "@/services/shared/fetcher";
-import { baseUrl } from "@/services/shared/apiUrl";
-import Home from "../page";
-=======
-} from "lucide-react";
+import { MapPin, Bed, Bath, Square, Eye } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Image from "next/image";
->>>>>>> c79548b (Updated)
 
 const Properties: React.FC = () => {
   const { language, t } = useLanguage();
@@ -159,15 +135,14 @@ const Properties: React.FC = () => {
             <div
               key={property.id}
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="relative h-64 overflow-hidden">
-<<<<<<< HEAD
-                <img
-=======
+              <div className="relative h-64 w-full overflow-hidden">
                 <Image
->>>>>>> c79548b (Updated)
                   src={property.image}
                   alt={property.title}
+                  width={400}
+                  height={256}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  style={{ width: "100%", height: "100%" }}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">

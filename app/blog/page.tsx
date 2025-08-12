@@ -3,19 +3,11 @@
 import React, { useState } from "react";
 import { Search, Calendar, User, ArrowRight, Filter } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-<<<<<<< HEAD
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-=======
->>>>>>> c79548b (Updated)
 import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
-<<<<<<< HEAD
-=======
 import { ButtonLoading } from "../components/ButtonLoading";
->>>>>>> c79548b (Updated)
 
 const BlogPage: React.FC = () => {
   const { language, t } = useLanguage();
