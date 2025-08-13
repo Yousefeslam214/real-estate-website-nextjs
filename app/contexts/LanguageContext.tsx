@@ -83,9 +83,9 @@ const translations = {
     // Contact
     "contact.title": "Contact Us",
     "contact.subtitle": "Get in touch with our real estate experts",
-    "contact.address": "Ministry of Housing, New Administrative Capital, Egypt",
-    "contact.phone": "+20 2 1234 5678",
-    "contact.email": "info@realestate.gov.eg",
+    "contact.address": "New Administrative Capital, Egypt",
+    "contact.phone": "+20 100 530 7391",
+    "contact.email": "yousefeslam214@gmail.com",
     "contact.hours": "Sunday - Thursday: 9:00 AM - 5:00 PM",
 
     // Footer
@@ -161,9 +161,9 @@ const translations = {
     // Contact
     "contact.title": "اتصل بنا",
     "contact.subtitle": "تواصل مع خبراء العقارات لدينا",
-    "contact.address": "وزارة الإسكان، العاصمة الإدارية الجديدة، مصر",
-    "contact.phone": "+20 2 1234 5678",
-    "contact.email": "info@realestate.gov.eg",
+    "contact.address": "العاصمة الإدارية الجديدة، مصر",
+    "contact.phone": "+20 100 530 7391",
+    "contact.email": "yousefeslam214@gmail.com",
     "contact.hours": "الأحد - الخميس: 9:00 صباحاً - 5:00 مساءً",
 
     // Footer
