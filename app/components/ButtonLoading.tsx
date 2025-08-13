@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export function ButtonLoading() {
   return (
     <>
-      {/* <div className="flex items-center justify-center h-[100vh]"> */}
+      <div className="flex items-center justify-center h-[100vh]">
       <Button
         size="sm"
         disabled
@@ -14,7 +14,7 @@ export function ButtonLoading() {
         <Loader2Icon className="animate-gradient-spin" />
         Please wait
       </Button>
-      {/* </div> */}
+      </div>
     </>
   );
 }

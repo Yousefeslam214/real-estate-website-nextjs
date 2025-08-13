@@ -1,11 +1,10 @@
-import { PaginationResponse } from "@/types/api";
-import { Property } from "../properties/property.service";
+import { ApiResponse } from "@/types/api";
 
 // The fetcher for SWR with optional token
 export const fetcher = async (
   url: string,
   token?: string
-): Promise<PaginationResponse<Property>> => {
+): Promise<ApiResponse<any>> => {
   const headers: HeadersInit = token
     ? { Authorization: `Bearer ${token}` }
     : {};

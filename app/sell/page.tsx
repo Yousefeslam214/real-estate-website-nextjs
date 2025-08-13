@@ -69,11 +69,11 @@ const SellProperty: React.FC = () => {
   useEffect(() => {
     // Get token from localStorage if exists
     const token = localStorage.getItem("token");
-  
+
     if (token) {
       setIsAuthenticated(true);
     }
-  })
+  }, []);
 
   const propertyTypes = [
     {
