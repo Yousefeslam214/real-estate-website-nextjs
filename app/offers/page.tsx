@@ -1,28 +1,11 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
-import {
-  Search,
-  MapPin,
-  Bed,
-  Bath,
-  Square,
-  Eye,
-  Heart,
-  Filter,
-  Phone,
-  Mail,
-} from "lucide-react";
+import React, { Suspense, useState } from "react";
+import { Search, MapPin } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-import { fetchProperties } from "@/services/properties/property.service";
-import useSWR from "swr";
-import { baseUrl } from "@/services/shared/apiUrl";
-import { fetcher } from "@/services/shared/fetcher";
-export async function getApartments() {
-  // You can add any sync logic here if needed
-  const data = await fetchProperties();
-  return data;
-}
+import PropertiesCard, { Filter } from "../components/PropertiesComponents/PropertiesCard";
+import PropertiesSkeleton from "../components/PropertiesComponents/PropertiesSkeleton";
+
 
 export default function OffersPage() {
   const { language, t } = useLanguage();
@@ -30,20 +13,7 @@ export default function OffersPage() {
   const [priceRange, setPriceRange] = useState("");
   const [bedrooms, setBedrooms] = useState("");
   const [location, setLocation] = useState("");
-  // const [filteredApartments, setFilteredApartments] = useState<any[]>([]);
-  const { data, error, isLoading } = useSWR(`${baseUrl}/properties`, fetcher);
-
-  const apartments = data?.data || [];
-  console.log("filteredApartments (client)", apartments);
-  // const filteredApartments = data?.data;
-  // console.log("filteredApartments (client)", filteredApartments);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     console.log("filteredApartments (client)", data);
-  //   };
-  //   fetchData();
-  // }, []);
-  // const filteredApartments =  fetchProperties();
+  const [totalCount, setTotalCount] = useState(0);
 
   const priceRanges = [
     { value: "", label: language === "ar" ? "جميع الأسعار" : "All Prices" },
@@ -102,51 +72,28 @@ export default function OffersPage() {
       label: language === "ar" ? "الشيخ زايد" : "Sheikh Zayed",
     },
   ];
-  // const apartments = [];
-  const filteredApartments = Array.isArray(apartments)
-    ? apartments.filter((apartment) => {
-        const matchesSearch =
-          apartment.additional_information[language].title
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          apartment.additional_information[language].location
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase());
-        // const matchesBedrooms =
-        //   bedrooms === "" ||
-        //   apartment.bedrooms.toString() === bedrooms ||
-        //   (bedrooms === "5+" && apartment.bedrooms >= 5);
-        // const matchesLocation =
-        //   location === "" || apartment.location.toLowerCase().includes(location);
+  
+  const propertiesDataFilters: Filter[] = [
+    {
+      price: priceRange
+        ? priceRange.includes("+")
+          ? [parseInt(priceRange.replace("+", "")), Infinity]
+          : (() => {
+              const parts = priceRange.split("-").map((p) => parseInt(p));
+              return parts.length === 2 ? [parts[0], parts[1]] as [number, number] : undefined;
+            })()
+        : undefined,
+      bedrooms: bedrooms
+        ? bedrooms === "5+"
+          ? 5
+          : parseInt(bedrooms)
+        : undefined,
+      location: location || undefined,
+      // add type and minArea if needed
+    },
+  ];
 
-        let matchesPrice = true;
-        if (priceRange) {
-          const [min, max] = priceRange
-            .split("-")
-            .map((p) => p.replace("+", ""));
-          if (max) {
-            matchesPrice =
-              apartment.price_amount >= parseInt(min) &&
-              apartment.price_amount <= parseInt(max);
-          } else {
-            matchesPrice = apartment.price_amount >= parseInt(min);
-          }
-        }
-
-        return (
-          matchesSearch &&
-          // && matchesBedrooms && matchesLocation
-          matchesPrice
-        );
-      })
-    : [];
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
-      price
-    );
-  };
-
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section */}
@@ -178,8 +125,8 @@ export default function OffersPage() {
               </p>
               <p className="text-gray-500 dark:text-gray-400">
                 {language === "ar"
-                  ? `عرض ${filteredApartments?.pagination?.totalCount} عقار على الخريطة`
-                  : `Showing ${filteredApartments?.pagination?.totalCount} properties on map`}
+                  ? `عرض ${totalCount} عقار على الخريطة`
+                  : `Showing ${totalCount} properties on map`}
               </p>
             </div>
 
@@ -272,148 +219,23 @@ export default function OffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-gray-600 dark:text-gray-300">
             {language === "ar"
-              ? `تم العثور على ${filteredApartments?.length} شقة`
-              : `Found ${filteredApartments?.length} apartments`}
+              ? `تم العثور على ${totalCount} شقة`
+              : `Found ${totalCount} apartments`}
           </p>
         </div>
       </section>
 
       {/* Apartments Grid */}
       <section className="py-16">
-        <Suspense fallback={<div className="text-center">Loading...</div>}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredApartments?.map((apartment) => (
-                <div
-                  key={apartment.id}
-                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={apartment.coverimageurl}
-                      alt={apartment.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {language === "ar" ? "للبيع" : "For Sale"}
-                      </span>
-                    </div>
-                    <div className="absolute top-4 right-4">
-                      <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-200">
-                        <Heart className="h-5 w-5 text-gray-600" />
-                      </button>
-                    </div>
-                    <div className="absolute bottom-4 left-4">
-                      <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1 rounded-full text-sm font-bold">
-                        {formatPrice(parseInt(apartment.price_amount) || 0)}{" "}
-                        {language === "ar" ? "ج.م" : "EGP"}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
-                      {apartment.additional_information[language].title}
-                    </h3>
-
-                    <div className="flex items-center text-gray-600 dark:text-gray-400 mb-4">
-                      <MapPin className="h-4 w-4 mr-2" />
-                      <span className="text-sm">
-                        {apartment.additional_information[language].address}
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4 mb-4">
-                      <div className="text-center">
-                        <Square className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {parseInt(apartment.area_sqm)}{" "}
-                          {language === "ar" ? "م²" : "m²"}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {apartment.bedrooms}{" "}
-                          {language === "ar" ? "غرف" : "beds"}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <Bath className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {apartment.bathrooms}{" "}
-                          {language === "ar" ? "حمام" : "baths"}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mb-4">
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        {/* {language === "ar"
-                          ? `الطابق ${apartment.floor} من ${apartment.totalFloors}`
-                          : `Floor ${apartment.floor} of ${apartment.totalFloors}`} */}
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {/* {apartment.features
-                          .slice(0, 3)
-                          .map((feature, index) => (
-                            <span
-                              key={index}
-                              className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                              {feature}
-                            </span>
-                          ))} */}
-                      </div>
-                    </div>
-
-                    <div className="border-t pt-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                          delivered on {apartment?.available_from?.slice(0, 7)}
-                          {/*
-                           <p className="font-medium">{apartment.agent.name}</p> 
-                           <div className="flex items-center mt-1">
-                             <Phone className="h-3 w-3 mr-1" /> 
-                             <span className="text-xs">
-                              {apartment.agent.phone}
-                            </span> 
-                          </div> 
-                          */}
-                        </div>
-                      </div>
-
-                      <div className="flex space-x-2 rtl:space-x-reverse">
-                        <a
-                          href={`offers/${apartment.id}`}
-                          className="flex-1 bg-gradient-to-r from-blue-600 to-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center space-x-2 rtl:space-x-reverse text-sm">
-                          <Eye className="h-4 w-4" />
-                          <span>
-                            {language === "ar" ? "التفاصيل" : "Details"}
-                          </span>
-                        </a>
-                        <button
-                          className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg transition-colors duration-200"
-                          onClick={() => window.open("tel:01005307391")}>
-                          <Phone className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {filteredApartments?.length === 0 && (
-              <div className="text-center py-16">
-                <p className="text-gray-500 dark:text-gray-400 text-lg">
-                  {language === "ar"
-                    ? "لم يتم العثور على شقق تطابق معايير البحث"
-                    : "No apartments found matching your search criteria"}
-                </p>
-              </div>
-            )}
-          </div>
-        </Suspense>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Suspense fallback={<PropertiesSkeleton length={10} />}>
+            <PropertiesCard
+              propertiesDataFilters={propertiesDataFilters}
+              itemNum={10}
+              setTotalCount={setTotalCount}
+            />
+          </Suspense>
+        </div>
       </section>
     </div>
   );

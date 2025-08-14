@@ -38,11 +38,9 @@ export const emptyPagination: Pagination = {
   hasPrevious: false,
 };
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
-  data: {
-    data: T[];
-    pagination: Pagination;
-  };
+  data: T[];
+  pagination: Pagination;
 }

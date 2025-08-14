@@ -6,21 +6,76 @@ import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Image from "next/image";
-import { ApiResponse } from "@/types/api";
+import { ApiResponse, Property } from "@/types/api";
+import { useEffect } from "react";
 
-const PropertiesCard = () => {
+export type Filter = {
+  price?: [number, number];
+  bedrooms?: number;
+  location?: string;
+  type?: string;
+  minArea?: number;
+};
+type PropertiesCardProps = {
+  itemNum?: number;
+  page?: number;
+  propertiesDataFilters?: Filter[];
+  setTotalCount?: (count: number) => void;
+};
+
+const PropertiesCard = ({
+  itemNum = 6,
+  propertiesDataFilters,
+  page = 1,
+  setTotalCount,
+}: PropertiesCardProps) => {
   const { language, t } = useLanguage();
-
   const { data, isLoading, error } = useSWR<ApiResponse<Property>>(
-    `${baseUrl}/properties`,
+    `${baseUrl}/properties?page=${page}&limit=${itemNum}`,
     fetcher,
     {
       suspense: true,
       fallback: undefined,
     }
   );
-  const properties = data?.data || [];
-  console.log("Properties data:", properties || []);
+
+  const properties: Property[] = Array.isArray(data?.data) ? data.data : [];
+  const filteredProperties = properties.filter((property) => {
+    if (!propertiesDataFilters) return true; // no filters, keep all
+
+    let matches = true;
+
+    propertiesDataFilters.forEach((filter) => {
+      if (filter.price) {
+        const price = parseInt(property.price_amount);
+        if (price < filter.price[0] || price > filter.price[1]) matches = false;
+      }
+      if (filter.bedrooms && property.bedrooms < filter.bedrooms)
+        matches = false;
+      if (
+        filter.location &&
+        !property.additional_information[language].address.includes(
+          filter.location
+        )
+      )
+        matches = false;
+      if (filter.type && property.listing_type !== filter.type) matches = false;
+      if (filter.minArea && parseFloat(property.area_sqm) < filter.minArea) matches = false;
+    });
+
+    return matches;
+  });
+  useEffect(() => {
+    if (setTotalCount) {
+      if (propertiesDataFilters) {
+        setTotalCount(filteredProperties.length);
+      } else if (data?.pagination?.totalCount !== undefined) {
+        console.log("Setting total count:", data.pagination.totalCount);
+        setTotalCount(data.pagination.totalCount);
+      }
+    }
+  }, [data, filteredProperties.length, propertiesDataFilters, propertiesDataFilters?.length, setTotalCount]);
+  console.log("Filtered properties:", filteredProperties);
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
       price
@@ -28,9 +83,19 @@ const PropertiesCard = () => {
   };
   return (
     <div>
+      {propertiesDataFilters &&
+        filteredProperties &&
+        filteredProperties?.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-500 dark:text-gray-400 text-lg">
+              {language === "ar"
+                ? "لم يتم العثور على شقق تطابق معايير البحث"
+                : "No apartments found matching your search criteria"}
+            </p>
+          </div>
+        )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {" "}
-        {properties.slice(0, 6).map((property) => (
+        {filteredProperties.slice(0, itemNum).map((property) => (
           <div
             key={property.id}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
