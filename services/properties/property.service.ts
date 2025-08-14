@@ -1,4 +1,4 @@
-import { PaginationResponse } from "@/types/api";
+import { ApiResponse,  } from "@/types/api";
 import { baseUrl } from "../shared/apiUrl";
 import { PropertyInput, PropertyUpdateInput } from "@/schemas/property.schema";
 
@@ -28,7 +28,7 @@ export interface Property {
 export const fetchProperties = async (
   page?: number,
   limit?: number
-): Promise<PaginationResponse<Property>> => {
+): Promise<ApiResponse<Property>> => {
   const params = new URLSearchParams();
   if (page !== undefined) params.append("page", page.toString());
   if (limit !== undefined) params.append("limit", limit.toString());
@@ -40,7 +40,7 @@ export const fetchProperties = async (
 
   if (!res.ok) throw new Error("Failed to fetch properties");
 
-  const data: PaginationResponse<Property> = await res.json();
+  const data: ApiResponse<Property> = await res.json();
   return data;
 };
 

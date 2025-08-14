@@ -174,7 +174,7 @@ const DashboardPage: React.FC = () => {
 
           {/* Blog Posts Tab */}
           {activeTab === "posts" && (
-            <BlogPostsDashboardTab blogPosts={blogPosts} />
+            <BlogPostsDashboardTab />
           )}
 
           {/* Users Tab */}

@@ -71,15 +71,15 @@ const PropertiesCard = ({
   useEffect(() => {
     if (setTotalCount) {
       if (propertiesDataFilters) {
-        setTotalCount(filteredProperties.length);
+        setTotalCount(filteredProperties?.length ?? 0);
       } else if (data?.pagination?.totalCount !== undefined) {
         console.log("Setting total count:", data.pagination.totalCount);
-        setTotalCount(data.pagination.totalCount);
+        setTotalCount(data?.pagination?.totalCount);
       }
     }
   }, [
     data,
-    filteredProperties.length,
+    filteredProperties?.length,
     propertiesDataFilters,
     propertiesDataFilters?.length,
     setTotalCount,
@@ -107,14 +107,14 @@ const PropertiesCard = ({
           </div>
         )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProperties.slice(0, itemNum).map((property) => (
+        {filteredProperties?.slice(0, itemNum).map((property) => (
           <div
             key={property.id}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
             <div className="relative h-64 w-full overflow-hidden">
               {property?.coverimageurl ? (
                 <Image
-                  src={property.coverimageurl}
+                  src={property?.coverimageurl}
                   alt={
                     property?.additional_information[language].title ||
                     "property"
@@ -161,7 +161,7 @@ const PropertiesCard = ({
                     {property?.area_sqm} {t("properties.area")}
                   </span>
                 </div>
-                {property.bedrooms > 0 && (
+                {property?.bedrooms > 0 && (
                   <div className="text-center">
                     <Bed className="h-5 w-5 mx-auto mb-1 text-gray-500 dark:text-gray-400" />
                     <span className="text-sm text-gray-600 dark:text-gray-400">

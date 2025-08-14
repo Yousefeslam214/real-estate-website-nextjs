@@ -9,6 +9,8 @@ import Pagination from "../Pagination";
 import { Toast } from "@/components/ui/toast";
 import toast from "react-hot-toast";
 import { Router } from "next/router";
+import Image from "next/image";
+import { Property } from "@/types/api";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties";
@@ -58,7 +60,7 @@ const PropertiesDashboardTab = () => {
   console.log("Properties data:", data);
   const { language, t } = useLanguage();
 
-  const properties = Array.isArray(data?.data) ? data.data : [];
+  const properties = Array.isArray(data?.data) ? data?.data : [];
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(price);
@@ -111,16 +113,26 @@ const PropertiesDashboardTab = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-200">
-            {properties.map((property: any) => (
+            {properties?.map((property: Property) => (
               <tr key={property.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center">
-                  <img
+                  <Image
                     src={property?.coverimageurl || "/placeholder.jpg"}
-                    alt={property?.title || "Property"}
+                    alt={
+                      language === "ar"
+                        ? property?.additional_information?.ar?.title ||
+                          "Property"
+                        : property?.additional_information?.en?.title ||
+                          "Property"
+                    }
                     className="h-12 w-12 rounded-lg object-cover"
                   />
                   <div className="ml-4">
-                    <div className="text-sm font-medium">{property?.title}</div>
+                    <div className="text-sm font-medium">
+                      {language === "ar"
+                        ? property?.additional_information?.ar?.title
+                        : property?.additional_information?.en?.title}
+                    </div>
                     <div className="text-sm text-gray-500">
                       {/* {property?.location} */}
                     </div>
@@ -135,7 +147,7 @@ const PropertiesDashboardTab = () => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm font-medium">
-                    {formatPrice(property?.price_amount)}{" "}
+                    {formatPrice(parseInt(property?.price_amount))}{" "}
                     {language === "ar" ? "ج.م" : "EGP"}
                   </div>
                 </td>
@@ -159,8 +171,11 @@ const PropertiesDashboardTab = () => {
                       rel="noopener noreferrer">
                       <Eye className="h-4 w-4" />
                     </a>
-                    <button className="text-green-600"
-                    onClick={() => window.location.href = `/dashboard/properties/${property.id}/edit`}>
+                    <button
+                      className="text-green-600"
+                      onClick={() =>
+                        (window.location.href = `/dashboard/properties/${property.id}/edit`)
+                      }>
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
@@ -173,7 +188,7 @@ const PropertiesDashboardTab = () => {
               </tr>
             ))}
 
-            {properties.length === 0 && (
+            {properties?.length === 0 && (
               <tr>
                 <td colSpan={4} className="text-center p-4">
                   {language === "ar" ? "لا توجد عقارات" : "No properties found"}
@@ -187,7 +202,7 @@ const PropertiesDashboardTab = () => {
       {/* ✅ Use Pagination Component */}
       <Pagination
         currentPage={currentPage}
-        totalPages={data?.pagination?.totalPages}
+        totalPages={data?.pagination?.totalPages ?? 1}
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
