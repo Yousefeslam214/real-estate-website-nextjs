@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 // Mock blog data (same as in your blog/page.tsx)
-const blogPosts: unknown[] = [
+const blogPosts: BlogPost[] = [
   {
     id: 1,
     title: "Launch of New Administrative Capital Phase 3",
@@ -169,383 +169,383 @@ export async function generateStaticParams() {
 // // const BlogPostPage = ({ params }: { params: { slug: string[] } }) => {
 // const BlogPostPage = (id: DetailsPageProps) => {
 
-const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
-  const params = useParams();
-  console.log("params", params); // Check shape
-  const { language, t } = useLanguage();
-  console.log("initialData :", initialData);
-  const router = useRouter();
-  const postId = parseInt(params.slug[0]);
-  // const post = blogPosts.find((p) => p.id === postId);
-  const post = initialData?.data;
-  console.log("Post data fetched:", post);
-  // Format date function
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
+//   const params = useParams();
+//   console.log("params", params); // Check shape
+//   const { language, t } = useLanguage();
+//   console.log("initialData :", initialData);
+//   const router = useRouter();
+//   const postId = parseInt(params.slug[0]);
+//   // const post = blogPosts.find((p) => p.id === postId);
+//   const post = initialData?.data;
+//   console.log("Post data fetched:", post);
+//   // Format date function
+//   const formatDate = (dateString: string) => {
+//     const date = new Date(dateString);
+//     return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG", {
+//       year: "numeric",
+//       month: "long",
+//       day: "numeric",
+//     });
+//   };
 
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            {language === "ar" ? "المقال غير موجود" : "Article Not Found"}
-          </h2>
-          <button
-            onClick={() => router.push("/blog")}
-            className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center mx-auto">
-            <ArrowLeft
-              className={`mr-2 h-5 w-5 ${language === "ar" && "rotate-180"}`}
-            />
-            {language === "ar" ? "العودة إلى المدونة" : "Back to Blog"}
-          </button>
-        </div>
-      </div>
-    );
-  }
+//   if (!post) {
+//     return (
+//       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+//           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+//             {language === "ar" ? "المقال غير موجود" : "Article Not Found"}
+//           </h2>
+//           <button
+//             onClick={() => router.push("/blog")}
+//             className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-green-700 transition-all duration-300 flex items-center justify-center mx-auto">
+//             <ArrowLeft
+//               className={`mr-2 h-5 w-5 ${language === "ar" && "rotate-180"}`}
+//             />
+//             {language === "ar" ? "العودة إلى المدونة" : "Back to Blog"}
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
 
-  // Find related posts (same category, excluding current)
-  const relatedPosts = blogPosts
-    .filter((p) => p.category === post.category && p.id !== post.id)
-    .slice(0, 3);
+//   // Find related posts (same category, excluding current)
+//   const relatedPosts = blogPosts
+//     .filter((p) => p.category === post.category && p.id !== post.id)
+//     .slice(0, 3);
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* Hero Section */}
-      <div className="relative h-96">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-10" />
-        <img
-          src={post.featuredImageUrl}
-          alt={post.title}
-          className="w-full h-full object-cover"
-        />
-        <div
-          className="
-          absolute bottom-0 left-0 right-0 z-20 max-w-7xl
-         mx-auto px-4 sm:px-6 lg:px-8 pb-12
-         ">
-          <div className="max-w-3xl">
-            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4 inline-block">
-              {post.category === "housing"
-                ? language === "ar"
-                  ? "مشاريع الإسكان"
-                  : "Housing Projects"
-                : post.category === "digital"
-                ? language === "ar"
-                  ? "الخدمات الرقمية"
-                  : "Digital Services"
-                : post.category === "investment"
-                ? language === "ar"
-                  ? "الاستثمار"
-                  : "Investment"
-                : language === "ar"
-                ? "الاستدامة"
-                : "Sustainability"}
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {post.title}
-            </h1>
-            <div className="flex flex-wrap items-center text-gray-200 text-sm">
-              <div className="flex items-center mr-6 mb-2">
-                <User className="h-4 w-4 mr-2" />
-                <span>{post.author.name}</span>
-              </div>
-              <div className="flex items-center mr-6 mb-2">
-                <Calendar className="h-4 w-4 mr-2" />
-                <span>{formatDate(post.date)}</span>
-              </div>
-              <div className="flex items-center mb-2">
-                <span>{post.readTime}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+//   return (
+//     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+//       {/* Hero Section */}
+//       <div className="relative h-96">
+//         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-10" />
+//         <img
+//           src={post.featuredImageUrl}
+//           alt={post.title}
+//           className="w-full h-full object-cover"
+//         />
+//         <div
+//           className="
+//           absolute bottom-0 left-0 right-0 z-20 max-w-7xl
+//          mx-auto px-4 sm:px-6 lg:px-8 pb-12
+//          ">
+//           <div className="max-w-3xl">
+//             <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4 inline-block">
+//               {post.category === "housing"
+//                 ? language === "ar"
+//                   ? "مشاريع الإسكان"
+//                   : "Housing Projects"
+//                 : post.category === "digital"
+//                 ? language === "ar"
+//                   ? "الخدمات الرقمية"
+//                   : "Digital Services"
+//                 : post.category === "investment"
+//                 ? language === "ar"
+//                   ? "الاستثمار"
+//                   : "Investment"
+//                 : language === "ar"
+//                 ? "الاستدامة"
+//                 : "Sustainability"}
+//             </span>
+//             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+//               {post.title}
+//             </h1>
+//             <div className="flex flex-wrap items-center text-gray-200 text-sm">
+//               <div className="flex items-center mr-6 mb-2">
+//                 <User className="h-4 w-4 mr-2" />
+//                 <span>{post.author.name}</span>
+//               </div>
+//               <div className="flex items-center mr-6 mb-2">
+//                 <Calendar className="h-4 w-4 mr-2" />
+//                 <span>{formatDate(post.date)}</span>
+//               </div>
+//               <div className="flex items-center mb-2">
+//                 <span>{post.readTime}</span>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="lead text-gray-700 dark:text-gray-300 text-xl mb-8">
-              {post.excerpt}
-            </p>
+//       {/* Main Content */}
+//       <section className="py-16">
+//         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+//           <div className="prose prose-lg dark:prose-invert max-w-none">
+//             <p className="lead text-gray-700 dark:text-gray-300 text-xl mb-8">
+//               {post.excerpt}
+//             </p>
 
-            <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl my-8">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                {language === "ar" ? "النقاط الرئيسية" : "Key Takeaways"}
-              </h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>
-                  {language === "ar"
-                    ? "إطلاق المرحلة الثالثة من مشروع العاصمة الإدارية"
-                    : "Launch of New Administrative Capital Phase 3"}
-                </li>
-                <li>
-                  {language === "ar"
-                    ? "توفير 50,000 وحدة سكنية جديدة"
-                    : "Provision of 50,000 new residential units"}
-                </li>
-                <li>
-                  {language === "ar"
-                    ? "مرافق تجارية وترفيهية وتعليمية متطورة"
-                    : "Advanced commercial, recreational, and educational facilities"}
-                </li>
-              </ul>
-            </div>
+//             <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl my-8">
+//               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+//                 {language === "ar" ? "النقاط الرئيسية" : "Key Takeaways"}
+//               </h3>
+//               <ul className="list-disc pl-5 space-y-2">
+//                 <li>
+//                   {language === "ar"
+//                     ? "إطلاق المرحلة الثالثة من مشروع العاصمة الإدارية"
+//                     : "Launch of New Administrative Capital Phase 3"}
+//                 </li>
+//                 <li>
+//                   {language === "ar"
+//                     ? "توفير 50,000 وحدة سكنية جديدة"
+//                     : "Provision of 50,000 new residential units"}
+//                 </li>
+//                 <li>
+//                   {language === "ar"
+//                     ? "مرافق تجارية وترفيهية وتعليمية متطورة"
+//                     : "Advanced commercial, recreational, and educational facilities"}
+//                 </li>
+//               </ul>
+//             </div>
 
-            <p className="mb-6">{post.content}</p>
+//             <p className="mb-6">{post.content}</p>
 
-            <h2 className="text-2xl font-bold mt-10 mb-6">
-              {language === "ar" ? "ملخص المقال" : "Post Summary"}
-            </h2>
+//             <h2 className="text-2xl font-bold mt-10 mb-6">
+//               {language === "ar" ? "ملخص المقال" : "Post Summary"}
+//             </h2>
 
-            <p className="mb-6">
-              {language === "ar"
-                ? "يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة. تم تصميم المشروع ليكون نموذجاً للتنمية المستدامة والتخطيط الحضري الحديث في المنطقة."
-                : "The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities. Designed to be a model of sustainable development and modern urban planning in the region."}
-            </p>
-            <h2 className="text-2xl font-bold mt-10 mb-6">
-              {language === "ar" ? "تفاصيل المشروع" : "Project Details"}
-            </h2>
+//             <p className="mb-6">
+//               {language === "ar"
+//                 ? "يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة. تم تصميم المشروع ليكون نموذجاً للتنمية المستدامة والتخطيط الحضري الحديث في المنطقة."
+//                 : "The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities. Designed to be a model of sustainable development and modern urban planning in the region."}
+//             </p>
+//             <h2 className="text-2xl font-bold mt-10 mb-6">
+//               {language === "ar" ? "تفاصيل المشروع" : "Project Details"}
+//             </h2>
 
-            <p className="mb-6">
-              {language === "ar"
-                ? "يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة. تم تصميم المشروع ليكون نموذجاً للتنمية المستدامة والتخطيط الحضري الحديث في المنطقة."
-                : "The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities. Designed to be a model of sustainable development and modern urban planning in the region."}
-            </p>
+//             <p className="mb-6">
+//               {language === "ar"
+//                 ? "يشمل المشروع إنشاء 50,000 وحدة سكنية متنوعة تلبي احتياجات جميع الشرائح الاجتماعية، بالإضافة إلى مرافق تجارية وترفيهية وتعليمية متطورة. تم تصميم المشروع ليكون نموذجاً للتنمية المستدامة والتخطيط الحضري الحديث في المنطقة."
+//                 : "The project includes the construction of 50,000 diverse residential units catering to all social segments, along with advanced commercial, recreational, and educational facilities. Designed to be a model of sustainable development and modern urban planning in the region."}
+//             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
-              <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  {language === "ar" ? "المزايا الرئيسية" : "Key Benefits"}
-                </h3>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>
-                      {language === "ar"
-                        ? "وحدات سكنية بأسعار تنافسية"
-                        : "Competitively priced residential units"}
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>
-                      {language === "ar"
-                        ? "بنية تحتية متطورة"
-                        : "Advanced infrastructure"}
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>
-                      {language === "ar"
-                        ? "تصميم مستدام وصديق للبيئة"
-                        : "Sustainable and eco-friendly design"}
-                    </span>
-                  </li>
-                </ul>
-              </div>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10">
+//               <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl">
+//                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+//                   {language === "ar" ? "المزايا الرئيسية" : "Key Benefits"}
+//                 </h3>
+//                 <ul className="space-y-2">
+//                   <li className="flex items-start">
+//                     <span className="text-green-500 mr-2">✓</span>
+//                     <span>
+//                       {language === "ar"
+//                         ? "وحدات سكنية بأسعار تنافسية"
+//                         : "Competitively priced residential units"}
+//                     </span>
+//                   </li>
+//                   <li className="flex items-start">
+//                     <span className="text-green-500 mr-2">✓</span>
+//                     <span>
+//                       {language === "ar"
+//                         ? "بنية تحتية متطورة"
+//                         : "Advanced infrastructure"}
+//                     </span>
+//                   </li>
+//                   <li className="flex items-start">
+//                     <span className="text-green-500 mr-2">✓</span>
+//                     <span>
+//                       {language === "ar"
+//                         ? "تصميم مستدام وصديق للبيئة"
+//                         : "Sustainable and eco-friendly design"}
+//                     </span>
+//                   </li>
+//                 </ul>
+//               </div>
 
-              <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  {language === "ar" ? "الجدول الزمني" : "Timeline"}
-                </h3>
-                <ul className="space-y-2">
-                  <li className="flex justify-between">
-                    <span>
-                      {language === "ar"
-                        ? "بدء الإنشاءات"
-                        : "Construction start"}
-                    </span>
-                    <span className="font-medium">Q1 2025</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>
-                      {language === "ar"
-                        ? "استلام المرحلة الأولى"
-                        : "Phase 1 delivery"}
-                    </span>
-                    <span className="font-medium">Q4 2026</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>
-                      {language === "ar"
-                        ? "الانتهاء الكامل"
-                        : "Full completion"}
-                    </span>
-                    <span className="font-medium">Q2 2028</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+//               <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl">
+//                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+//                   {language === "ar" ? "الجدول الزمني" : "Timeline"}
+//                 </h3>
+//                 <ul className="space-y-2">
+//                   <li className="flex justify-between">
+//                     <span>
+//                       {language === "ar"
+//                         ? "بدء الإنشاءات"
+//                         : "Construction start"}
+//                     </span>
+//                     <span className="font-medium">Q1 2025</span>
+//                   </li>
+//                   <li className="flex justify-between">
+//                     <span>
+//                       {language === "ar"
+//                         ? "استلام المرحلة الأولى"
+//                         : "Phase 1 delivery"}
+//                     </span>
+//                     <span className="font-medium">Q4 2026</span>
+//                   </li>
+//                   <li className="flex justify-between">
+//                     <span>
+//                       {language === "ar"
+//                         ? "الانتهاء الكامل"
+//                         : "Full completion"}
+//                     </span>
+//                     <span className="font-medium">Q2 2028</span>
+//                   </li>
+//                 </ul>
+//               </div>
+//             </div>
 
-            <blockquote className="border-l-4 border-blue-600 pl-6 py-3 my-8 italic text-gray-700 dark:text-gray-300">
-              {language === "ar"
-                ? "يمثل هذا المشروع نقلة نوعية في قطاع الإسكان المصري، حيث يدمج بين التصميم الحديث والممارسات المستدامة لخلق مجتمعات متكاملة تلبي احتياجات المواطنين."
-                : "This project represents a qualitative leap in the Egyptian housing sector, integrating modern design and sustainable practices to create integrated communities that meet citizens' needs."}
-            </blockquote>
+//             <blockquote className="border-l-4 border-blue-600 pl-6 py-3 my-8 italic text-gray-700 dark:text-gray-300">
+//               {language === "ar"
+//                 ? "يمثل هذا المشروع نقلة نوعية في قطاع الإسكان المصري، حيث يدمج بين التصميم الحديث والممارسات المستدامة لخلق مجتمعات متكاملة تلبي احتياجات المواطنين."
+//                 : "This project represents a qualitative leap in the Egyptian housing sector, integrating modern design and sustainable practices to create integrated communities that meet citizens' needs."}
+//             </blockquote>
 
-            <h2 className="text-2xl font-bold mt-10 mb-6">
-              {language === "ar" ? "التأثير المجتمعي" : "Community Impact"}
-            </h2>
+//             <h2 className="text-2xl font-bold mt-10 mb-6">
+//               {language === "ar" ? "التأثير المجتمعي" : "Community Impact"}
+//             </h2>
 
-            <p className="mb-6">
-              {language === "ar"
-                ? "من المتوقع أن يوفر المشروع أكثر من 100,000 فرصة عمل مباشرة وغير مباشرة خلال مراحل الإنشاء المختلفة، كما سيسهم في تحسين جودة الحياة للمواطنين من خلال توفير مساحات خضراء ومرافق عامة عالية الجودة. سيتم تخصيص 20% من الوحدات السكنية للشباب والأسر محدودة الدخل."
-                : "The project is expected to provide over 100,000 direct and indirect job opportunities during various construction phases. It will also improve citizens' quality of life by providing green spaces and high-quality public facilities. 20% of residential units will be allocated to youth and low-income families."}
-            </p>
-          </div>
+//             <p className="mb-6">
+//               {language === "ar"
+//                 ? "من المتوقع أن يوفر المشروع أكثر من 100,000 فرصة عمل مباشرة وغير مباشرة خلال مراحل الإنشاء المختلفة، كما سيسهم في تحسين جودة الحياة للمواطنين من خلال توفير مساحات خضراء ومرافق عامة عالية الجودة. سيتم تخصيص 20% من الوحدات السكنية للشباب والأسر محدودة الدخل."
+//                 : "The project is expected to provide over 100,000 direct and indirect job opportunities during various construction phases. It will also improve citizens' quality of life by providing green spaces and high-quality public facilities. 20% of residential units will be allocated to youth and low-income families."}
+//             </p>
+//           </div>
 
-          {/* Share Buttons */}
-          <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {language === "ar" ? "شارك هذه المقالة" : "Share this article"}
-              </h3>
-              <div className="flex space-x-3 rtl:space-x-reverse">
-                <button className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
-                  <Share2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+//           {/* Share Buttons */}
+//           <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+//             <div className="flex items-center justify-between">
+//               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+//                 {language === "ar" ? "شارك هذه المقالة" : "Share this article"}
+//               </h3>
+//               <div className="flex space-x-3 rtl:space-x-reverse">
+//                 <button className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
+//                   <Share2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
 
-      {/* Related Posts */}
-      {relatedPosts.length > 0 && (
-        <section className="py-12 bg-gray-100 dark:bg-gray-800 transition-colors duration-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {language === "ar" ? "مقالات ذات صلة" : "Related Articles"}
-              </h2>
-              <Link
-                href="/blog"
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center">
-                {language === "ar" ? "عرض الكل" : "View All"}
-                <ArrowRight
-                  className={`h-5 w-5 ${
-                    language === "ar" ? "mr-2 rotate-180" : "ml-2"
-                  }`}
-                />
-              </Link>
-            </div>
+//       {/* Related Posts */}
+//       {relatedPosts.length > 0 && (
+//         <section className="py-12 bg-gray-100 dark:bg-gray-800 transition-colors duration-200">
+//           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//             <div className="flex justify-between items-center mb-10">
+//               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+//                 {language === "ar" ? "مقالات ذات صلة" : "Related Articles"}
+//               </h2>
+//               <Link
+//                 href="/blog"
+//                 className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center">
+//                 {language === "ar" ? "عرض الكل" : "View All"}
+//                 <ArrowRight
+//                   className={`h-5 w-5 ${
+//                     language === "ar" ? "mr-2 rotate-180" : "ml-2"
+//                   }`}
+//                 />
+//               </Link>
+//             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedPosts.map((post) => (
-                <article
-                  key={post.id}
-                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={post.featuredImageUrl}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {post.category === "housing"
-                          ? language === "ar"
-                            ? "مشاريع الإسكان"
-                            : "Housing"
-                          : post.category === "digital"
-                          ? language === "ar"
-                            ? "رقمية"
-                            : "Digital"
-                          : post.category === "investment"
-                          ? language === "ar"
-                            ? "استثمار"
-                            : "Investment"
-                          : language === "ar"
-                          ? "استدامة"
-                          : "Sustainability"}
-                      </span>
-                    </div>
-                  </div>
+//             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+//               {relatedPosts.map((post) => (
+//                 <article
+//                   key={post.id}
+//                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+//                   <div className="relative h-48 overflow-hidden">
+//                     <img
+//                       src={post.featuredImageUrl}
+//                       alt={post.title}
+//                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+//                     />
+//                     <div className="absolute top-4 left-4">
+//                       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+//                         {post.category === "housing"
+//                           ? language === "ar"
+//                             ? "مشاريع الإسكان"
+//                             : "Housing"
+//                           : post.category === "digital"
+//                           ? language === "ar"
+//                             ? "رقمية"
+//                             : "Digital"
+//                           : post.category === "investment"
+//                           ? language === "ar"
+//                             ? "استثمار"
+//                             : "Investment"
+//                           : language === "ar"
+//                           ? "استدامة"
+//                           : "Sustainability"}
+//                       </span>
+//                     </div>
+//                   </div>
 
-                  <div className="p-6">
-                    <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 text-sm mb-3">
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        <span>{formatDate(post.date)}</span>
-                      </div>
-                      <span>{post.readTime}</span>
-                    </div>
+//                   <div className="p-6">
+//                     <div className="flex items-center justify-between text-gray-500 dark:text-gray-400 text-sm mb-3">
+//                       <div className="flex items-center">
+//                         <Calendar className="h-4 w-4 mr-2" />
+//                         <span>{formatDate(post.date)}</span>
+//                       </div>
+//                       <span>{post.readTime}</span>
+//                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
-                      {post.title}
-                    </h3>
+//                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
+//                       {post.title}
+//                     </h3>
 
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
+//                     <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+//                       {post.excerpt}
+//                     </p>
 
-                    <Link
-                      href={`/blog/${post.id}/${post.title
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, "-")}`}
-                      className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors duration-200">
-                      <span>
-                        {language === "ar" ? "اقرأ المزيد" : "Read More"}
-                      </span>
-                      <ArrowRight
-                        className={`h-4 w-4 ${
-                          language === "ar" ? "mr-2 rotate-180" : "ml-2"
-                        }`}
-                      />
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+//                     <Link
+//                       href={`/blog/${post.id}/${post.title
+//                         .toLowerCase()
+//                         .replace(/[^a-z0-9]+/g, "-")}`}
+//                       className="flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors duration-200">
+//                       <span>
+//                         {language === "ar" ? "اقرأ المزيد" : "Read More"}
+//                       </span>
+//                       <ArrowRight
+//                         className={`h-4 w-4 ${
+//                           language === "ar" ? "mr-2 rotate-180" : "ml-2"
+//                         }`}
+//                       />
+//                     </Link>
+//                   </div>
+//                 </article>
+//               ))}
+//             </div>
+//           </div>
+//         </section>
+//       )}
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            {language === "ar"
-              ? "انضم إلى قائمتنا البريدية"
-              : "Join Our Newsletter"}
-          </h2>
-          <p className="text-xl mb-10 max-w-3xl mx-auto text-blue-100">
-            {language === "ar"
-              ? "احصل على آخر التحديثات والمشاريع العقارية الجديدة مباشرة في بريدك الإلكتروني"
-              : "Get the latest updates and new real estate projects directly in your inbox"}
-          </p>
+//       {/* CTA Section */}
+//       <section className="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+//           <h2 className="text-3xl font-bold mb-6">
+//             {language === "ar"
+//               ? "انضم إلى قائمتنا البريدية"
+//               : "Join Our Newsletter"}
+//           </h2>
+//           <p className="text-xl mb-10 max-w-3xl mx-auto text-blue-100">
+//             {language === "ar"
+//               ? "احصل على آخر التحديثات والمشاريع العقارية الجديدة مباشرة في بريدك الإلكتروني"
+//               : "Get the latest updates and new real estate projects directly in your inbox"}
+//           </p>
 
-          <div className="max-w-xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="email"
-                placeholder={
-                  language === "ar" ? "بريدك الإلكتروني" : "Your email address"
-                }
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap">
-                {language === "ar" ? "اشتراك" : "Subscribe"}
-              </button>
-            </div>
-            <p className="text-sm mt-3 text-blue-200">
-              {language === "ar"
-                ? "نحن نحترم خصوصيتك. لن نشارك بريدك مع أي طرف ثالث."
-                : "We respect your privacy. We'll never share your email with any third parties."}
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+//           <div className="max-w-xl mx-auto">
+//             <div className="flex flex-col sm:flex-row gap-4">
+//               <input
+//                 type="email"
+//                 placeholder={
+//                   language === "ar" ? "بريدك الإلكتروني" : "Your email address"
+//                 }
+//                 className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+//               />
+//               <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap">
+//                 {language === "ar" ? "اشتراك" : "Subscribe"}
+//               </button>
+//             </div>
+//             <p className="text-sm mt-3 text-blue-200">
+//               {language === "ar"
+//                 ? "نحن نحترم خصوصيتك. لن نشارك بريدك مع أي طرف ثالث."
+//                 : "We respect your privacy. We'll never share your email with any third parties."}
+//             </p>
+//           </div>
+//         </div>
+//       </section>
+//     </div>
+//   );
 };
 
 export default BlogPostPage;
