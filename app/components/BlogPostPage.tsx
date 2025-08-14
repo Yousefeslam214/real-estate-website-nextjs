@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 // Mock blog data (same as in your blog/page.tsx)
-const blogPosts: BlogPost[] = [
+const blogPosts: unknown[] = [
   {
     id: 1,
     title: "Launch of New Administrative Capital Phase 3",
