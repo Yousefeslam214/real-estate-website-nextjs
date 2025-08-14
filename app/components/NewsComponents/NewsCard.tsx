@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { baseUrl } from "@/services/shared/apiUrl";
 import { fetcher } from "@/services/shared/fetcher";
@@ -74,7 +74,7 @@ const NewsCard = () => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {newsItems.slice(0, 3).map((item) => (
+        {newsItems.slice(0, 3).map((item: any) => (
           <article
             key={item.id}
             className="bg-gray-50 dark:bg-gray-700 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
