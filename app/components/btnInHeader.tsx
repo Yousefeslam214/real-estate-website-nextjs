@@ -1,15 +1,28 @@
+"use client";
+
 import { Globe, Menu, Moon, Sun, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useRouter } from "next/navigation";
 
 const BtnInHeader = () => {
-  const render = useRouter();
+  const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
-
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsAuthorized(true);
+    }
+  }, []);
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthorized(false);
+    router.push("/signin");
+  };
   return (
     <div>
       {" "}
@@ -32,14 +45,23 @@ const BtnInHeader = () => {
             {language === "en" ? "العربية" : "English"}
           </span>
         </button>
-        <button
-          onClick={() => render.push("/signup")}
-          className="flex items-center space-x-2 rtl:space-x-reverse bg-gradient-to-br from-blue-600 to-green-600 hover:bg-blue-600 dark:hover:bg-blue-800 px-3 py-2 rounded-lg transition-colors duration-200 shadow text-white">
-          {/* <Globe className="h-4 w-4" /> */}
-          <span className="text-sm font-medium">
-            {language === "en" ? t("Sign Up") : t("إنشاء حساب")}
-          </span>
-        </button>
+        {isAuthorized ? (
+          <button
+            onClick={logout}
+            className="flex items-center space-x-2 rtl:space-x-reverse bg-gradient-to-br from-blue-600 to-green-600 hover:bg-blue-600 dark:hover:bg-blue-800 px-3 py-2 rounded-lg transition-colors duration-200 shadow text-white">
+            <span className="text-sm font-medium">
+              {language === "en" ? t("Log Out") : t("تسجيل الخروج")}
+            </span>
+          </button>
+        ) : (
+          <button
+            onClick={() => router.push("/signin")}
+            className="flex items-center space-x-2 rtl:space-x-reverse bg-gradient-to-br from-blue-600 to-green-600 hover:bg-blue-600 dark:hover:bg-blue-800 px-3 py-2 rounded-lg transition-colors duration-200 shadow text-white">
+            <span className="text-sm font-medium">
+              {language === "en" ? t("Sign In") : t("تسجيل الدخول")}
+            </span>
+          </button>
+        )}
 
         {/* Mobile menu button */}
         <div className="md:hidden">

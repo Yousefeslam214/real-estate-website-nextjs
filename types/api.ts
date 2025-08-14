@@ -29,6 +29,14 @@ export interface Pagination {
   hasNext: boolean;
   hasPrevious: boolean;
 }
+export const emptyPagination: Pagination = {
+  currentPage: 1,
+  limit: 0,
+  totalCount: 0,
+  totalPages: 0,
+  hasNext: false,
+  hasPrevious: false,
+};
 
 export interface ApiResponse<T = any> {
   success: boolean;

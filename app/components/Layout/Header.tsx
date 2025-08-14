@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { Menu, X, Globe, Sun, Moon } from "lucide-react";
-import { useLanguage } from "../contexts/LanguageContext";
-import { useTheme } from "../contexts/ThemeContext";
-import BtnInHeader from "./btnInHeader";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { useTheme } from "../../contexts/ThemeContext";
+import BtnInHeader from "../btnInHeader";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

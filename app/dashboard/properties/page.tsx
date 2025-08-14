@@ -187,7 +187,7 @@ const PropertiesDashboardTab = () => {
       {/* ✅ Use Pagination Component */}
       <Pagination
         currentPage={currentPage}
-        totalPages={data.pagination.totalPages}
+        totalPages={data?.pagination?.totalPages}
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>

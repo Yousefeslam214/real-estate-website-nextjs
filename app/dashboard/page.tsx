@@ -18,7 +18,7 @@ import {
 import { useLanguage } from "../contexts/LanguageContext";
 import PropertiesDashboardTab from "./properties/page";
 import Overview from "./overview/page";
-import Header from "../components/Header";
+import Header from "../components/Layout/Header";
 import BtnInHeader from "../components/btnInHeader";
 import OverviewDashboardTab from "./overview/page";
 import BlogPostsDashboardTab from "./blog/page";
@@ -100,15 +100,15 @@ const DashboardPage: React.FC = () => {
       <div className="w-64 bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
         {/* <div className="p-6">
           <div className="flex items-center"> */}
-            {/* <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
+        {/* <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">RE</span>
             </div> */}
-            {/* <div className={`${language === "ar" ? "mr-3" : "ml-3"}`}>
+        {/* <div className={`${language === "ar" ? "mr-3" : "ml-3"}`}>
               <h1 className="text-lg font-bold text-gray-900 dark:text-white">
                 {language === "ar" ? "لوحة التحكم" : "Dashboard"}
               </h1>
             </div> */}
-          {/* </div>
+        {/* </div>
         </div> */}
 
         <nav className="mt-6">

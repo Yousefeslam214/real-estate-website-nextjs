@@ -4,7 +4,7 @@ import { Home, X } from "lucide-react";
 import { PropertyCard } from "./PropertyCard";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import LoopingScrollList from "./LoopingScrollList";
+import LoopingScrollList from "../LoopingScrollList";
 
 export interface Property {
   id: string;

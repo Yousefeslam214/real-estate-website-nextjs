@@ -4,8 +4,8 @@
 import React from "react";
 import { ArrowLeft, Calendar, User, Share2, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Layout/Header";
+import Footer from "@/app/components/Layout/Footer";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { DetailsPageProps } from "@/types/detailsPage";
@@ -24,7 +24,7 @@ interface BlogPost {
 }
 
 // Mock blog data (same as in your blog/page.tsx)
-const blogPosts : BlogPost[] = [
+const blogPosts: BlogPost[] = [
   {
     id: 1,
     title: "Launch of New Administrative Capital Phase 3",
@@ -409,7 +409,6 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
                 {language === "ar" ? "شارك هذه المقالة" : "Share this article"}
               </h3>
               <div className="flex space-x-3 rtl:space-x-reverse">
-              
                 <button className="bg-gray-200 dark:bg-gray-700 p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
                   <Share2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                 </button>

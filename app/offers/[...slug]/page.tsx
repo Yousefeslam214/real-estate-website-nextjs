@@ -1,6 +1,5 @@
-import PropertyDetailsClient from "@/app/components/PropertyDetailsClient";
+import PropertyDetailsClient from "@/app/components/PropertiesComponents/PropertyDetailsClient";
 import { baseUrl } from "@/services/shared/apiUrl";
-
 
 export default async function Page({ params }: { params: { slug: string[] } }) {
   const res = await fetch(`${baseUrl}/properties/${params.slug[0]}`, {
@@ -12,7 +11,5 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
   }
 
   const data = await res.json();
-  return (
-    <PropertyDetailsClient id={params.slug[0]} initialData={data} />
-  );
+  return <PropertyDetailsClient id={params.slug[0]} initialData={data} />;
 }

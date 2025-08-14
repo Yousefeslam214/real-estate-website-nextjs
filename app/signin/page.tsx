@@ -32,6 +32,7 @@ const SignInPage: React.FC = () => {
         localStorage.setItem("token", data.data.token);
         setIsSubmitted(true);
         router.push("/");
+        router.refresh();
         return;
       }
     } catch (err) {

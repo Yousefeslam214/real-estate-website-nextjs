@@ -9,7 +9,7 @@ import { signUpUser } from "@/services/auth/auth.service";
 import { useRouter } from "next/navigation";
 
 const SignUpPage: React.FC = () => {
-  const { language} = useLanguage();
+  const { language } = useLanguage();
   const [formData, setFormData] = useState<SignUpInput>({
     username: "",
     email: "",
@@ -38,12 +38,13 @@ const SignUpPage: React.FC = () => {
       if (data?.result?.token) {
         localStorage.setItem("token", data.result.token);
         setIsSubmitted(true);
-        router.push("/")
+        router.push("/");
+        router.refresh();
         return;
       }
     } catch (err) {
       console.error("Sign up error:", err);
-      
+
       // If you have a toast function, use it here, e.g. showToast("Something went wrong!", "error");
     }
     setTimeout(() => {
