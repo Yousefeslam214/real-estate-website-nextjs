@@ -1,3 +1,4 @@
+"use client";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { baseUrl } from "@/services/shared/apiUrl";

@@ -1,3 +1,4 @@
+"use client"
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { fetcher } from "@/services/shared/fetcher";
 // import Home from "@/app/page";
