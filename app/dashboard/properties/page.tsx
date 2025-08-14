@@ -1,7 +1,8 @@
+"use client";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { fetcher } from "@/services/shared/fetcher";
 import { Edit, Eye, Filter, Plus, Search, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import clsx from "clsx";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
@@ -16,9 +17,9 @@ const PropertiesDashboardTab = () => {
   const activeTab = "properties";
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [token, setToken] = React.useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       setToken(localStorage.getItem("token"));
     }
