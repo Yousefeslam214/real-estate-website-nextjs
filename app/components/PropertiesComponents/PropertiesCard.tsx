@@ -39,8 +39,10 @@ const PropertiesCard = ({
     }
   );
 
-  const properties: Property[] | undefined = Array.isArray(data?.data) ? data?.data : [];
-  const filteredProperties = properties.filter((property) => {
+  const properties: Property[] | undefined = Array.isArray(data?.data)
+    ? data?.data
+    : [];
+  const filteredProperties = properties?.filter((property) => {
     if (!propertiesDataFilters) return true; // no filters, keep all
 
     let matches = true;
