@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Cairo } from "next/font/google";
+// import { Inter, Cairo } from "next/font/google";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { PropertiesSidebar } from "./components/PropertiesComponents/PropertiesSidebar";
@@ -12,8 +12,8 @@ import { Toaster } from "react-hot-toast";
 // import { Toast } from "@radix-ui/react-toast";
 import { ToastProvider } from "./contexts/ToastContext";
 
-const inter = Inter({ subsets: ["latin"] });
-const cairo = Cairo({ subsets: ["arabic"] });
+// const inter = Inter({ subsets: ["latin"] });
+// const cairo = Cairo({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
   title: "Palmline Properties | المصرية للعقارات",
@@ -65,7 +65,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${cairo.className}`}>
+      <body 
+      // className={`${inter.className} ${cairo.className}`}
+      >
         <LanguageProvider>
           <ThemeProvider>
             <Header />

@@ -60,7 +60,8 @@ const PropertiesCard = ({
       )
         matches = false;
       if (filter.type && property.listing_type !== filter.type) matches = false;
-      if (filter.minArea && parseFloat(property.area_sqm) < filter.minArea) matches = false;
+      if (filter.minArea && parseFloat(property.area_sqm) < filter.minArea)
+        matches = false;
     });
 
     return matches;
@@ -74,13 +75,22 @@ const PropertiesCard = ({
         setTotalCount(data.pagination.totalCount);
       }
     }
-  }, [data, filteredProperties.length, propertiesDataFilters, propertiesDataFilters?.length, setTotalCount]);
+  }, [
+    data,
+    filteredProperties.length,
+    propertiesDataFilters,
+    propertiesDataFilters?.length,
+    setTotalCount,
+  ]);
   console.log("Filtered properties:", filteredProperties);
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
       price
     );
   };
+  if (error) {
+    <div>error {error}</div>;
+  }
   return (
     <div>
       {propertiesDataFilters &&
