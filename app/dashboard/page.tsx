@@ -2,12 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  Plus,
-  Edit,
-  Trash2,
-  Eye,
-  Search,
-  Filter,
   BarChart3,
   Users,
   Home,
@@ -17,14 +11,11 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import PropertiesDashboardTab from "./properties/page";
-import Overview from "./overview/page";
-import Header from "../components/Layout/Header";
-import BtnInHeader from "../components/btnInHeader";
 import OverviewDashboardTab from "./overview/page";
 import BlogPostsDashboardTab from "./blog/page";
 
 const DashboardPage: React.FC = () => {
-  const { language, t } = useLanguage();
+  const { language} = useLanguage();
   const [activeTab, setActiveTab] = useState("properties");
 
   // Mock data for blog posts
@@ -83,16 +74,7 @@ const DashboardPage: React.FC = () => {
     },
   ];
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
-      price
-    );
-  };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG");
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex transition-colors duration-200">

@@ -5,12 +5,13 @@ import { useLanguage } from "@/app/contexts/LanguageContext";
 import { baseUrl } from "@/services/shared/apiUrl";
 import { fetcher } from "@/services/shared/fetcher";
 import { Edit, Eye, Trash2 } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 import useSWR from "swr";
 
 // const BlogPostsDashboardTab = ({ blogPosts }: any) => {
 const BlogPostsDashboardTab = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = React.useState("");
   const activeTab = "posts"; // This can be dynamic based on your app's state
   const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
@@ -67,10 +68,12 @@ const BlogPostsDashboardTab = () => {
                 key={post.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
                 <td className="px-6 py-4 flex items-center">
-                  <img
+                  <Image
                     src={post?.featuredImageUrl || "/placeholder.jpg"}
-                    // alt={post?.title || "Post"}
+                    alt={post?.title || "Post"}
                     className="h-12 w-12 rounded-lg object-cover"
+                    width={48}
+                    height={48}
                   />
                   <div className="ml-4">
                     {/* <div className="text-sm font-medium">{post?.title}</div> */}

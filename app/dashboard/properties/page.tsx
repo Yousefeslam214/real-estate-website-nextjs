@@ -1,15 +1,13 @@
 "use client";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { fetcher } from "@/services/shared/fetcher";
-import { Edit, Eye, Filter, Plus, Search, Trash2 } from "lucide-react";
+import { Edit, Eye, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import clsx from "clsx";
 import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import Pagination from "../Pagination";
-import { Toast } from "@/components/ui/toast";
 import toast from "react-hot-toast";
-import { Router } from "next/router";
 import Image from "next/image";
 import { Property } from "@/types/api";
 
@@ -65,7 +63,7 @@ const PropertiesDashboardTab = () => {
   };
 
   console.log("Properties data:", data);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   const properties = Array.isArray(data?.data) ? data?.data : [];
 

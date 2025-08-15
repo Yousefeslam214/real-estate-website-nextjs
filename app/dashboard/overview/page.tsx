@@ -7,7 +7,7 @@ import React from "react";
 import useSWR from "swr";
 
 const OverviewDashboardTab = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   console.log("API URL:", apiUrl);
   const { data, error, isLoading } = useSWR(`${apiUrl}/properties`, fetcher);

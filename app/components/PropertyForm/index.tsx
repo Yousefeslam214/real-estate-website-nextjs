@@ -1,14 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import {
-//   inputPropertySchema,
-//   PropertyInput,
-// } from "@/schemas/inputPropertySchema";
 import { PropertyFormProps } from "@/types/PropertyFormProps";
-import { useLanguage } from "@/app/contexts/LanguageContext";
-import { inputPropertySchema, PropertyInput } from "@/schemas/property.schema";
+import {  PropertyInput } from "@/schemas/property.schema";
 
 export default function PropertyForm({
   mode,
@@ -24,7 +18,6 @@ export default function PropertyForm({
     defaultValues,
   });
   console.log("Default Values from property Form:", defaultValues);
-  const { language, t } = useLanguage();
 
   const labelStyle =
     "block mb-1 font-semibold text-gray-800 dark:text-gray-100";

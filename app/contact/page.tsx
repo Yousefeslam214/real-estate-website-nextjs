@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, User, MessageSquare, Building, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const ContactPage: React.FC = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',

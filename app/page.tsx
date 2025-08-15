@@ -1,3 +1,5 @@
+"use client";
+
 import Hero from "./components/Hero";
 import Properties from "./components/PropertiesComponents/Properties";
 import Services from "./components/Services";

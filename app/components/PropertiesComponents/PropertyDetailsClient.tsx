@@ -20,12 +20,13 @@ import {
 } from "lucide-react";
 import { DetailsPageProps } from "@/types/detailsPage";
 import { useLanguage } from "@/app/contexts/LanguageContext";
+import Image from "next/image";
 
 const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
   id,
   initialData,
 }) => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   // const language = "en";
   let currentImageIndex = 0;
   let isFavorite = false;
@@ -77,10 +78,12 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
             {/* Main Image */}
             <div className="lg:col-span-2">
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
-                <img
+                <Image
                   src={property?.photos[currentImageIndex]}
                   alt={property?.additional_information[language]?.title}
                   className="w-full h-full object-cover"
+                  width={500}
+                  height={500}
                 />
                 <div className="absolute top-4 left-4 flex space-x-2 rtl:space-x-reverse">
                   <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
@@ -127,10 +130,12 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                     }`}
                     // onClick={() => setCurrentImageIndex(index + 1)}
                   >
-                    <img
+                    <Image
                       src={image}
                       alt={`Property ${index + 2}`}
                       className="w-full h-full object-cover"
+                      width={500}
+                      height={500}
                     />
                   </div>
                 ))}
@@ -297,10 +302,12 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                   {language === "ar" ? "تواصل مع الوكيل" : "Contact Agent"}
                 </h3>
                 <div className="flex items-center space-x-4 rtl:space-x-reverse mb-6">
-                  <img
+                  <Image
                     src={property?.contact?.image || "/3866.jpg"}
                     alt={property?.contact?.name || ""}
                     className="w-16 h-16 rounded-full object-cover"
+                    width={64}
+                    height={64}
                   />
                   <div>
                     <h4 className="font-semibold text-gray-900">

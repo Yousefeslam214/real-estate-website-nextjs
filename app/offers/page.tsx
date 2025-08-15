@@ -3,12 +3,13 @@
 import React, { Suspense, useState } from "react";
 import { Search, MapPin } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
-import PropertiesCard, { Filter } from "../components/PropertiesComponents/PropertiesCard";
+import PropertiesCard, {
+  Filter,
+} from "../components/PropertiesComponents/PropertiesCard";
 import PropertiesSkeleton from "../components/PropertiesComponents/PropertiesSkeleton";
 
-
 export default function OffersPage() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [bedrooms, setBedrooms] = useState("");
@@ -72,7 +73,7 @@ export default function OffersPage() {
       label: language === "ar" ? "الشيخ زايد" : "Sheikh Zayed",
     },
   ];
-  
+
   const propertiesDataFilters: Filter[] = [
     {
       price: priceRange
@@ -80,7 +81,9 @@ export default function OffersPage() {
           ? [parseInt(priceRange.replace("+", "")), Infinity]
           : (() => {
               const parts = priceRange.split("-").map((p) => parseInt(p));
-              return parts.length === 2 ? [parts[0], parts[1]] as [number, number] : undefined;
+              return parts.length === 2
+                ? ([parts[0], parts[1]] as [number, number])
+                : undefined;
             })()
         : undefined,
       bedrooms: bedrooms
@@ -93,7 +96,6 @@ export default function OffersPage() {
     },
   ];
 
-  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section */}
@@ -228,13 +230,13 @@ export default function OffersPage() {
       {/* Apartments Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Suspense fallback={<PropertiesSkeleton length={10} />}>
-            <PropertiesCard
-              propertiesDataFilters={propertiesDataFilters}
-              itemNum={10}
-              setTotalCount={setTotalCount}
-            />
-          </Suspense>
+          {/* <Suspense fallback={<PropertiesSkeleton length={10} />}> */}
+          <PropertiesCard
+            propertiesDataFilters={propertiesDataFilters}
+            itemNum={10}
+            setTotalCount={setTotalCount}
+          />
+          {/* </Suspense> */}
         </div>
       </section>
     </div>

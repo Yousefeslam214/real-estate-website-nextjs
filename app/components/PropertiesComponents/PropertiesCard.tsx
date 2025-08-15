@@ -20,8 +20,22 @@ type PropertiesCardProps = {
   itemNum?: number;
   page?: number;
   propertiesDataFilters?: Filter[];
+  fallback?: Property[];
   setTotalCount?: (count: number) => void;
+  // setTotalCount?: (count: number) => void;
 };
+
+// export async function getStaticProps() {
+//   const res = await fetch(`${process.env.API_URL}/properties?page=1&limit=6`);
+//   const data = await res.json();
+
+//   return {
+//     props: {
+//       fallbackData: data,
+//     },
+//     revalidate: 60, // optional
+//   };
+// }
 
 const PropertiesCard = ({
   itemNum = 6,
@@ -32,12 +46,16 @@ const PropertiesCard = ({
   const { language, t } = useLanguage();
   const { data, isLoading, error } = useSWR<ApiResponse<Property>>(
     `${baseUrl}/properties?page=${page}&limit=${itemNum}`,
-    fetcher,
-    {
-      suspense: true,
-      fallback: undefined,
-    }
+    fetcher
+    // ,
+    // {
+    //   suspense: true,
+    // }
   );
+  // const res = await fetch(
+  //   `${process.env.API_URL}/properties?page=${page}&limit=${itemNum}`
+  // );
+  // const data = await res.json();
 
   const properties: Property[] | undefined = Array.isArray(data?.data)
     ? data?.data

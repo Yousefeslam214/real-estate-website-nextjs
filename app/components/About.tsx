@@ -3,6 +3,7 @@
 import React from 'react';
 import { Shield, Users, Award, TrendingUp } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import Image from 'next/image';
 
 const About: React.FC = () => {
   const { language, t } = useLanguage();
@@ -68,10 +69,12 @@ const About: React.FC = () => {
           {/* Image */}
           <div className="relative">
             <div className="bg-gradient-to-br from-blue-200 to-green-200 dark:from-blue-900 dark:to-green-900 rounded-2xl p-8">
-              <img
+              <Image
                 src="https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg"
                 alt="About us"
                 className="w-full h-96 object-cover rounded-xl shadow-xl"
+                width={500}
+                height={300}
               />
             </div>
           </div>

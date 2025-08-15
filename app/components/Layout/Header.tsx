@@ -1,15 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Menu, X, Globe, Sun, Moon } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { useTheme } from "../../contexts/ThemeContext";
 import BtnInHeader from "../btnInHeader";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { language, toggleLanguage, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
+  const { language, t } = useLanguage();
 
   const navigationItems = [
     { key: "nav.home", href: "/" },

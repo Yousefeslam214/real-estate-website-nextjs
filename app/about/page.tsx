@@ -2,24 +2,19 @@
 
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useTheme } from '../contexts/ThemeContext';
 import { 
   Users, 
   Target, 
   Award, 
   TrendingUp, 
-  MapPin, 
-  Phone, 
-  Mail,
-  Calendar,
   Building,
   Star,
   CheckCircle
 } from 'lucide-react';
+import Image from 'next/image';
 
 const About: React.FC = () => {
-  const { language, t } = useLanguage();
-  const { theme } = useTheme();
+  const { language} = useLanguage();
 
   const stats = [
     { icon: Building, value: '500+', label: language === 'ar' ? 'عقار متاح' : 'Properties Available' },
@@ -223,10 +218,12 @@ const About: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {team.map((member, index) => (
                 <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg">
-                  <img 
+                  <Image 
                     src={member.image} 
                     alt={member.name}
                     className="w-full h-64 object-cover"
+                    width={256}
+                    height={256}
                   />
                   <div className="p-6 text-center">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{member.name}</h3>

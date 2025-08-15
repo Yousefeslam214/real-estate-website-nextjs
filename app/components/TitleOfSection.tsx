@@ -4,7 +4,7 @@ import React from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const TitleOfSection = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   return (
     <div>
       {" "}

@@ -8,9 +8,10 @@ import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
 import { ButtonLoading } from "../components/ButtonLoading";
+import Image from "next/image";
 
 const BlogPage: React.FC = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -35,7 +36,10 @@ const BlogPage: React.FC = () => {
   ];
 
   const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
-
+  if (error) {
+    console.error("Error fetching blog posts:", error);
+    return <div>Error loading blog posts</div>;
+  }
   const blogPosts = data?.data || [];
   console.log("blogPosts");
   console.log(blogPosts);
@@ -120,10 +124,12 @@ const BlogPage: React.FC = () => {
                 key={post.id}
                 className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <Image
                     src={post.featuredImageUrl}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    width={500}
+                    height={300}
                   />
                   <div className="absolute top-4 left-4">
                     <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">

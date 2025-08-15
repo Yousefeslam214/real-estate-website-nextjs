@@ -2,23 +2,19 @@
 
 import React, { useState, useCallback, useEffect } from "react";
 import {
-  MapPin,
-  Phone,
-  Mail,
-  Upload,
   CheckCircle,
   X,
   Building,
   Home,
   Factory,
   Mountain,
-  Car,
   Store,
   AlertCircle,
   Camera,
   Plus,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import Image from "next/image";
 
 interface PropertyFormData {
   title: string;
@@ -43,7 +39,7 @@ interface User {
 }
 
 const SellProperty: React.FC = () => {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   // Mock authentication state - replace with your actual auth logic
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -281,14 +277,6 @@ const SellProperty: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const formatPrice = (value: string) => {
-    const number = parseInt(value.replace(/,/g, ""));
-    if (isNaN(number)) return value;
-    return new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-EG").format(
-      number
-    );
   };
 
   // Show login form if not authenticated
@@ -695,10 +683,12 @@ const SellProperty: React.FC = () => {
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {formData.images.map((image, index) => (
                           <div key={index} className="relative group">
-                            <img
+                            <Image
                               src={URL.createObjectURL(image)}
                               alt={`Preview ${index + 1}`}
                               className="w-full h-32 object-cover rounded-lg"
+                              width={300}
+                              height={128}
                             />
                             <button
                               type="button"
