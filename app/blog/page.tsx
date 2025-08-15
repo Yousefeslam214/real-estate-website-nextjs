@@ -9,11 +9,15 @@ import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
 import { ButtonLoading } from "../components/ButtonLoading";
 import Image from "next/image";
+import { paginate } from "@/lib/paginate";
 
 const BlogPage: React.FC = () => {
   const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const [page, setPage] = useState(1);
+  const limit = 6; // posts per page
 
   const categories = [
     { value: "", label: language === "ar" ? "جميع الفئات" : "All Categories" },
@@ -64,7 +68,11 @@ const BlogPage: React.FC = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG");
   };
-
+  const { data: paginatedPosts, totalPages } = paginate(
+    filteredPosts,
+    page,
+    limit
+  );
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section */}
@@ -220,6 +228,34 @@ const BlogPage: React.FC = () => {
               </p>
             </div>
           )}
+        </div>
+        <div className="flex items-center gap-2 mt-8 justify-end pr-7 pl-7">
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+            {language === "ar" ? "السابق" : "Previous"}
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-4 py-2 rounded ${
+                page === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              }`}>
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+            {language === "ar" ? "التالي" : "Next"}
+          </button>
         </div>
       </section>
     </div>

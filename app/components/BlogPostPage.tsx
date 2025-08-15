@@ -61,7 +61,7 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-10" />
         <img
           src={post.featuredImageUrl}
-          alt={post.title}
+          alt={post[language].title}
           className="w-full h-full object-cover"
         />
         <div
@@ -88,7 +88,7 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
                 : "Sustainability"}
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {post.title}
+              {language === "ar" ? post.titleAr : post.titleEn}
             </h1>
             <div className="flex flex-wrap items-center text-gray-200 text-sm">
               <div className="flex items-center mr-6 mb-2">
