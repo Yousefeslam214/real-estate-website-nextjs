@@ -46,8 +46,15 @@ const BlogPage: React.FC = () => {
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      // post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (post[language]?.title &&
+        post[language].title
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())) ||
+      (post[language]?.summary &&
+        post[language].summary
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()));
     const matchesCategory =
       selectedCategory === "" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -126,7 +133,7 @@ const BlogPage: React.FC = () => {
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src={post.featuredImageUrl}
-                    alt={post.title}
+                    alt={post[language].title}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     width={500}
                     height={300}
@@ -134,11 +141,12 @@ const BlogPage: React.FC = () => {
                   <div className="absolute top-4 left-4">
                     <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                       {
-                        categories.find((cat) => cat.value === post.category)
-                          ?.label
+                        categories.find(
+                          (cat) => cat.value === post[language].category
+                        )?.label
                       }
-                      {Array.isArray(post.categories) &&
-                        post.categories.map(
+                      {Array.isArray(post[language].categories) &&
+                        post[language].categories.map(
                           (cat: { name: string }, idx: number) => (
                             <span key={idx} className="ml-1">
                               {cat.name}{" "}
@@ -169,12 +177,15 @@ const BlogPage: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
-                    {post.title}
+                  <h3
+                    className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 min-h-[57px]
+                    flex flex-col justify-center
+                    ">
+                    {post[language].title}
                   </h3>
 
                   <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                    {post.excerpt}
+                    {post[language].excerpt}
                   </p>
 
                   <div className="flex items-center justify-between">
