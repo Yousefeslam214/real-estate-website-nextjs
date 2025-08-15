@@ -8,12 +8,18 @@ import { ApiResponse } from "@/types/api";
 import useSWR from "swr";
 import Link from "next/link";
 import Image from "next/image";
+import NewsSkeleton from "./NewsSkeleton";
 
-const NewsCard = () => {
+type NewsCardProps = {
+  page?: number;
+  itemNum?: number;
+};
+
+const NewsCard = ({ page, itemNum }: NewsCardProps) => {
   const { language, t } = useLanguage();
 
   const { data, isLoading, error } = useSWR<ApiResponse>(
-    `${baseUrl}/posts`,
+    `${baseUrl}/posts?page=${page}&limit=${itemNum}`,
     fetcher,
     {
       // suspense: true,
@@ -21,6 +27,8 @@ const NewsCard = () => {
   );
   const newsItems = data?.data || [];
   console.log("fetch posts ", newsItems);
+  if (error) return <div>error {error}</div>;
+  if (isLoading) return <NewsSkeleton length={itemNum || 3} />;
 
   return (
     <div>

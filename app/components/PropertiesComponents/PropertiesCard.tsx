@@ -8,6 +8,7 @@ import { baseUrl } from "@/services/shared/apiUrl";
 import Image from "next/image";
 import { ApiResponse, Property } from "@/types/api";
 import { useEffect } from "react";
+import PropertiesSkeleton from "./PropertiesSkeleton";
 
 export type Filter = {
   price?: [number, number];
@@ -22,6 +23,7 @@ type PropertiesCardProps = {
   propertiesDataFilters?: Filter[];
   fallback?: Property[];
   setTotalCount?: (count: number) => void;
+  classNameAttr?: string;
   // setTotalCount?: (count: number) => void;
 };
 
@@ -42,6 +44,7 @@ const PropertiesCard = ({
   propertiesDataFilters,
   page = 1,
   setTotalCount,
+  classNameAttr,
 }: PropertiesCardProps) => {
   const { language, t } = useLanguage();
   const { data, isLoading, error } = useSWR<ApiResponse<Property>>(
@@ -111,6 +114,7 @@ const PropertiesCard = ({
   if (error) {
     <div>error {error}</div>;
   }
+  if (isLoading) return <PropertiesSkeleton length={itemNum} />;
   return (
     <div>
       {propertiesDataFilters &&
@@ -124,7 +128,8 @@ const PropertiesCard = ({
             </p>
           </div>
         )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div className={`${classNameAttr}`}>
         {filteredProperties?.slice(0, itemNum).map((property) => (
           <div
             key={property.id}

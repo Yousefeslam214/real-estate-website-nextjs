@@ -11,7 +11,7 @@ const News: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <TitleOfSection />
         {/* <Suspense fallback={<NewsSkeleton length={3} />}> */}
-          <NewsCard />
+          <NewsCard page={1} itemNum={3} />
         {/* </Suspense> */}
       </div>
     </section>

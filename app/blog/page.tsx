@@ -10,6 +10,7 @@ import Link from "next/link";
 import { ButtonLoading } from "../components/ButtonLoading";
 import Image from "next/image";
 import { paginate } from "@/lib/paginate";
+import NewsSkeleton from "../components/NewsComponents/NewsSkeleton";
 
 const BlogPage: React.FC = () => {
   const { language } = useLanguage();
@@ -39,7 +40,10 @@ const BlogPage: React.FC = () => {
     },
   ];
 
-  const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
+  const { data, isLoading, error } = useSWR(
+    `${baseUrl}/posts?page=${page}&limit=${limit}`,
+    fetcher
+  );
   if (error) {
     console.error("Error fetching blog posts:", error);
     return <div>Error loading blog posts</div>;
@@ -131,8 +135,8 @@ const BlogPage: React.FC = () => {
 
       {/* Blog Posts Grid */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-          {isLoading && <ButtonLoading />}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {isLoading && <NewsSkeleton length={limit} />}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
               <article

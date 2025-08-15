@@ -5,6 +5,7 @@ import { PropertyCard } from "./PropertyCard";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import LoopingScrollList from "../LoopingScrollList";
+import PropertiesCard from "./PropertiesCard";
 
 export interface Property {
   id: string;
@@ -17,48 +18,6 @@ export interface Property {
   image: string;
 }
 
-const properties: Property[] = [
-  {
-    id: "1",
-    title: "Luxury Waterfront Villa",
-    location: "Bali, Indonesia",
-    price: 1200000,
-    bedrooms: 5,
-    bathrooms: 6,
-    area: 4500,
-    image: "/property1.jpg",
-  },
-  {
-    id: "2",
-    title: "Modern City Apartment",
-    location: "New York, USA",
-    price: 850000,
-    bedrooms: 3,
-    bathrooms: 2,
-    area: 1800,
-    image: "/property2.jpg",
-  },
-  {
-    id: "3",
-    title: "Mountain Retreat Cabin",
-    location: "Aspen, Colorado",
-    price: 650000,
-    bedrooms: 4,
-    bathrooms: 3,
-    area: 2800,
-    image: "/property3.jpg",
-  },
-  {
-    id: "4",
-    title: "Beachfront Paradise",
-    location: "Maldives",
-    price: 2200000,
-    bedrooms: 6,
-    bathrooms: 7,
-    area: 5200,
-    image: "/property4.jpg",
-  },
-];
 
 export const PropertiesSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,12 +56,11 @@ export const PropertiesSidebar = () => {
 
           {/* Auto-scrolling content */}
           <LoopingScrollList>
-            {[...properties, ...properties].map((property, index) => (
-              <PropertyCard
-                key={`${property.id}-${index}`}
-                property={property}
-              />
-            ))}
+            <PropertiesCard
+                />
+            {/* // {[...properties, ...properties].map((property, index) => (
+              
+            // ))} */}
           </LoopingScrollList>
 
           {/* Footer */}
