@@ -78,14 +78,39 @@ export async function createProperty(data: Record<string, any>) {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) {
-      throw new Error(`${res.status}`);
-      // return await { status: res.status, body: await res.json() };
-    }
-    return await { status: res.status, body: await res.json() };
-
+    // if (!res.ok) {
+    //   throw new Error(`${res.status}`);
+    // }
+    const result = await res.json();
+    console.log("Response from createProperty:", result);
+    return {
+      status: res.status,
+      propertyId: result.data?.propertyId,
+      body: result.data,
+    };
+    // return await { status: res.status, body: await res.json() };
   } catch (error) {
     console.error("Error creating property:", error);
     throw error;
   }
 }
+export const uploadPropertyPhotos = async (
+  propertyId: number,
+  files: File[]
+) => {
+  for (let i = 0; i < files.length; i++) {
+    const formData = new FormData();
+    formData.append("photo", files[i]); // key must match backend field name
+
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/properties/${propertyId}/upload/photo/${i}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        },
+        body: formData,
+      }
+    );
+  }
+};

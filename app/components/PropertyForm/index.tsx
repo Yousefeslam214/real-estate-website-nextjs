@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { PropertyFormProps } from "@/types/PropertyFormProps";
+import { PropertyFormProps } from "@/types/PropertyForms";
 import {  PropertyInput } from "@/schemas/property.schema";
 
 export default function PropertyForm({
