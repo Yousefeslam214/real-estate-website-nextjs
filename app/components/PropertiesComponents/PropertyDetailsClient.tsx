@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import {
   MapPin,
   Bed,
@@ -27,24 +28,7 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
   initialData,
 }) => {
   const { language } = useLanguage();
-  // const language = "en";
-  let currentImageIndex = 0;
-  let isFavorite = false;
-
-  const setCurrentImageIndex = (index: number) => {
-    currentImageIndex = index;
-  };
-
-  const setIsFavorite = (value: boolean) => {
-    isFavorite = value;
-  };
-  // const params = useParams();
-
-  // const { data, error, isLoading } = useSWR(
-  //   [`${baseUrl}/properties/${id}`, token],
-  //   ([url, token]) => fetcher(url, token)
-  // );
-
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const property = initialData?.data;
 
   const formatPrice = (price: number) => {
@@ -94,15 +78,6 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                   </span>
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2 rtl:space-x-reverse">
-                  <button
-                    // onClick={() => setIsFavorite(!isFavorite)}
-                    className={`p-2 rounded-full shadow-lg transition-colors duration-200 ${
-                      isFavorite
-                        ? "bg-red-500 text-white"
-                        : "bg-white text-gray-600 hover:bg-gray-100"
-                    }`}>
-                    <Heart className="h-5 w-5" />
-                  </button>
                   <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-200">
                     <Share2 className="h-5 w-5 text-gray-600" />
                   </button>
@@ -124,15 +99,14 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                   <div
                     key={index}
                     className={`relative h-24 rounded-lg overflow-hidden cursor-pointer transition-all duration-200 ${
-                      currentImageIndex === index + 1
+                      currentImageIndex === index
                         ? "ring-2 ring-blue-500"
                         : "hover:opacity-80"
                     }`}
-                    // onClick={() => setCurrentImageIndex(index + 1)}
-                  >
+                    onClick={() => setCurrentImageIndex(index + 1)}>
                     <Image
                       src={image}
-                      alt={`Property ${index + 2}`}
+                      alt={`Property ${index + 1}`}
                       className="w-full h-full object-cover"
                       width={500}
                       height={500}
@@ -373,21 +347,7 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                     <span className="text-gray-600">
                       {language === "ar" ? "الطابق:" : "Floor:"}
                     </span>
-                    <span className="font-medium">
-                      {(() => {
-                        const minFloor = 1;
-                        const maxFloor = 3;
-                        const randomFloor =
-                          Math.floor(
-                            Math.random() * (maxFloor - minFloor + 1)
-                          ) + minFloor;
-                        return randomFloor === 0
-                          ? language === "ar"
-                            ? "الطابق الأرضي"
-                            : "Ground Floor"
-                          : randomFloor;
-                      })()}
-                    </span>
+                    <span className="font-medium">1</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">

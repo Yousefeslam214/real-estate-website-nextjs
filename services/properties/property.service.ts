@@ -1,4 +1,4 @@
-import { ApiResponse,  } from "@/types/api";
+import { ApiResponse } from "@/types/api";
 import { baseUrl } from "../shared/apiUrl";
 import { PropertyInput, PropertyUpdateInput } from "@/schemas/property.schema";
 
@@ -61,6 +61,31 @@ export async function updateProperty(id: number, data: PropertyUpdateInput) {
     return await res.json();
   } catch (error) {
     console.error("Error updating property:", error);
+    throw error;
+  }
+}
+
+export async function createProperty(data: Record<string, any>) {
+  try {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const res = await fetch(`${baseUrl}/properties/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status}`);
+      // return await { status: res.status, body: await res.json() };
+    }
+    return await { status: res.status, body: await res.json() };
+
+  } catch (error) {
+    console.error("Error creating property:", error);
     throw error;
   }
 }
