@@ -182,11 +182,14 @@ const PropertyForm = ({ formData, setFormData, errors, setErrors }: Props) => {
                       {language === "ar" ? "اختر مشروع" : "Select Project"}
                     </option>
                     {Array.isArray(projects) &&
-                      projects.map((p) => (
-                        <option key={p.project_id} value={p.project_id}>
-                          {p.name}
-                        </option>
-                      ))}
+                      projects.map((p) => {
+                        const project = p as { project_id: number | string; name: string };
+                        return (
+                          <option key={project.project_id} value={project.project_id}>
+                            {project.name}
+                          </option>
+                        );
+                      })}
                   </select>
                   {errors.projectId && (
                     <p className="text-red-500 text-sm mt-1 flex items-center">
@@ -484,11 +487,9 @@ const PropertyForm = ({ formData, setFormData, errors, setErrors }: Props) => {
                         checked={formData.features.includes(f.id)}
                         onChange={() => toggleFeature(f.id)}
                       />
-                      {typeof f.icon === "string" ? (
+                     
                         <span className="text-xl">{f.icon}</span>
-                      ) : (
-                        <f.icon className="h-5 w-5" />
-                      )}
+                     
                       <span>{language === "ar" ? f.nameAr : f.nameEn}</span>
                     </label>
                   ))}
