@@ -7,7 +7,6 @@ import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
-import { ButtonLoading } from "../components/ButtonLoading";
 import Image from "next/image";
 import { paginate } from "@/lib/paginate";
 import NewsSkeleton from "../components/NewsComponents/NewsSkeleton";

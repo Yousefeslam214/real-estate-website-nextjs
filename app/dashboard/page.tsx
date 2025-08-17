@@ -18,34 +18,6 @@ const DashboardPage: React.FC = () => {
   const { language} = useLanguage();
   const [activeTab, setActiveTab] = useState("properties");
 
-  // Mock data for blog posts
-  const blogPosts = [
-    {
-      id: 1,
-      title:
-        language === "ar"
-          ? "إطلاق مشروع العاصمة الإدارية المرحلة الثالثة"
-          : "Launch of New Administrative Capital Phase 3",
-      author: language === "ar" ? "وزارة الإسكان" : "Ministry of Housing",
-      status: language === "ar" ? "منشور" : "Published",
-      views: 5420,
-      createdAt: "2025-01-15",
-      category: language === "ar" ? "أخبار" : "News",
-    },
-    {
-      id: 2,
-      title:
-        language === "ar"
-          ? "تحديث قوانين التملك للأجانب"
-          : "Updated Foreign Ownership Laws",
-      author: language === "ar" ? "وزارة العدل" : "Ministry of Justice",
-      status: language === "ar" ? "مسودة" : "Draft",
-      views: 0,
-      createdAt: "2025-01-12",
-      category: language === "ar" ? "قوانين" : "Regulations",
-    },
-  ];
-
   const sidebarItems = [
     {
       id: "overview",

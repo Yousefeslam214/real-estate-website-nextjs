@@ -1,12 +1,11 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import { Search, MapPin } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import PropertiesCard, {
   Filter,
 } from "../components/PropertiesComponents/PropertiesCard";
-import PropertiesSkeleton from "../components/PropertiesComponents/PropertiesSkeleton";
 
 export default function OffersPage() {
   const { language } = useLanguage();

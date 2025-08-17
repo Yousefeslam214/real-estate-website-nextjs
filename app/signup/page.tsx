@@ -17,7 +17,6 @@ const SignUpPage: React.FC = () => {
   });
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // const apiUrl = process.env.NEXT_PUBLIC_API_URL;

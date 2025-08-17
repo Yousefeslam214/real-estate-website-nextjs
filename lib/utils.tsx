@@ -1,4 +1,3 @@
-import { useLanguage } from "@/app/contexts/LanguageContext";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

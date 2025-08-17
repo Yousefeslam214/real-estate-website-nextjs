@@ -1,7 +1,6 @@
 "use client";
 
 import { Home, X } from "lucide-react";
-import { PropertyCard } from "./PropertyCard";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import LoopingScrollList from "../LoopingScrollList";
@@ -58,9 +57,6 @@ export const PropertiesSidebar = () => {
           <LoopingScrollList>
             <PropertiesCard
                 />
-            {/* // {[...properties, ...properties].map((property, index) => (
-              
-            // ))} */}
           </LoopingScrollList>
 
           {/* Footer */}

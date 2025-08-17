@@ -9,7 +9,6 @@ import {
   Calendar,
   Phone,
   Mail,
-  Heart,
   Share2,
   Camera,
   Car,

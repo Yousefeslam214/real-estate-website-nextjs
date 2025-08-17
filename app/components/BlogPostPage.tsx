@@ -7,29 +7,16 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { DetailsPageProps } from "@/types/detailsPage";
 import { formatDate, readTime } from "@/lib/utils";
+import Image from "next/image";
 
-const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
+const BlogPostPage: React.FC<DetailsPageProps> = ({ initialData }) => {
   const params = useParams();
   console.log("params", params); // Check shape
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   console.log("initialData :", initialData);
   const router = useRouter();
-  const postId = parseInt(params.slug[0]);
-  // const post = blogPosts.find((p) => p.id === postId);
   const post = initialData?.data;
   console.log("Post data fetched:", post);
-  // Format date function
-  //   const formatDate = () => {
-  //     // Generate a random date in the past year
-  //     const now = Date.now();
-  //     const randomOffset = Math.floor(Math.random() * 365 * 24 * 60 * 60 * 1000);
-  //     const date = new Date(now - randomOffset);
-  //     return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG", {
-  //       year: "numeric",
-  //       month: "long",
-  //     });
-  //   };
-  //   const readTime = `${Math.floor(Math.random() * 9) + 2} min read`;
 
   if (!post) {
     return (
@@ -59,10 +46,12 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
       {/* Hero Section */}
       <div className="relative h-96">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-10" />
-        <img
+        <Image
           src={post.featuredImageUrl}
           alt={post[language].title}
           className="w-full h-full object-cover"
+          fill
+          sizes="100vw"
         />
         <div
           className="
@@ -70,39 +59,39 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ id, initialData }) => {
          mx-auto px-4 sm:px-6 lg:px-8 pb-12
          ">
           <div className="max-w-3xl">
-            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4 inline-block">
-              {post.category === "housing"
-                ? language === "ar"
-                  ? "مشاريع الإسكان"
-                  : "Housing Projects"
-                : post.category === "digital"
-                ? language === "ar"
-                  ? "الخدمات الرقمية"
-                  : "Digital Services"
-                : post.category === "investment"
-                ? language === "ar"
-                  ? "الاستثمار"
-                  : "Investment"
-                : language === "ar"
-                ? "الاستدامة"
-                : "Sustainability"}
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {language === "ar" ? post.titleAr : post.titleEn}
-            </h1>
-            <div className="flex flex-wrap items-center text-gray-200 text-sm">
-              <div className="flex items-center mr-6 mb-2">
-                <User className="h-4 w-4 mr-2" />
-                <span>{post.author.name}</span>
-              </div>
-              <div className="flex items-center mr-6 mb-2">
-                <Calendar className="h-4 w-4 mr-2" />
-                <span>{formatDate(language)}</span>
-              </div>
-              <div className="flex items-center mb-2">
-                <span>{readTime(language)}</span>
-              </div>
-            </div>
+        <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-4 inline-block">
+          {post.category === "housing"
+            ? language === "ar"
+          ? "مشاريع الإسكان"
+          : "Housing Projects"
+            : post.category === "digital"
+            ? language === "ar"
+          ? "الخدمات الرقمية"
+          : "Digital Services"
+            : post.category === "investment"
+            ? language === "ar"
+          ? "الاستثمار"
+          : "Investment"
+            : language === "ar"
+            ? "الاستدامة"
+            : "Sustainability"}
+        </span>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          {language === "ar" ? post.titleAr : post.titleEn}
+        </h1>
+        <div className="flex flex-wrap items-center text-gray-200 text-sm">
+          <div className="flex items-center mr-6 mb-2">
+            <User className="h-4 w-4 mr-2" />
+            <span>{post.author.name}</span>
+          </div>
+          <div className="flex items-center mr-6 mb-2">
+            <Calendar className="h-4 w-4 mr-2" />
+            <span>{formatDate(language)}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span>{readTime(language)}</span>
+          </div>
+        </div>
           </div>
         </div>
       </div>

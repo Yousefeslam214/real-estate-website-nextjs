@@ -152,43 +152,6 @@ const SellProperty: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = e.target;
-    // List all fields that should be numbers
-    const numberFields = [
-      "propertyTypeId",
-      "projectId",
-      "priceAmount",
-      "areaSqm",
-      "bedrooms",
-      "bathrooms",
-    ];
-    setFormData((prev) => ({
-      ...prev,
-      [name]: numberFields.includes(name)
-        ? value === ""
-          ? 0
-          : Number(value)
-        : value,
-    }));
-
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-  };
-
-  const handleChange = (field: keyof PropertyFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

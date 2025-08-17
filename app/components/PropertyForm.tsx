@@ -1,24 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import useSWR from "swr";
 import { PropertyFormData } from "@/types/PropertyForms";
 import { ApiResponse } from "@/types/api";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
-import {
-  CheckCircle,
-  X,
-  Building,
-  Home,
-  Factory,
-  Mountain,
-  Store,
-  AlertCircle,
-  Camera,
-  Plus,
-} from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { featuresList } from "@/lib/data/data";
 interface Props {
   formData: PropertyFormData;
@@ -183,9 +172,14 @@ const PropertyForm = ({ formData, setFormData, errors, setErrors }: Props) => {
                     </option>
                     {Array.isArray(projects) &&
                       projects.map((p) => {
-                        const project = p as { project_id: number | string; name: string };
+                        const project = p as {
+                          project_id: number | string;
+                          name: string;
+                        };
                         return (
-                          <option key={project.project_id} value={project.project_id}>
+                          <option
+                            key={project.project_id}
+                            value={project.project_id}>
                             {project.name}
                           </option>
                         );
@@ -487,9 +481,9 @@ const PropertyForm = ({ formData, setFormData, errors, setErrors }: Props) => {
                         checked={formData.features.includes(f.id)}
                         onChange={() => toggleFeature(f.id)}
                       />
-                     
-                        <span className="text-xl">{f.icon}</span>
-                     
+
+                      <span className="text-xl">{f.icon}</span>
+
                       <span>{language === "ar" ? f.nameAr : f.nameEn}</span>
                     </label>
                   ))}
