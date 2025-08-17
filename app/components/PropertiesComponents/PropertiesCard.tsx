@@ -7,7 +7,7 @@ import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Image from "next/image";
 import { ApiResponse, Property } from "@/types/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropertiesSkeleton from "./PropertiesSkeleton";
 
 export type Filter = {
@@ -24,6 +24,7 @@ type PropertiesCardProps = {
   fallback?: Property[];
   setTotalCount?: (count: number) => void;
   classNameAttr?: string;
+  isHomePage?: boolean;
   // setTotalCount?: (count: number) => void;
 };
 
@@ -45,16 +46,19 @@ const PropertiesCard = ({
   page = 1,
   setTotalCount,
   classNameAttr,
+  isHomePage = true,
 }: PropertiesCardProps) => {
   const { language, t } = useLanguage();
+  const [pageInThisPage, setPageInThisPage] = useState(page);
+  const [itemNumInThisPage, setItemNumInThisPage] = useState(itemNum);
+
   const { data, isLoading, error } = useSWR<ApiResponse<Property>>(
-    `${baseUrl}/properties?page=${page}&limit=${itemNum}`,
+    `${baseUrl}/properties?page=${pageInThisPage}&limit=${itemNumInThisPage}`,
     fetcher
-    // ,
-    // {
-    //   suspense: true,
-    // }
   );
+  console.log("Data fetched:", data);
+  const totalPages = data?.pagination?.totalPages || 1;
+  console.log("Total pages:", totalPages);
   // const res = await fetch(
   //   `${process.env.API_URL}/properties?page=${page}&limit=${itemNum}`
   // );
@@ -212,6 +216,39 @@ const PropertiesCard = ({
           </div>
         ))}
       </div>
+      {/* Pagination */}
+      {!isHomePage && (
+        <div className="flex items-center gap-2 mt-8 justify-end pr-7 pl-7">
+        <button
+          onClick={() => setPageInThisPage((prev) => Math.max(prev - 1, 1))}
+          disabled={pageInThisPage === 1}
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+          {language === "ar" ? "السابق" : "Previous"}
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+          key={i}
+            onClick={() => setPageInThisPage(i + 1)}
+            className={`px-4 py-2 rounded ${
+              pageInThisPage === i + 1
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 dark:bg-gray-700"
+            }`}>
+            {i + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            setPageInThisPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={pageInThisPage === totalPages}
+          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+          {language === "ar" ? "التالي" : "Next"}
+        </button>
+      </div>
+      )}
     </div>
   );
 };
