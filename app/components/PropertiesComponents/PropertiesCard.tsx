@@ -25,20 +25,7 @@ type PropertiesCardProps = {
   setTotalCount?: (count: number) => void;
   classNameAttr?: string;
   isHomePage?: boolean;
-  // setTotalCount?: (count: number) => void;
 };
-
-// export async function getStaticProps() {
-//   const res = await fetch(`${process.env.API_URL}/properties?page=1&limit=6`);
-//   const data = await res.json();
-
-//   return {
-//     props: {
-//       fallbackData: data,
-//     },
-//     revalidate: 60, // optional
-//   };
-// }
 
 const PropertiesCard = ({
   itemNum = 6,
@@ -50,20 +37,12 @@ const PropertiesCard = ({
 }: PropertiesCardProps) => {
   const { language, t } = useLanguage();
   const [pageInThisPage, setPageInThisPage] = useState(page);
-  const [itemNumInThisPage, setItemNumInThisPage] = useState(itemNum);
 
   const { data, isLoading, error } = useSWR<ApiResponse<Property>>(
-    `${baseUrl}/properties?page=${pageInThisPage}&limit=${itemNumInThisPage}`,
+    `${baseUrl}/properties?page=${pageInThisPage}&limit=${itemNum}`,
     fetcher
   );
-  console.log("Data fetched:", data);
   const totalPages = data?.pagination?.totalPages || 1;
-  console.log("Total pages:", totalPages);
-  // const res = await fetch(
-  //   `${process.env.API_URL}/properties?page=${page}&limit=${itemNum}`
-  // );
-  // const data = await res.json();
-
   const properties: Property[] | undefined = Array.isArray(data?.data)
     ? data?.data
     : [];
@@ -95,11 +74,11 @@ const PropertiesCard = ({
   });
   useEffect(() => {
     if (setTotalCount) {
-      if (propertiesDataFilters) {
-        setTotalCount(filteredProperties?.length ?? 0);
-      } else if (data?.pagination?.totalCount !== undefined) {
+      if (data?.pagination?.totalCount !== undefined) {
         console.log("Setting total count:", data.pagination.totalCount);
         setTotalCount(data?.pagination?.totalCount);
+      } else {
+        setTotalCount(101);
       }
     }
   }, [
@@ -219,35 +198,35 @@ const PropertiesCard = ({
       {/* Pagination */}
       {!isHomePage && (
         <div className="flex items-center gap-2 mt-8 justify-end pr-7 pl-7">
-        <button
-          onClick={() => setPageInThisPage((prev) => Math.max(prev - 1, 1))}
-          disabled={pageInThisPage === 1}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
-          {language === "ar" ? "السابق" : "Previous"}
-        </button>
-
-        {Array.from({ length: totalPages }, (_, i) => (
           <button
-          key={i}
-            onClick={() => setPageInThisPage(i + 1)}
-            className={`px-4 py-2 rounded ${
-              pageInThisPage === i + 1
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700"
-            }`}>
-            {i + 1}
+            onClick={() => setPageInThisPage((prev) => Math.max(prev - 1, 1))}
+            disabled={pageInThisPage === 1}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+            {language === "ar" ? "السابق" : "Previous"}
           </button>
-        ))}
 
-        <button
-          onClick={() =>
-            setPageInThisPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={pageInThisPage === totalPages}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
-          {language === "ar" ? "التالي" : "Next"}
-        </button>
-      </div>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setPageInThisPage(i + 1)}
+              className={`px-4 py-2 rounded ${
+                pageInThisPage === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 dark:bg-gray-700"
+              }`}>
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() =>
+              setPageInThisPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={pageInThisPage === totalPages}
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">
+            {language === "ar" ? "التالي" : "Next"}
+          </button>
+        </div>
       )}
     </div>
   );
