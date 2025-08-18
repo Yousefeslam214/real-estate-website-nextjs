@@ -5,7 +5,7 @@ import { baseUrl } from "@/services/shared/apiUrl";
 import { fetcher, fetcherDash } from "@/services/shared/fetcher";
 // import Home from "@/app/page";
 import { BarChart3, FileText, Home, Users } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 type DashboardCardProps = {
   title: string;
@@ -41,8 +41,16 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
 const OverviewDashboardTab = () => {
   const { language } = useLanguage();
 
+  const [token, setToken] = useState<string>("");
+
+  // only run in browser
+  useEffect(() => {
+    const stored = localStorage.getItem("token");
+    if (stored) setToken(stored);
+  }, []);
+
   const { data } = useSWR(
-    [`${baseUrl}/dashboard`, localStorage.getItem("token") ?? ""],
+    token ? [`${baseUrl}/dashboard`, token] : null, // don't fetch until token is ready
     ([url, token]) => fetcherDash(url, token)
   );
   const dashboardData: DashboardOverview | undefined = data?.data;
