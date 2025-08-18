@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useLanguage } from "../contexts/LanguageContext";
 import {
   Users,
   Target,
@@ -11,6 +10,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const About: React.FC = () => {
   const { language } = useLanguage();

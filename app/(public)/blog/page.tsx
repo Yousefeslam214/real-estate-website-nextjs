@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import { Search, Calendar, User, ArrowRight, Filter } from "lucide-react";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import useSWR from "swr";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
 import Link from "next/link";
 import Image from "next/image";
 import { paginate } from "@/lib/utils/paginate";
-import NewsSkeleton from "../components/NewsComponents/NewsSkeleton";
+import NewsSkeleton from "@/components/NewsComponents/NewsSkeleton";
 
 const BlogPage: React.FC = () => {
   const { language } = useLanguage();

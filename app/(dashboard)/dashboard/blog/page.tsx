@@ -1,6 +1,6 @@
 "use client";
 
-import SearchWithAddButton from "@/app/components/SearchWithAddButton";
+import SearchWithAddButton from "@/components/SearchWithAddButton";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { baseUrl } from "@/services/shared/apiUrl";
 import { fetcher } from "@/services/shared/fetcher";
@@ -9,7 +9,6 @@ import Image from "next/image";
 import React from "react";
 import useSWR from "swr";
 
-// const BlogPostsDashboardTab = ({ blogPosts }: any) => {
 const BlogPostsDashboardTab = () => {
   const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = React.useState("");

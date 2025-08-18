@@ -5,11 +5,12 @@ import { Edit, Eye, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import clsx from "clsx";
-import SearchWithAddButton from "@/app/components/SearchWithAddButton";
+// import SearchWithAddButton from "@/app/components/SearchWithAddButton";
 import Pagination from "../Pagination";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { Property } from "@/lib/types/api";
+import SearchWithAddButton from "@/components/SearchWithAddButton";
 
 const PropertiesDashboardTab = () => {
   const activeTab = "properties";

@@ -9,13 +9,13 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { useLanguage } from "../contexts/LanguageContext";
 import PropertiesDashboardTab from "./properties/page";
 import OverviewDashboardTab from "./overview/page";
 import BlogPostsDashboardTab from "./blog/page";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const DashboardPage: React.FC = () => {
-  const { language} = useLanguage();
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState("properties");
 
   const sidebarItems = [
@@ -45,8 +45,6 @@ const DashboardPage: React.FC = () => {
       icon: Settings,
     },
   ];
-
-
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex transition-colors duration-200">
@@ -127,9 +125,7 @@ const DashboardPage: React.FC = () => {
           {activeTab === "properties" && <PropertiesDashboardTab />}
 
           {/* Blog Posts Tab */}
-          {activeTab === "posts" && (
-            <BlogPostsDashboardTab />
-          )}
+          {activeTab === "posts" && <BlogPostsDashboardTab />}
 
           {/* Users Tab */}
           {activeTab === "users" && (

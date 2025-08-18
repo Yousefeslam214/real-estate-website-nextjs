@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Mail, Lock, User, Eye, EyeOff, CheckCircle } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { SignUpInput } from "@/lib/schemas/login.schema";
 import { signUpUser } from "@/services/auth/auth.service";
 import { useRouter } from "next/navigation";

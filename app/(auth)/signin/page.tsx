@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { login } from "@/services/auth/auth.service";
 import { LoginInput } from "@/lib/schemas/login.schema";
 import { useRouter } from "next/navigation";
-import { useToast } from "../contexts/ToastContext";
+import { useToast } from "@/contexts/ToastContext";
 
 const SignInPage: React.FC = () => {
   const { language } = useLanguage();
