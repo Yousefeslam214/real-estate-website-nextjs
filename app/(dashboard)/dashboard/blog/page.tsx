@@ -15,7 +15,7 @@ const BlogPostsDashboardTab = () => {
   const activeTab = "posts"; // This can be dynamic based on your app's state
   const { data, isLoading, error } = useSWR(`${baseUrl}/posts`, fetcher);
   console.log("Blog Posts data:", data?.data);
-  const blogPosts = data?.data || [];
+  const blogPosts = Array.isArray(data?.data) ? data?.data : [];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -62,7 +62,7 @@ const BlogPostsDashboardTab = () => {
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-            {blogPosts.map((post) => (
+            {blogPosts?.map((post) => (
               <tr
                 key={post.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">

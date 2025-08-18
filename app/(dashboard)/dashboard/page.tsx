@@ -16,7 +16,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const DashboardPage: React.FC = () => {
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState("properties");
+  const [activeTab, setActiveTab] = useState("overview");
 
   const sidebarItems = [
     {
@@ -50,19 +50,6 @@ const DashboardPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex transition-colors duration-200">
       {/* Sidebar */}
       <div className="w-64 bg-white dark:bg-gray-800 shadow-lg transition-colors duration-200">
-        {/* <div className="p-6">
-          <div className="flex items-center"> */}
-        {/* <div className="h-10 w-10 bg-gradient-to-br from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">RE</span>
-            </div> */}
-        {/* <div className={`${language === "ar" ? "mr-3" : "ml-3"}`}>
-              <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-                {language === "ar" ? "لوحة التحكم" : "Dashboard"}
-              </h1>
-            </div> */}
-        {/* </div>
-        </div> */}
-
         <nav className="mt-6">
           {sidebarItems.map((item) => {
             const IconComponent = item.icon;
@@ -81,7 +68,6 @@ const DashboardPage: React.FC = () => {
             );
           })}
         </nav>
-
         <div className="absolute bottom-0 w-64 p-6">
           <button className="flex items-center text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors duration-200">
             <LogOut className="h-5 w-5 mr-3" />
@@ -92,30 +78,6 @@ const DashboardPage: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
-        {/* Header */}
-        {/* <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700 transition-colors duration-200">
-          <div className="px-6 py-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {activeTab === "overview" &&
-                  (language === "ar" ? "نظرة عامة" : "Overview")}
-                {activeTab === "properties" &&
-                  (language === "ar" ? "إدارة العقارات" : "Manage Properties")}
-                {activeTab === "posts" &&
-                  (language === "ar" ? "إدارة المقالات" : "Manage Blog Posts")}
-                {activeTab === "users" &&
-                  (language === "ar" ? "إدارة المستخدمين" : "Manage Users")}
-                {activeTab === "settings" &&
-                  (language === "ar" ? "الإعدادات" : "Settings")}
-              </h2>
-              <div className="flex items-end space-x-4 rtl:space-x-reverse ">
-               
-                <BtnInHeader />
-              </div>
-            </div>
-          </div>
-        </header> */}
-
         {/* Content Area */}
         <main className="p-6 overflow-y-auto h-full">
           {/* Overview Tab */}

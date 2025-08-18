@@ -123,25 +123,27 @@ const PropertiesDashboardTab = () => {
               <tr key={property.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center">
                   <Image
-                    src={property?.coverimageurl || "/placeholder.jpg"}
-                    alt={
-                      language === "ar"
-                        ? property?.additional_information?.ar?.title ||
-                          "Property"
-                        : property?.additional_information?.en?.title ||
-                          "Property"
-                    }
-                    className="h-12 w-12 rounded-lg object-cover"
+                  src={property?.coverimageurl || "/placeholder.jpg"}
+                  alt={
+                    language === "ar"
+                    ? property?.additional_information?.ar?.title ||
+                      "Property"
+                    : property?.additional_information?.en?.title ||
+                      "Property"
+                  }
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 rounded-lg object-cover"
                   />
                   <div className="ml-4">
-                    <div className="text-sm font-medium">
-                      {language === "ar"
-                        ? property?.additional_information?.ar?.title
-                        : property?.additional_information?.en?.title}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {/* {property?.location} */}
-                    </div>
+                  <div className="text-sm font-medium">
+                    {language === "ar"
+                    ? property?.additional_information?.ar?.title
+                    : property?.additional_information?.en?.title}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {/* {property?.location} */}
+                  </div>
                   </div>
                 </td>
                 <td className="px-6 py-4">

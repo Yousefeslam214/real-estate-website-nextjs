@@ -44,7 +44,15 @@ const PropertiesCard = ({
   );
   const totalPages = data?.pagination?.totalPages || 1;
   const properties: Property[] | undefined = Array.isArray(data?.data)
-    ? data?.data
+    ? (data?.data as Property[]).filter(
+        (property) =>
+          property &&
+          typeof property === "object" &&
+          "id" in property &&
+          "price_amount" in property &&
+          "area_sqm" in property &&
+          "listing_type" in property
+      )
     : [];
   const filteredProperties = properties?.filter((property) => {
     if (!propertiesDataFilters) return true; // no filters, keep all

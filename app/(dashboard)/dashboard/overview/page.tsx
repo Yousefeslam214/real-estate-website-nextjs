@@ -1,84 +1,84 @@
 "use client";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { fetcher } from "@/services/shared/fetcher";
+import { DashboardOverview } from "@/lib/types/api";
+import { baseUrl } from "@/services/shared/apiUrl";
+import { fetcher, fetcherDash } from "@/services/shared/fetcher";
 // import Home from "@/app/page";
 import { BarChart3, FileText, Home, Users } from "lucide-react";
 import React from "react";
 import useSWR from "swr";
+type DashboardCardProps = {
+  title: string;
+  value?: number | string;
+  icon: React.ReactNode;
+  iconBg: string;
+};
+
+const DashboardCard: React.FC<DashboardCardProps> = ({
+  title,
+  value,
+  icon,
+  iconBg,
+}) => {
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200 flex flex-col justify-between">
+      <div className="flex items-center justify-between">
+        <div className="text-left">
+          <p className="text-sm text-gray-600 dark:text-gray-400">{title}</p>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">
+            {value}
+          </p>
+        </div>
+        <div
+          className={`${iconBg} p-3 rounded-lg flex items-center justify-center`}>
+          {icon}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const OverviewDashboardTab = () => {
   const { language } = useLanguage();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  console.log("API URL:", apiUrl);
-  const { data, error, isLoading } = useSWR(`${apiUrl}/properties`, fetcher);
-  console.log("Data fetched:", data);
-  const totalProperties = data?.pagination?.totalCount || 0;
+
+  const { data } = useSWR(
+    [`${baseUrl}/dashboard`, localStorage.getItem("token") ?? ""],
+    ([url, token]) => fetcherDash(url, token)
+  );
+  const dashboardData: DashboardOverview | undefined = data?.data;
   return (
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {language === "ar" ? "إجمالي العقارات" : "Total Properties"}
-              </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                {totalProperties}
-              </p>
-            </div>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <Home className="h-8 w-8 text-blue-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {language === "ar" ? "المقالات المنشورة" : "Published Posts"}
-              </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                89
-              </p>
-            </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <FileText className="h-8 w-8 text-green-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {language === "ar" ? "المستخدمون النشطون" : "Active Users"}
-              </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                15,432
-              </p>
-            </div>
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <Users className="h-8 w-8 text-purple-600" />
-            </div>
-          </div>
-        </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {language === "ar" ? "المشاهدات الشهرية" : "Monthly Views"}
-              </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                234K
-              </p>
-            </div>
-            <div className="bg-orange-100 p-3 rounded-lg">
-              <BarChart3 className="h-8 w-8 text-orange-600" />
-            </div>
-          </div>
-        </div>
+        <DashboardCard
+          title={language === "ar" ? "إجمالي العقارات" : "Total Properties"}
+          value={dashboardData?.totalProperties}
+          icon={<Home className="h-8 w-8 text-blue-600" />}
+          iconBg="bg-blue-100"
+        />
+        <DashboardCard
+          title={language === "ar" ? "المقالات المنشورة" : "Published Posts"}
+          value={dashboardData?.totalPosts}
+          icon={<FileText className="h-8 w-8 text-green-600" />}
+          iconBg="bg-green-100"
+        />
+        <DashboardCard
+          title={language === "ar" ? "المستخدمون النشطون" : "Active Users"}
+          value={dashboardData?.totalUsers}
+          icon={<Users className="h-8 w-8 text-purple-600" />}
+          iconBg="bg-purple-100"
+        />
+        <DashboardCard
+          title={
+            language === "ar"
+              ? "العقارات غير المعتمدة"
+              : "Unapproved Properties"
+          }
+          value={dashboardData?.totalUnAprovedProperties}
+          icon={<BarChart3 className="h-8 w-8 text-orange-600" />}
+          iconBg="bg-orange-100"
+        />
       </div>
-
       {/* Recent Activity */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition-colors duration-200">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">

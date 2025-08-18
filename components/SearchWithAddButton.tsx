@@ -1,5 +1,6 @@
 import React from "react";
 import { Search, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface SearchWithAddButtonProps {
   searchQuery: string;
@@ -14,8 +15,16 @@ const SearchWithAddButton: React.FC<SearchWithAddButtonProps> = ({
   setSearchQuery,
   language,
   activeTab,
-  onAddClick,
 }) => {
+  const router = useRouter();
+  const handleAddClick = () => {
+    if (activeTab == "properties") {
+      router.push("/dashboard/properties/create");
+    } else {
+      router.push("/dashboard/posts/create");
+    }
+  };
+
   return (
     <div className="flex items-end space-x-4 rtl:space-x-reverse">
       <div className="relative">
@@ -34,7 +43,7 @@ const SearchWithAddButton: React.FC<SearchWithAddButtonProps> = ({
 
       {(activeTab === "properties" || activeTab === "posts") && (
         <button
-          onClick={onAddClick}
+          onClick={handleAddClick}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg 
                      hover:bg-blue-700 transition-colors duration-200 
                      flex items-center space-x-2 rtl:space-x-reverse">

@@ -44,14 +44,15 @@ const BlogPostPage: React.FC<DetailsPageProps> = ({ initialData }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* Hero Section */}
-      <div className="relative h-96">
+      <div className="relative h-96 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 z-10" />
         <Image
           src={post.featuredImageUrl}
           alt={post[language].title}
           className="w-full h-full object-cover"
-          fill
           sizes="100vw"
+          width={1920}
+          height={384}
         />
         <div
           className="

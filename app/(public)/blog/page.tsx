@@ -47,11 +47,11 @@ const BlogPage: React.FC = () => {
     console.error("Error fetching blog posts:", error);
     return <div>Error loading blog posts</div>;
   }
-  const blogPosts = data?.data || [];
+  const blogPosts = Array.isArray(data?.data) ? data?.data : [];
   console.log("blogPosts");
   console.log(blogPosts);
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = blogPosts?.filter((post) => {
     const matchesSearch =
       // post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (post[language]?.title &&
@@ -71,8 +71,8 @@ const BlogPage: React.FC = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString(language === "ar" ? "ar-EG" : "en-EG");
   };
-  const { data: paginatedPosts, totalPages } = paginate(
-    filteredPosts,
+  const { totalPages } = paginate(
+    filteredPosts ?? [],
     page,
     limit
   );
@@ -137,7 +137,7 @@ const BlogPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading && <NewsSkeleton length={limit} />}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
+            {filteredPosts?.map((post) => (
               <article
                 key={post.id}
                 className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
@@ -222,7 +222,7 @@ const BlogPage: React.FC = () => {
             ))}
           </div>
 
-          {filteredPosts.length === 0 && !isLoading && (
+          {filteredPosts?.length === 0 && !isLoading && (
             <div className="text-center py-16">
               <p className="text-gray-500 dark:text-gray-400 text-lg">
                 {language === "ar"

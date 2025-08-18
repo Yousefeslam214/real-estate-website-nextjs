@@ -64,7 +64,8 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                 <Image
                   src={
                     property?.photos[currentImageIndex] ||
-                    property?.coverimageurl
+                    property?.coverimageurl ||
+                    "/3866.jpg"
                   }
                   alt={property?.additional_information[language]?.title}
                   className="w-full h-full object-cover"
@@ -107,7 +108,7 @@ const PropertyDetailsPage: React.FC<DetailsPageProps> = ({
                     }`}
                     onClick={() => setCurrentImageIndex(index + 1)}>
                     <Image
-                      src={image}
+                      src={image || "/3866.jpg"}
                       alt={`Property ${index + 1}`}
                       className="w-full h-full object-cover"
                       width={500}

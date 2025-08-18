@@ -3,7 +3,7 @@
 import React from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import useSWR from "swr";
-import { PropertyFormData } from "@/lib/types/PropertyForms";
+import { PropertyFormData } from "@/lib/types/PropertyFormData&Props";
 import { ApiResponse } from "@/lib/types/api";
 import { fetcher } from "@/services/shared/fetcher";
 import { baseUrl } from "@/services/shared/apiUrl";
@@ -20,11 +20,10 @@ const PropertyForm = ({ formData, setFormData, errors, setErrors }: Props) => {
   const { language } = useLanguage();
   //   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const { data } = useSWR<ApiResponse>(
+  const projects = useSWR<ApiResponse>(
     `${baseUrl}/properties/getAvailableProjects`,
     fetcher
-  );
-  const projects = data?.data;
+  ).data?.data;
 
   // const propertyTypes = [
   //   {
