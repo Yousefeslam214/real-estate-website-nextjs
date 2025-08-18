@@ -1,4 +1,4 @@
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "@/lib/types/api";
 
 // The fetcher for SWR with optional token
 export const fetcher = async (

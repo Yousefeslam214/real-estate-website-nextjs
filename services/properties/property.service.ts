@@ -1,6 +1,9 @@
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "@/lib/types/api";
 import { baseUrl } from "../shared/apiUrl";
-import { PropertyInput, PropertyUpdateInput } from "@/schemas/property.schema";
+import {
+  PropertyInput,
+  PropertyUpdateInput,
+} from "@/lib/schemas/property.schema";
 
 export interface Property {
   id: string;

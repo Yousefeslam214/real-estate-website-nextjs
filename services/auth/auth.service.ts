@@ -1,5 +1,5 @@
 import { baseUrl } from "../shared/apiUrl";
-import { LoginInput, SignUpInput } from "@/schemas/login.schema";
+import { LoginInput, SignUpInput } from "@/lib/schemas/login.schema";
 
 // /api/auth/login
 export const login = async (loginSchema: LoginInput) => {

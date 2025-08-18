@@ -1,16 +1,16 @@
 import "./globals.css";
 import type { Metadata } from "next";
 // import { Inter, Cairo } from "next/font/google";
-import { LanguageProvider } from "./contexts/LanguageContext";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { PropertiesSidebar } from "./components/PropertiesComponents/PropertiesSidebar";
-import Header from "./components/Layout/Header";
-import Footer from "./components/Layout/Footer";
+import { LanguageProvider } from "../contexts/LanguageContext";
+import { ThemeProvider } from "../contexts/ThemeContext";
+import { PropertiesSidebar } from "../components/PropertiesComponents/PropertiesSidebar";
+import Header from "../components/Layout/Header";
+import Footer from "../components/Layout/Footer";
 // import { Toaster } from "@/components/ui/toaster";
 // import PropertiesSidebar from "./components/PropertiesSidebar";
 import { Toaster } from "react-hot-toast";
 // import { Toast } from "@radix-ui/react-toast";
-import { ToastProvider } from "./contexts/ToastContext";
+import { ToastProvider } from "../contexts/ToastContext";
 
 // const inter = Inter({ subsets: ["latin"] });
 // const cairo = Cairo({ subsets: ["arabic"] });
@@ -65,7 +65,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body 
+      <body
       // className={`${inter.className} ${cairo.className}`}
       >
         <LanguageProvider>
